@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=/usr/bin/lxpolkit
+Name=lxpolkit
+Type=Application

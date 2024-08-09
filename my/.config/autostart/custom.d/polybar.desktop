@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=/usr/bin/bash -c '~/.local/bin/scripts.d/polybar.sh'
+Name=polybar
+Type=Application

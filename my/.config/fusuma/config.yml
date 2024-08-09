@@ -1,0 +1,14 @@
+swipe:
+  3:
+    left:
+      command: 'xdotool key alt+Right'
+    right:
+      command: 'xdotool key alt+Left'
+
+threshold:
+  pinch: 0.5
+  swipe: 1.0
+
+interval:
+  pinch: 0.5
+  swipe: 1.0

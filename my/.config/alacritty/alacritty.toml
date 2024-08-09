@@ -1,0 +1,37 @@
+import = ["~/.config/alacritty/themes.d/solarized_osaka.toml"]
+
+[window]
+dimensions = { columns = 120, lines = 30 }
+padding = { x = 10, y = 10 }
+dynamic_padding = true
+decorations = "Full"
+opacity = 1.0
+blur = false
+startup_mode = "Windowed"
+title = "Alacritty"
+dynamic_title = true
+class = { instance = "Alacritty", general = "Alacritty" }
+
+[scrolling]
+history = 100000
+multiplier = 5
+
+[font]
+normal = { family = "MesloLGMDZNerdFontMono", style = "Regular" }
+size = 12.0
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+save_to_clipboard = false
+
+[cursor]
+style = { shape = "Block", blinking = "Never" }
+unfocused_hollow = true
+thickness = 0.15
+
+[mouse]
+hide_when_typing = true

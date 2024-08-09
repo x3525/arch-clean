@@ -1,0 +1,11 @@
+[Default Applications]
+application/json=sublime_text.desktop;
+application/pdf=firefox.desktop;
+application/x-zerosize=sublime_text.desktop
+application/zip=xarchiver.desktop;
+audio/mpeg=vlc.desktop;
+image/jpeg=feh.desktop;
+image/png=feh.desktop;
+inode/directory=thunar.desktop;
+text/plain=sublime_text.desktop;
+video/mp4=vlc.desktop;

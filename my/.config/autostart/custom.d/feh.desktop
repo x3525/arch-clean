@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=/usr/bin/feh --no-fehbg --bg-fill --randomize /usr/share/backgrounds/random/
+Name=feh
+Type=Application

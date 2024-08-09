@@ -1,0 +1,12 @@
+configuration {
+    disable-history: false;
+    font: "Noto Sans Mono 12";
+    fullscreen: false;
+    hide-scrollbar: true;
+    icon-theme: "Papirus";
+    show-icons: true;
+    sidebar-mode: false;
+    window {
+        hide-active-window: false;
+    }
+}

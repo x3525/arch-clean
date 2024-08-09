@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=/usr/bin/autorandr --change
+Name=autorandr
+Type=Application
