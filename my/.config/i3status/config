@@ -1,0 +1,86 @@
+general {
+    color_bad = "#880808"
+    color_degraded = "#cc7722"
+    color_good = "#097969"
+    colors = true
+    interval = 1
+    output_format = "i3bar"
+}
+
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "path_exists virtual"
+order += "cpu_usage"
+order += "memory"
+order += "volume master"
+order += "battery all"
+order += "time"
+
+battery all {
+    align = "left"
+    format = "%status %percentage"
+    format_down = ""
+    format_percentage = "%3.0f%s"
+    hide_seconds = true
+    last_full_capacity = true
+    low_threshold = 20
+    path = "/sys/class/power_supply/BAT%d/uevent"
+    status_bat = "󰁾"
+    status_chr = "󰂄"
+    status_full = "󰁹"
+    status_idle = "󱈑"
+    status_unk = "󰂑"
+    threshold_type = "percentage"
+}
+
+cpu_usage {
+    align = "left"
+    degraded_threshold = 40
+    format = "CPU %usage"
+    format_above_degraded_threshold = "CPU %usage"
+    format_above_threshold = "CPU %usage"
+    max_threshold = 90
+    min_width = "CPU ???%"
+}
+
+ethernet _first_ {
+    align = "left"
+    format_down = "󰈀"
+    format_up = "󰈀"
+}
+
+memory {
+    align = "left"
+    format = "MEM %percentage_used"
+    format_degraded = "MEM %percentage_used"
+    memory_used_method = "memavailable"
+    min_width = "MEM ???.?%"
+    threshold_critical = "5%"
+    threshold_degraded = "15%"
+}
+
+path_exists virtual {
+    align = "left"
+    format = "󰕥"
+    format_down = "󰒘"
+    path = "/sys/class/net/tun0"
+}
+
+time {
+    align = "left"
+    format = "%H:%M:%S\n%d/%m/%y"
+}
+
+volume master {
+    align = "left"
+    format = "󰕾 %volume"
+    format_muted = "󰖁 %volume"
+    min_width = "󰕾 ???%"
+}
+
+wireless _first_ {
+    align = "left"
+    format_down = "󰤨"
+    format_quality = "%3d%s"
+    format_up = "[%essid] 󰤨"
+}

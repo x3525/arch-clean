@@ -1,0 +1,76 @@
+@import "colors.rasi"
+
+* {
+    background-color: @gray;
+    border: 0px;
+    location: center;
+    text-color: @white;
+    transparency: "real";
+    width: 1000px;
+    x-offset: 0;
+    y-offset: 0;
+}
+
+error-message {
+    border: 50px;
+}
+
+prompt {
+    background-color: @purple;
+    enabled: true;
+    padding: 0px;
+}
+
+entry {
+    background-color: @purple;
+    blink: true;
+    expand: true;
+    horizontal-align: 0;
+    padding: 10px;
+}
+
+inputbar {
+    background-color: @purple;
+    children: [ prompt, entry ];
+    expand: false;
+    margin: 0px;
+    padding: 10px;
+}
+
+listview {
+    columns: 1;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+    lines: 10;
+    padding: 10px;
+    spacing: 10px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    padding: 0px;
+    spacing: 0px;
+}
+
+element {
+    orientation: horizontal;
+    padding: 10px;
+}
+
+element selected {
+    background-color: @purple;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 24px;
+}
+
+element-text {
+    background-color: transparent;
+    expand: true;
+    horizontal-align: 0;
+    margin: 2px;
+    vertical-align: 0.5;
+}

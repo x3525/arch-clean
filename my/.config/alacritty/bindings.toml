@@ -1,0 +1,5 @@
+[keyboard]
+bindings = [
+{ key = "PageUp", mode = "~Alt", action = "ScrollPageUp" },
+{ key = "PageDown", mode = "~Alt", action = "ScrollPageDown" },
+]
