@@ -1,0 +1,13 @@
+configuration {
+    disable-history: false;
+    font: "Noto Sans Mono 12";
+    fullscreen: false;
+    hide-scrollbar: true;
+    icon-theme: "Papirus";
+    modi: "drun,Power Menu:~/.local/bin.d/power_menu.sh,run";
+    show-icons: true;
+    sidebar-mode: false;
+    window {
+        hide-active-window: false;
+    }
+}

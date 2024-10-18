@@ -1,0 +1,51 @@
+import = [
+"~/.config/alacritty/bindings.toml",
+"~/.config/alacritty/themes.d/solarized_osaka.toml",
+]
+
+[window]
+padding.x = 10
+padding.y = 10
+decorations = "Full"
+opacity = 1.0
+blur = false
+title = "Alacritty"
+dynamic_title = true
+
+[scrolling]
+history = 100000
+multiplier = 5
+
+[font]
+normal.family = "MesloLGMDZNerdFontMono"
+normal.style = "Regular"
+size = 14.0
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+save_to_clipboard = false
+
+[cursor]
+style.shape = "Block"
+style.blinking = "Never"
+unfocused_hollow = true
+thickness = 0.15
+
+[terminal]
+osc52 = "Disabled"
+
+[mouse]
+hide_when_typing = true
+
+[[hints.enabled]]
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+hyperlinks = true
+post_processing = true
+persist = false
+command = "xdg-open"
+mouse.mods = "Control"
+mouse.enabled = true

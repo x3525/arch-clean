@@ -1,0 +1,25 @@
+[Default Applications]
+application/json=sublime_text.desktop;
+application/pdf=firefox.desktop;
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
+application/x-extension-xhtml=firefox.desktop
+application/x-shellscript=sublime_text.desktop;
+application/x-zerosize=sublime_text.desktop;
+application/xhtml+xml=firefox.desktop
+application/yaml=sublime_text.desktop;
+application/zip=xarchiver.desktop;
+audio/mpeg=vlc.desktop;
+image/jpeg=feh.desktop;
+image/png=feh.desktop;
+image/svg+xml=firefox.desktop;
+inode/directory=thunar.desktop;
+text/html=firefox.desktop
+text/markdown=sublime_text.desktop;
+text/plain=sublime_text.desktop;
+video/mp4=vlc.desktop;
+video/webm=vlc.desktop;
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop

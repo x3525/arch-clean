@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=bash -c 'picom --config ~/.config/picom/picom.conf'
+Name=picom
+Type=Application

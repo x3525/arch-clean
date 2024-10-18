@@ -1,0 +1,4 @@
+[Desktop Entry]
+Exec=hsetroot -root -solid rgb:00/00/00
+Name=hsetroot
+Type=Application
