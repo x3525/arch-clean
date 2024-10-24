@@ -1,0 +1,11 @@
+[Unit]
+Description=Battery notification timer
+ConditionPathIsDirectory=/sys/class/power_supply/BAT0
+
+[Timer]
+AccuracySec=1us
+OnStartupSec=5s
+OnUnitActiveSec=3s
+
+[Install]
+WantedBy=timers.target
