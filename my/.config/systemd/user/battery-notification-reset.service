@@ -1,0 +1,10 @@
+[Unit]
+Description=Battery notification reset service
+ConditionEnvironment=BATTERY=D
+
+[Service]
+Type=exec
+ExecStart=systemctl --user unset-environment BATTERY
+
+[Install]
+WantedBy=default.target
