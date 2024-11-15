@@ -36,7 +36,7 @@
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline                 # \n
-    time                    # current time
+    # time                  # current time
     context                 # user@hostname
     prompt_char             # prompt symbol
   )
