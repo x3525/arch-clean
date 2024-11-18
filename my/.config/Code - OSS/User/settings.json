@@ -23,8 +23,6 @@
     "files.trimTrailingWhitespace": true,
     "markdownlint.config": {"MD045": false, "MD046": false},
     "redhat.telemetry.enabled": false,
-    "window.customTitleBarVisibility": "never",
-    "workbench.activityBar.location": "top",
     "workbench.editor.enablePreview": false,
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.list.openMode": "doubleClick",
