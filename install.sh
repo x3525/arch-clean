@@ -49,7 +49,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 # Download Powerlevel10k theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
 
-# Copy files --
+# Copy files <--
 cp -r my/. ~
 sudo cp -r system/. / --no-preserve=ownership
 
