@@ -73,7 +73,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
-source ~/.local/bin.d/ls_colors.sh
+source ~/bin/ls_colors.sh
 
 source $ZSH/oh-my-zsh.sh
 

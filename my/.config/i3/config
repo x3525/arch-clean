@@ -17,7 +17,7 @@ focus_on_window_activation urgent
 tiling_drag modifier
 
 # Lock screen
-exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.local/bin.d/locker.sh
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/bin/locker.sh
 
 # Executing applications
 exec_always --no-startup-id ~/bin/restart.sh ~/.config/autostart/desktop.d
