@@ -8,7 +8,6 @@
     "cSpell.maxDuplicateProblems": 1000000,
     "cSpell.maxNumberOfProblems": 1000000,
     "cSpell.minWordLength": 3,
-    "cSpell.textDecoration": "underline wavy orange 0.1rem",
     "editor.detectIndentation": false,
     "editor.fontFamily": "JetBrains Mono",
     "editor.fontSize": 14,
