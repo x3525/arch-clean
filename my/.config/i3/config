@@ -20,4 +20,4 @@ tiling_drag modifier
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.local/bin.d/locker.sh
 
 # Executing applications
-exec_always --no-startup-id ~/.local/bin.d/restart.sh ~/.config/autostart/custom.d
+exec_always --no-startup-id ~/bin/restart.sh ~/.config/autostart/desktop.d
