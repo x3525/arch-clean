@@ -10,20 +10,8 @@ fi
 sudo pacman-key --init
 sudo pacman-key --populate
 
-PACKAGES=(ARCHINSTALL PACKAGES "$@")
-
-if [[ ${PACKAGES[*]} =~ TOOLS ]] && ! grep -q -- 'sublime-text' /etc/pacman.conf
-then
-    # Add stable x86_64 channel
-    curl -O https://download.sublimetext.com/sublimehq-pub.gpg
-    sudo pacman-key --add sublimehq-pub.gpg
-    sudo pacman-key --lsign-key 8A8F901A
-    rm sublimehq-pub.gpg
-    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | sudo tee -a /etc/pacman.conf
-fi
-
 # Install packages
-while ! cat -- "${PACKAGES[@]}" | sudo pacman -Syu --noconfirm --needed -
+while ! cat -- PACKAGES | sudo pacman -Syu --noconfirm --needed -
 do
     echo "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r
@@ -82,7 +70,6 @@ sudo systemctl enable reflector.timer
 
 # Enable services
 sudo systemctl enable cronie.service
-sudo systemctl enable iwd.service
 sudo systemctl enable lightdm.service
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable systemd-timesyncd.service
@@ -90,4 +77,3 @@ sudo systemctl enable systemd-timesyncd.service
 # Disable services
 sudo systemctl disable autorandr-lid-listener.service
 sudo systemctl disable autorandr.service
-sudo systemctl disable bluetooth.service
