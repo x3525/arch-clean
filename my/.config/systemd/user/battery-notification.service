@@ -3,7 +3,7 @@ Description=Battery notification service
 
 [Service]
 Type=exec
-ExecStart=-bash -c 'STATUS=$$(cut -c1 /sys/class/power_supply/BAT0/status) && ! systemctl --user show-environment | grep -q -- BATTERY=$$STATUS && systemctl --user set-environment BATTERY=$$STATUS && ~/bin/notify.sh battery $$STATUS $$(awk -v CAPACITY=$$(cat /sys/class/power_supply/BAT0/capacity) \'BEGIN{printf "%%03d",int(CAPACITY/10)*10}\')'
+ExecStart=-bash -c 'STATUS=$$(cut -c1 /sys/class/power_supply/BAT0/status) && CAPACITY=$$(cat /sys/class/power_supply/BAT0/capacity) && ! systemctl --user show-environment | grep -q -- BATTERY=$$STATUS && systemctl --user set-environment BATTERY=$$STATUS && ~/bin/notify.sh battery $$STATUS $$CAPACITY'
 
 [Install]
 WantedBy=default.target
