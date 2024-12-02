@@ -14,6 +14,7 @@ application/xhtml+xml=firefox.desktop
 application/yaml=sublime_text.desktop
 application/zip=xarchiver.desktop
 audio/mpeg=vlc.desktop
+audio/x-vorbis+ogg=vlc.desktop
 image/jpeg=feh.desktop
 image/png=feh.desktop
 image/svg+xml=firefox.desktop
