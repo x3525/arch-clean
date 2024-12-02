@@ -22,6 +22,9 @@ do
     esac
 done
 
+# Set default Java environment
+sudo archlinux-java set java-11-openjdk
+
 # Install yay AUR helper
 git clone https://aur.archlinux.org/yay.git
 makepkg -D yay -si --noconfirm --needed
