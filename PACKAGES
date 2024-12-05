@@ -97,6 +97,7 @@ postgresql
 powerline
 powerline-fonts
 python-pip
+python-pylint
 rdesktop
 redis
 reflector
