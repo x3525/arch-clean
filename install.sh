@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$(id -u)" -eq 0 ]
+if [ "$(id -u)" -eq 0 ] && [ "$(find /home -mindepth 1 -maxdepth 1 -type d | wc -l)" -ne 0 ]
 then
     echo "You are root."
     exit 1
