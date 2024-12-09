@@ -1,7 +1,6 @@
 # See dunst(5) for all configuration options
 
 [global]
-
     ### Display ###
 
     # Which monitor should the notifications be displayed on.
@@ -22,19 +21,21 @@
 
     ### Geometry ###
 
+    # The width of the window, excluding the frame.
     # dynamic width from 0 to 300
     # width = (0, 300)
     # constant width of 300
     width = 400
 
-    # The maximum height of a single notification, excluding the frame.
-    height = 500
+    # The height of a single notification, excluding the frame.
+    # dynamic height from 0 to 300
+    height = (0, 500)
 
     # Position the notification in the top right corner
     origin = top-right
 
     # Offset from the origin
-    offset = 10x100
+    offset = (10, 100)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -77,7 +78,7 @@
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
-    indicate_hidden = true
+    indicate_hidden = yes
 
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
@@ -197,7 +198,7 @@
     ellipsize = end
 
     # Ignore newlines '\n' in notifications.
-    ignore_newline = false
+    ignore_newline = no
 
     # Stack together notifications with the same content
     stack_duplicates = true
@@ -206,7 +207,7 @@
     hide_duplicate_count = false
 
     # Display indicators for URLs (U) and actions (A).
-    show_indicators = false
+    show_indicators = no
 
     ### Icons ###
 
@@ -239,7 +240,7 @@
 
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
-    sticky_history = true
+    sticky_history = yes
 
     # Maximum amount of notifications kept in history
     history_length = 0
@@ -292,7 +293,7 @@
     # Set this to true to use X11 output on Wayland.
     force_xwayland = false
 
-    ### Legacy
+    ### Legacy ###
 
     # Use the Xinerama extension instead of RandR for multi-monitor support.
     # This setting is provided for compatibility with older nVidia drivers that
@@ -304,7 +305,7 @@
     # layout changes.
     force_xinerama = false
 
-    ### Mouse
+    ### Mouse ###
 
     # Defines list of actions for each mouse event
     # Possible values are:
