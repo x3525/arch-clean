@@ -96,6 +96,7 @@ polkit
 postgresql
 powerline
 powerline-fonts
+proxychains-ng
 python-pip
 python-pylint
 rdesktop
