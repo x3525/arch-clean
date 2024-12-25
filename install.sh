@@ -60,7 +60,6 @@ fc-cache -fv
 rfkill block bluetooth
 
 # Enable timers
-systemctl --user enable battery-notification-reset.timer
 systemctl --user enable battery-notification.timer
 sudo systemctl enable fstrim.timer
 sudo systemctl enable reflector.timer
