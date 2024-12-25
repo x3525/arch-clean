@@ -1,4 +1,5 @@
 adwaita-cursors
+adwaita-icon-theme
 aircrack-ng
 alacritty
 arandr
@@ -94,7 +95,6 @@ python-pip
 rdesktop
 redis
 reflector
-remmina
 rofi
 smartmontools
 smbclient
