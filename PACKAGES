@@ -19,7 +19,6 @@ firefox
 flameshot
 flatpak
 fping
-freerdp
 freerdp2
 gdb
 git
@@ -83,7 +82,6 @@ pacman-contrib
 pamixer
 papirus-icon-theme
 pavucontrol
-perl-file-mimeinfo
 php
 picom
 pipewire
@@ -94,8 +92,6 @@ playerctl
 pocl
 polkit
 postgresql
-powerline
-powerline-fonts
 proxychains-ng
 python-pip
 rdesktop
