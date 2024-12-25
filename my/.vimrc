@@ -1,12 +1,6 @@
 unlet! skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-call plug#begin()
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'rust-lang/rust.vim'
-call plug#end()
-
 syntax on
 filetype plugin indent on
 
