@@ -2,7 +2,7 @@
 
 if [ "$(id -u)" -eq 0 ] && [ "$(find /home -mindepth 1 -maxdepth 1 -type d | wc -l)" -ne 0 ]
 then
-    echo "You are root."
+    echo "You are root!"
     exit 1
 fi
 
@@ -22,18 +22,15 @@ do
     esac
 done
 
-# Set default Java environment
-sudo archlinux-java set java-11-openjdk
-
 # Install yay AUR helper
 git clone https://aur.archlinux.org/yay.git
 makepkg -D yay -si --noconfirm --needed
 rm -rf yay
 
-# Install OMZ
+# Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-# Download OMZ plugins
+# Download Oh My Zsh plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
