@@ -1,4 +1,4 @@
 [Desktop Entry]
-Exec=bash -c 'dunst -config ~/.config/dunst/dunstrc'
+Exec=dunst
 Name=dunst
 Type=Application
