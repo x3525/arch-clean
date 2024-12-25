@@ -23,12 +23,10 @@ case $1 in
     battery)
         case $2 in
             C)
-                ICON=battery-$(awk -v CAPACITY="$3" 'BEGIN{printf "%03d",int(CAPACITY/10)*10}')-charging
-                dunstify -u L -h string:x-dunst-stack-tag:battery -i "$ICON" "Battery" "Battery is charging..." -h int:value:"$3"
+                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050-charging "Battery" "Battery is charging..." -h int:value:"$3"
                 ;;
             D)
-                ICON=battery-$(awk -v CAPACITY="$3" 'BEGIN{printf "%03d",int(CAPACITY/10)*10}')
-                dunstify -u L -h string:x-dunst-stack-tag:battery -i "$ICON" "Battery" "Battery is discharging..." -h int:value:"$3"
+                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050 "Battery" "Battery is discharging..." -h int:value:"$3"
                 ;;
             F)
                 ;;
