@@ -9,10 +9,12 @@ brightnessctl
 code
 cronie
 dex
+dmenu
 dos2unix
 dosfstools
 dsniff
 dunst
+efibootmgr
 exfat-utils
 feh
 ffmpeg
@@ -27,6 +29,7 @@ github-cli
 glab
 gnome-calculator
 go
+grub
 gst-plugin-pipewire
 gtk3
 gvfs
@@ -35,13 +38,16 @@ hashcat-utils
 hcxtools
 hsetroot
 html2text
+htop
 hydra
 i3-wm
+i3blocks
 i3lock
 i3status
 impacket
 inetutils
 intel-media-driver
+iwd
 john
 jq
 kcolorchooser
@@ -63,6 +69,8 @@ mariadb
 medusa
 mesa
 metasploit
+nano
+network-manager-applet
 networkmanager
 nfs-utils
 nmap
