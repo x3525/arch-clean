@@ -25,10 +25,10 @@ battery all {
     last_full_capacity = true
     low_threshold = 20
     path = "/sys/class/power_supply/BAT%d/uevent"
-    status_bat = "B"
+    status_bat = "D"
     status_chr = "C"
     status_full = "F"
-    status_idle = "I"
+    status_idle = "N"
     status_unk = "U"
     threshold_type = "percentage"
 }
@@ -80,7 +80,7 @@ volume master {
 
 wireless _first_ {
     align = "left"
-    format_down = "W"
+    format_down = ""
     format_quality = "%3d%s"
-    format_up = "|%essid| W"
+    format_up = "%essid"
 }
