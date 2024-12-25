@@ -35,7 +35,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = (10, 100)
+    offset = (10, 110)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -57,7 +57,7 @@
     progress_bar_frame_width = 2
 
     # Set the minimum width for the progress bar
-    progress_bar_min_width = 150
+    progress_bar_min_width = 200
 
     # Set the maximum width for the progress bar
     progress_bar_max_width = 400
@@ -134,7 +134,7 @@
     # Set to 0 to disable.
     # A client can set the 'transient' hint to bypass this. See the rules
     # section for how to disable this if necessary
-    # idle_threshold = 120
+    idle_threshold = 120
 
     ### Text ###
 
@@ -217,8 +217,6 @@
 
     # Set icon theme (only used for recursive icon lookup)
     icon_theme = Papirus
-    # You can also set multiple icon themes, with the leftmost one being used first.
-    # icon_theme = "Adwaita, breeze"
 
     # Align icons left/right/top/off
     icon_position = left
@@ -341,6 +339,3 @@
     foreground = "#ffffff"
     highlight = "#000000"
     timeout = 0
-
-[fullscreen]
-    fullscreen = show
