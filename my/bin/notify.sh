@@ -23,10 +23,10 @@ case $1 in
     battery)
         case $2 in
             C)
-                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050-charging "Battery" "Battery is charging..." -h int:value:"$3"
+                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050-charging "Battery" "Battery is charging..."
                 ;;
             D)
-                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050 "Battery" "Battery is discharging..." -h int:value:"$3"
+                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050 "Battery" "Battery is discharging..."
                 ;;
             F)
                 ;;
