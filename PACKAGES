@@ -61,6 +61,7 @@ libwebp
 lightdm
 lightdm-gtk-greeter
 linux-headers
+lsof
 lxsession-gtk3
 man-db
 man-pages
