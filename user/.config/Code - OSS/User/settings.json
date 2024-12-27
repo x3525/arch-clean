@@ -1,4 +1,7 @@
 {
+    "cSpell.blockCheckingWhenAverageChunkSizeGreaterThan": 1000000,
+    "cSpell.blockCheckingWhenLineLengthGreaterThan": 1000000,
+    "cSpell.blockCheckingWhenTextChunkSizeGreaterThan": 1000000,
     "cSpell.language": "en,tr",
     "cSpell.maxDuplicateProblems": 1000000,
     "cSpell.maxNumberOfProblems": 1000000,
