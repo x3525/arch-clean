@@ -52,6 +52,7 @@ john
 jq
 kcolorchooser
 kolourpaint
+lib32-gcc-libs
 lib32-glibc
 libnotify
 libpulse
