@@ -44,9 +44,6 @@ sudo cp -r system/. / --no-preserve=ownership
 # Change default shell
 sudo chsh "$USER" --shell "$(which zsh)"
 
-# Update GRUB
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-
 # Generate the locales
 sudo locale-gen
 
