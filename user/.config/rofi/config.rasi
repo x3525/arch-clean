@@ -1,3 +1,5 @@
+@import "bindings.rasi"
+
 configuration {
     disable-history: false;
     font: "Noto Sans Mono 12";
