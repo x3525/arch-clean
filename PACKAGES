@@ -99,6 +99,7 @@ pipewire-alsa
 pipewire-jack
 pipewire-pulse
 playerctl
+plocate
 pocl
 polkit
 postgresql
