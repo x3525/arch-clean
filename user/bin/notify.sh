@@ -2,7 +2,7 @@
 
 case $1 in
     audio)
-        pamixer -"$2" 5 --allow-boost --set-limit 150 && killall -SIGUSR1 i3status
+        pamixer -"$2" 5 --allow-boost --set-limit 150 && killall -USR1 i3status
 
         if pamixer --get-mute | grep -q -- 'true'
         then
