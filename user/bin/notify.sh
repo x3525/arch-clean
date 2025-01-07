@@ -14,7 +14,7 @@ case $1 in
         dunstify -u L -h string:x-dunst-stack-tag:all -i "$ICON" "Volume" -h int:value:"$(pamixer --get-volume)"
         ;;
     touchpad)
-        DEVICE="$(xinput list --short | grep -- 'Touchpad' | grep -o -P -- '(?<=id=)[0-9]+')"
+        DEVICE="$(xinput list --short | grep -- 'Touchpad' | grep -oP -- '(?<=id=)[0-9]+')"
 
         xinput "$2" "$DEVICE"
 
