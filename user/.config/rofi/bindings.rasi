@@ -75,7 +75,7 @@ configuration {
     ml-row-right: "";
     ml-row-up: "ScrollUp";
     ml-row-down: "ScrollDown";
-    me-select-entry: "";
-    me-accept-entry: "MousePrimary";
+    me-select-entry: "MousePrimary";
+    me-accept-entry: "MouseDPrimary";
     me-accept-custom: "";
 }
