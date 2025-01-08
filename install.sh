@@ -22,11 +22,6 @@ do
     esac
 done
 
-# Install yay AUR helper
-git clone https://aur.archlinux.org/yay.git
-makepkg -D yay -si --noconfirm --needed
-rm -rf yay
-
 # Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
