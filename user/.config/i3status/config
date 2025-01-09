@@ -14,6 +14,7 @@ order += "cpu_usage"
 order += "memory"
 order += "volume master"
 order += "battery all"
+order += "tztime local"
 order += "time"
 
 battery all {
@@ -68,7 +69,13 @@ path_exists virtual {
 
 time {
     align = "left"
-    format = "%H:%M:%S\n%d/%m/%y"
+    format = "%H:%M:%S%n%d/%m/%y"
+}
+
+tztime local {
+    align = "left"
+    format = "%a"
+    hide_if_equals_localtime = false
 }
 
 volume master {
