@@ -6,8 +6,10 @@ ascii
 autorandr
 bind
 brightnessctl
+cifs-utils
 code
 cronie
+dbeaver
 dex
 dmenu
 dos2unix
