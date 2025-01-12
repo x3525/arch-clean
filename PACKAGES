@@ -119,6 +119,7 @@ sof-firmware
 speech-dispatcher
 sqlitebrowser
 sqlmap
+sshpass
 sshuttle
 subbrute
 tcpdump
