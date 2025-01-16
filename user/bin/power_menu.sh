@@ -1,17 +1,17 @@
 #!/bin/bash
 
-echo -e "Log Out\0icon\x1fsystem-log-out"
+echo -e "Sign out\0icon\x1fsystem-log-out"
 echo -e "Restart\0icon\x1fsystem-reboot"
-echo -e "Shut Down\0icon\x1fsystem-shutdown"
+echo -e "Shut down\0icon\x1fsystem-shutdown"
 
 case $1 in
-    "Log Out")
+    "Sign out")
         i3-msg exit
         ;;
     "Restart")
         systemctl reboot
         ;;
-    "Shut Down")
+    "Shut down")
         systemctl poweroff
         ;;
 esac
