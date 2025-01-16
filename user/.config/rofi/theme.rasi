@@ -17,30 +17,25 @@ error-message {
 
 prompt {
     background-color: @purple;
-    enabled: true;
     padding: 0px;
 }
 
 entry {
     background-color: @purple;
     blink: true;
-    expand: true;
+    expand: false;
     horizontal-align: 0;
     padding: 10px;
 }
 
 inputbar {
-    background-color: @purple;
-    children: [ prompt, entry ];
-    expand: false;
-    margin: 0px;
-    padding: 10px;
+    enabled: false;
 }
 
 listview {
     columns: 1;
     cycle: true;
-    dynamic: true;
+    dynamic: false;
     layout: vertical;
     lines: 10;
     padding: 10px;
@@ -55,6 +50,8 @@ mainbox {
 
 element {
     orientation: horizontal;
+    children: [ element-icon, element-text ];
+    spacing: 20px;
     padding: 10px;
 }
 
@@ -64,7 +61,7 @@ element selected {
 
 element-icon {
     background-color: transparent;
-    size: 24px;
+    size: 32px;
 }
 
 element-text {
