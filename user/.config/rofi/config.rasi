@@ -1,13 +1,15 @@
 @import "bindings.rasi"
+@theme "theme.rasi"
 
 configuration {
     disable-history: false;
-    font: "Noto Sans Mono 12";
-    fullscreen: false;
+    dpi: 0;
+    drun-display-format: "{name}";
+    font: "Noto Sans Mono 16";
     icon-theme: "Papirus";
     max-history-size: 5;
     modi: "drun,power-menu:~/bin/power_menu.sh";
-    show-icons: true;
+    monitor: -5;
 
     entry {
         max-history: 0;
