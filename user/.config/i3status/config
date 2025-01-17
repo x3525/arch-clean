@@ -7,7 +7,6 @@ general {
     output_format = "i3bar"
 }
 
-order += "read_file README"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "path_exists virtual"
@@ -63,13 +62,6 @@ path_exists virtual {
     format = "V"
     format_down = "V"
     path = "/sys/class/net/tun0"
-}
-
-read_file README {
-    format = "%content"
-    format_bad = ""
-    Max_characters = 70
-    path = "~/README"
 }
 
 time {
