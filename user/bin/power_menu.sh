@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo -e "Sign out\0icon\x1fsystem-log-out"
-echo -e "Restart\0icon\x1fsystem-reboot"
-echo -e "Shut down\0icon\x1fsystem-shutdown"
+echo -en "Sign out\0icon\x1fsystem-log-out\n"
+echo -en "Restart\0icon\x1fsystem-reboot\n"
+echo -en "Shut down\0icon\x1fsystem-shutdown\n"
 
 case $1 in
     "Sign out")
