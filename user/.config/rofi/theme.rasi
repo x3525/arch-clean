@@ -13,6 +13,8 @@ window {
 
 mainbox {
     background-color: Black;
+    border-color: DarkSlateGray;
+    border: 5px;
 }
 
 inputbar {
