@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$(id -u)" -eq 0 ] && [ "$(find /home -mindepth 1 -maxdepth 1 -type d | wc -l)" -ne 0 ]
+if [ "$(id -u)" -eq 0 ]
 then
     echo "You are root!"
     exit 1
@@ -33,8 +33,8 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
 
 # Copy files !!!
-cp -r user/. ~
-sudo cp -r system/. / --no-preserve=ownership
+cp -r home/. ~
+sudo cp -r \\/. / --no-preserve=ownership
 
 # Change default shell
 sudo chsh "$USER" --shell "$(which zsh)"
