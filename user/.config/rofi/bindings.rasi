@@ -15,7 +15,7 @@ configuration {
     kb-remove-char-back: "BackSpace";
     kb-remove-to-eol: "";
     kb-remove-to-sol: "";
-    kb-accept-entry: "Return,KP_Enter";
+    kb-accept-entry: "Return";
     kb-accept-custom: "";
     kb-accept-custom-alt: "";
     kb-accept-alt: "";
@@ -32,8 +32,8 @@ configuration {
     kb-element-prev: "";
     kb-page-prev: "Page_Up";
     kb-page-next: "Page_Down";
-    kb-row-first: "Home,KP_Home";
-    kb-row-last: "End,KP_End";
+    kb-row-first: "Home";
+    kb-row-last: "End";
     kb-row-select: "";
     kb-screenshot: "";
     kb-ellipsize: "";

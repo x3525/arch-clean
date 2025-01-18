@@ -8,7 +8,7 @@ configuration {
     font: "mono 14";
     icon-theme: "Papirus";
     max-history-size: 5;
-    modi: "drun,power_menu";
+    modi: "drun,power";
     monitor: -5;
     sidebar-mode: false;
 

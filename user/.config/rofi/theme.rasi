@@ -7,28 +7,6 @@
     text-color: White;
 }
 
-window {
-    fullscreen: true;
-}
-
-mainbox {
-    background-color: Black;
-    border-color: DarkSlateGray;
-    border: 5px;
-}
-
-inputbar {
-    enabled: false;
-}
-
-listview {
-    columns: 1;
-    cycle: true;
-    flow: vertical;
-    require-input: false;
-    reverse: false;
-}
-
 element {
     children: [ element-icon, element-text ];
     padding: 20px;
@@ -46,4 +24,30 @@ element-icon {
 element-text {
     highlight: bold underline Red;
     vertical-align: 0.5;
+}
+
+error-message {
+    background-color: Black;
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    columns: 1;
+    cycle: true;
+    flow: vertical;
+    require-input: false;
+    reverse: false;
+}
+
+mainbox {
+    background-color: Black;
+}
+
+window {
+    border-color: DarkSlateGray;
+    border: 5px;
+    fullscreen: true;
 }
