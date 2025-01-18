@@ -1,6 +1,30 @@
 * {
     background-color: transparent;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    spacing: 0px;
     text-color: White;
+}
+
+window {
+    fullscreen: true;
+}
+
+mainbox {
+    background-color: Black;
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    columns: 1;
+    cycle: true;
+    flow: vertical;
+    require-input: false;
+    reverse: false;
 }
 
 element {
@@ -18,21 +42,6 @@ element-icon {
 }
 
 element-text {
+    highlight: underline Red;
     vertical-align: 0.5;
-}
-
-inputbar {
-    enabled: false;
-}
-
-listview {
-    spacing: 0px;
-}
-
-mainbox {
-    background-color: Black;
-}
-
-window {
-    fullscreen: true;
 }

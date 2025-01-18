@@ -4,12 +4,13 @@
 configuration {
     disable-history: false;
     dpi: 0;
-    drun-display-format: "{name}";
-    font: "Noto Sans Mono 14";
+    drun-display-format: "{name} [<span weight='light' size='small'><i>({comment})</i></span>]";
+    font: "mono 14";
     icon-theme: "Papirus";
     max-history-size: 5;
-    modi: "drun,power-menu:~/bin/power_menu.sh";
+    modi: "drun,power_menu";
     monitor: -5;
+    sidebar-mode: false;
 
     entry {
         max-history: 0;
