@@ -73,7 +73,7 @@ tztime local {
 volume master {
     align = "left"
     format = "V %volume"
-    format_muted = "V MUTE"
+    format_muted = "X %volume"
     min_width = "V ***%"
 }
 
