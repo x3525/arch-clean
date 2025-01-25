@@ -16,6 +16,7 @@
     "files.trimTrailingWhitespace": true,
     "markdownlint.config": {"MD045": false, "MD046": false},
     "telemetry.telemetryLevel": "off",
+    "terminal.external.linuxExec": "alacritty",
     "workbench.editor.enablePreview": false,
     "workbench.editor.focusRecentEditorAfterClose": false,
     "workbench.editor.pinnedTabsOnSeparateRow": true,
