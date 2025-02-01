@@ -155,6 +155,7 @@ xf86-video-amdgpu
 xf86-video-ati
 xf86-video-nouveau
 xf86-video-vmware
+xfce4-clipman-plugin
 xorg-server
 xorg-xev
 xorg-xinit
