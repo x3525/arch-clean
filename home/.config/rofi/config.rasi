@@ -4,7 +4,7 @@
 configuration {
     disable-history: false;
     dpi: 0;
-    drun-display-format: "{name} [<span weight='light' size='small'><i>({comment})</i></span>]";
+    drun-display-format: "{name}";
     font: "mono 14";
     icon-theme: "Papirus";
     max-history-size: 5;
