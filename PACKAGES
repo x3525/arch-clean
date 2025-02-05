@@ -9,6 +9,7 @@ brightnessctl
 cifs-utils
 code
 cronie
+cups
 dbeaver
 dex
 dmenu
@@ -38,6 +39,7 @@ gvfs
 hashcat
 hashcat-utils
 hcxtools
+hplips
 hsetroot
 html2text
 htop
