@@ -71,11 +71,4 @@ configuration {
     kb-select-10: "";
     kb-entry-history-up: "";
     kb-entry-history-down: "";
-    ml-row-left: "";
-    ml-row-right: "";
-    ml-row-up: "ScrollUp";
-    ml-row-down: "ScrollDown";
-    me-select-entry: "";
-    me-accept-entry: "";
-    me-accept-custom: "";
 }

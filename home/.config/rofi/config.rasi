@@ -1,4 +1,5 @@
-@import "bindings.rasi"
+@import "keyboard.rasi"
+@import "mouse.rasi"
 @theme "theme.rasi"
 
 configuration {
