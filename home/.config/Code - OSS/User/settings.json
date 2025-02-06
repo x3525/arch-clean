@@ -21,7 +21,7 @@
     "terminal.integrated.enableFileLinks": "off",
     "terminal.integrated.enableMultiLinePasteWarning": "always",
     "terminal.integrated.fontFamily": "MesloLGMDZ Nerd Font Mono",
-    "terminal.integrated.rightClickBehavior": "nothing",
+    "terminal.integrated.rightClickBehavior": "selectWord",
     "terminal.integrated.shellIntegration.decorationsEnabled": "overviewRuler",
     "workbench.editor.enablePreview": false,
     "workbench.editor.focusRecentEditorAfterClose": false,
