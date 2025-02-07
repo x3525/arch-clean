@@ -4,7 +4,6 @@ general {
     output_format = "i3bar"
 }
 
-order += "path_exists virtual"
 order += "cpu_usage"
 order += "memory"
 order += "volume master"
@@ -20,38 +19,32 @@ battery all {
     last_full_capacity = true
     low_threshold = 20
     path = "/sys/class/power_supply/BAT%d/uevent"
-    status_bat = "D"
-    status_chr = "C"
-    status_full = "F"
-    status_idle = "N"
-    status_unk = "U"
+    status_bat = "<"
+    status_chr = ">"
+    status_full = "+"
+    status_idle = "="
+    status_unk = "?"
     threshold_type = "percentage"
 }
 
 cpu_usage {
     align = "left"
     degraded_threshold = 40
-    format = "C %usage"
-    format_above_degraded_threshold = "C %usage"
-    format_above_threshold = "C %usage"
+    format = "CPU %usage"
+    format_above_degraded_threshold = "CPU %usage"
+    format_above_threshold = "CPU %usage"
     max_threshold = 90
-    min_width = "C ***%"
+    min_width = "CPU ***%"
 }
 
 memory {
     align = "left"
-    format = "M %percentage_used"
-    format_degraded = "M %percentage_used"
+    format = "MEM %percentage_used"
+    format_degraded = "MEM %percentage_used"
     memory_used_method = "memavailable"
-    min_width = "M ***.*%"
+    min_width = "MEM ***.*%"
     threshold_critical = "5%"
     threshold_degraded = "15%"
-}
-
-path_exists virtual {
-    format = "V"
-    format_down = ""
-    path = "/sys/class/net/tun0"
 }
 
 time {
@@ -59,13 +52,13 @@ time {
 }
 
 tztime local {
-    format = "%a"
+    format = "%^a"
     hide_if_equals_localtime = false
 }
 
 volume master {
     align = "left"
-    format = "V %volume"
-    format_muted = "M %volume"
-    min_width = "V ***%"
+    format = "VOL %volume"
+    format_muted = "MUT %volume"
+    min_width = "VOL ***%"
 }
