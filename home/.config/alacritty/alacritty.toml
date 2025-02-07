@@ -1,6 +1,5 @@
 [general]
 import = [
-"bindings.toml",
 "solarized_osaka.toml",
 ]
 
@@ -42,10 +41,6 @@ thickness = 0.15
 [terminal]
 osc52 = "Disabled"
 
-[mouse]
-hide_when_typing = true
-
 [[hints.enabled]]
 regex = ""
-hyperlinks = false
-command = "xdg-open"
+action = "Select"
