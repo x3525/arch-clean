@@ -1,4 +1,4 @@
 [Desktop Entry]
 Exec=nm-applet
-Name=nm-applet
+Name=network-manager-applet
 Type=Application
