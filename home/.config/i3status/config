@@ -4,8 +4,6 @@ general {
     output_format = "i3bar"
 }
 
-order += "wireless _first_"
-order += "ethernet _first_"
 order += "path_exists virtual"
 order += "cpu_usage"
 order += "memory"
@@ -40,11 +38,6 @@ cpu_usage {
     min_width = "C ***%"
 }
 
-ethernet _first_ {
-    format_down = ""
-    format_up = "E"
-}
-
 memory {
     align = "left"
     format = "M %percentage_used"
@@ -75,9 +68,4 @@ volume master {
     format = "V %volume"
     format_muted = "M %volume"
     min_width = "V ***%"
-}
-
-wireless _first_ {
-    format_down = ""
-    format_up = "W"
 }
