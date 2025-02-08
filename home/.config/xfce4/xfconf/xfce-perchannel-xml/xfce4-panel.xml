@@ -7,7 +7,7 @@
         <property name="never-confirm-history-clear" type="bool" value="true"/>
         <property name="paste-on-activate" type="uint" value="0"/>
         <property name="popup-at-pointer" type="bool" value="false"/>
-        <property name="max-menu-items" type="uint" value="10"/>
+        <property name="max-menu-items" type="uint" value="20"/>
         <property name="skip-action-on-key-down" type="bool" value="false"/>
         <property name="reorder-items" type="bool" value="true"/>
         <property name="reverse-menu-order" type="bool" value="false"/>
@@ -18,7 +18,7 @@
         <property name="show-qr-code" type="bool" value="false"/>
         <property name="enable-actions" type="bool" value="false"/>
         <property name="save-on-quit" type="bool" value="true"/>
-        <property name="max-images-in-history" type="uint" value="0"/>
+        <property name="max-images-in-history" type="uint" value="1"/>
         <property name="history-ignore-primary-clipboard" type="bool" value="true"/>
         <property name="max-texts-in-history" type="uint" value="1000"/>
       </property>
