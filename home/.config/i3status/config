@@ -1,5 +1,8 @@
 general {
-    colors = false
+    color_bad = "#880808"
+    color_degraded = "#cc7722"
+    color_good = "#097969"
+    colors = true
     interval = 1
     output_format = "i3bar"
 }
@@ -29,7 +32,7 @@ battery all {
 
 cpu_usage {
     align = "left"
-    degraded_threshold = 40
+    degraded_threshold = 60
     format = "CPU %usage"
     format_above_degraded_threshold = "CPU %usage"
     format_above_threshold = "CPU %usage"
