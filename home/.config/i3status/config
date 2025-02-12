@@ -33,19 +33,19 @@ battery all {
 cpu_usage {
     align = "left"
     degraded_threshold = 60
-    format = "CPU %usage"
-    format_above_degraded_threshold = "CPU %usage"
-    format_above_threshold = "CPU %usage"
+    format = "C %usage"
+    format_above_degraded_threshold = "C %usage"
+    format_above_threshold = "C %usage"
     max_threshold = 90
-    min_width = "CPU ***%"
+    min_width = "C ***%"
 }
 
 memory {
     align = "left"
-    format = "MEM %percentage_used"
-    format_degraded = "MEM %percentage_used"
+    format = "M %percentage_used"
+    format_degraded = "M %percentage_used"
     memory_used_method = "memavailable"
-    min_width = "MEM ***.*%"
+    min_width = "M ***.*%"
     threshold_critical = "5%"
     threshold_degraded = "15%"
 }
@@ -61,7 +61,7 @@ tztime local {
 
 volume master {
     align = "left"
-    format = "VOL %volume"
-    format_muted = "MUT %volume"
-    min_width = "VOL ***%"
+    format = "V %volume"
+    format_muted = "M %volume"
+    min_width = "V ***%"
 }
