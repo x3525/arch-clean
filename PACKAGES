@@ -7,6 +7,7 @@ autorandr
 bind
 brightnessctl
 cifs-utils
+cmake
 code
 cronie
 cups
