@@ -109,6 +109,7 @@ pocl
 polkit
 postgresql
 proxychains-ng
+python-keystone
 python-pip
 python-shodan
 rdesktop
