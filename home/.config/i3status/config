@@ -55,7 +55,7 @@ time {
 }
 
 tztime local {
-    format = "%^a"
+    format = "%a"
     hide_if_equals_localtime = false
 }
 
