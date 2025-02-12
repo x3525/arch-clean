@@ -32,7 +32,7 @@ battery all {
 
 cpu_usage {
     align = "left"
-    degraded_threshold = 60
+    degraded_threshold = 70
     format = "C %usage"
     format_above_degraded_threshold = "C %usage"
     format_above_threshold = "C %usage"
@@ -46,8 +46,8 @@ memory {
     format_degraded = "M %percentage_used"
     memory_used_method = "memavailable"
     min_width = "M ***.*%"
-    threshold_critical = "5%"
-    threshold_degraded = "15%"
+    threshold_critical = "10%"
+    threshold_degraded = "30%"
 }
 
 time {
