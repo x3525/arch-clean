@@ -14,7 +14,7 @@
     "editor.wordBasedSuggestions": "off",
     "explorer.compactFolders": false,
     "files.trimTrailingWhitespace": true,
-    "markdownlint.config": {"MD045": false, "MD046": false},
+    "markdownlint.config": {"MD007": {"indent": 4}, "MD045": false, "MD046": false},
     "telemetry.telemetryLevel": "off",
     "terminal.external.linuxExec": "alacritty",
     "terminal.integrated.defaultLocation": "editor",
