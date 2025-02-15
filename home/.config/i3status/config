@@ -36,7 +36,7 @@ cpu_usage {
     format = "C %usage"
     format_above_degraded_threshold = "C %usage"
     format_above_threshold = "C %usage"
-    max_threshold = 90
+    max_threshold = 95
     min_width = "C ***%"
 }
 
@@ -46,7 +46,7 @@ memory {
     format_degraded = "M %percentage_used"
     memory_used_method = "memavailable"
     min_width = "M ***.*%"
-    threshold_critical = "10%"
+    threshold_critical = "5%"
     threshold_degraded = "30%"
 }
 
