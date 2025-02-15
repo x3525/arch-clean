@@ -1,7 +1,7 @@
 #!/bin/bash
 
 case $1 in
-    audio)
+    volume)
         pamixer -"$2" 5 --allow-boost --set-limit 150 && killall -USR1 i3status
 
         if pamixer --get-mute | grep -q -- 'true'
