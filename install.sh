@@ -54,7 +54,6 @@ sudo systemctl enable fstrim.timer
 sudo systemctl enable reflector.timer
 
 # Enable services
-sudo systemctl enable cronie.service
 sudo systemctl enable lightdm.service
 sudo systemctl enable NetworkManager.service
 sudo systemctl enable systemd-timesyncd.service
