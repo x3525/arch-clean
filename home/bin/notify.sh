@@ -13,13 +13,6 @@ case $1 in
 
         dunstify -u L -h string:x-dunst-stack-tag:all -i "$ICON" "Volume" -h int:value:"$(pamixer --get-volume)"
         ;;
-    touchpad)
-        DEVICE="$(xinput list --short | grep -- 'Touchpad' | grep -oP -- '(?<=id=)[0-9]+')"
-
-        xinput "$2" "$DEVICE"
-
-        dunstify -u L -h string:x-dunst-stack-tag:all -i touchpad-indicator-light-"$2"d "$(xinput list --name-only "$DEVICE")" "Device is ${2}d"
-        ;;
     battery)
         case $2 in
             C)
