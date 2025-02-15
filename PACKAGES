@@ -42,7 +42,6 @@ hashcat-utils
 hcxtools
 hplip
 hsetroot
-html2text
 htop
 hydra
 i3-wm
@@ -109,6 +108,7 @@ pocl
 polkit
 postgresql
 proxychains-ng
+python-html2text
 python-keystone
 python-pip
 python-shodan
