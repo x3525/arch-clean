@@ -90,6 +90,7 @@ openldap
 openssh
 openvpn
 pacman-contrib
+pacutils
 pamixer
 papirus-icon-theme
 pavucontrol
