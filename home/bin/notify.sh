@@ -11,7 +11,7 @@ case $1 in
             ICON=volume-level-high
         fi
 
-        dunstify -u L -h string:x-dunst-stack-tag:all -i "$ICON" "Volume" -h int:value:"$(pamixer --get-volume)"
+        dunstify -u L -h string:x-dunst-stack-tag:volume -i "$ICON" "Volume" -h int:value:"$(pamixer --get-volume)"
         ;;
     battery)
         case $2 in
