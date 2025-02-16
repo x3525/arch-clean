@@ -3,7 +3,7 @@ Description=Battery notification timer
 ConditionPathIsDirectory=/sys/class/power_supply/BAT0
 
 [Timer]
-AccuracySec=1us
+AccuracySec=1s
 OnStartupSec=10s
 OnUnitActiveSec=5s
 
