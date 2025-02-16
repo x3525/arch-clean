@@ -48,6 +48,8 @@ john
 jq
 kcolorchooser
 kolourpaint
+kvantum
+kvantum-qt5
 lib32-gcc-libs
 lib32-glibc
 libnotify
@@ -63,6 +65,7 @@ make
 man-db
 man-pages
 mariadb
+mate-calc
 medusa
 mesa
 metasploit
@@ -146,6 +149,7 @@ wireshark-qt
 wpa_supplicant
 xarchiver
 xdg-utils
+xdotool
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-nouveau
