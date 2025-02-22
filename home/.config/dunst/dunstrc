@@ -323,19 +323,19 @@
     mouse_right_click = close_current
 
 [urgency_low]
+    timeout = 3
+    highlight = "#000000"
     background = "#097969"
     foreground = "#ffffff"
-    highlight = "#000000"
-    timeout = 3
 
 [urgency_normal]
+    timeout = 0
+    highlight = "#000000"
     background = "#097969"
     foreground = "#ffffff"
-    highlight = "#000000"
-    timeout = 0
 
 [urgency_critical]
+    timeout = 0
+    highlight = "#000000"
     background = "#880808"
     foreground = "#ffffff"
-    highlight = "#000000"
-    timeout = 0
