@@ -7,6 +7,8 @@ general {
     output_format = "i3bar"
 }
 
+order += "wireless _first_"
+order += "ethernet _first_"
 order += "cpu_usage"
 order += "memory"
 order += "volume master"
@@ -40,6 +42,11 @@ cpu_usage {
     min_width = "C ***%"
 }
 
+ethernet _first_ {
+    format_up = "E"
+    format_down = ""
+}
+
 memory {
     align = "left"
     format = "M %percentage_used"
@@ -64,4 +71,9 @@ volume master {
     format = "V %volume"
     format_muted = "M %volume"
     min_width = "V ***%"
+}
+
+wireless _first_ {
+    format_up = "W"
+    format_down = ""
 }
