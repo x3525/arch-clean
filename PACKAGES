@@ -11,12 +11,14 @@ cmake
 cronie
 cups
 curl
+debugedit
 dex
 dmenu
 dos2unix
 dosfstools
 dunst
 exfat-utils
+fakeroot
 feh
 ffmpeg
 firefox
