@@ -11,22 +11,22 @@ case $1 in
             ICON=volume-level-high
         fi
 
-        dunstify -u L -h string:x-dunst-stack-tag:volume -i "$ICON" "Volume" -h int:value:"$(pamixer --get-volume)"
+        notify-send -u low -h string:x-dunst-stack-tag:volume -i "$ICON" "Volume" -h int:value:"$(pamixer --get-volume)"
         ;;
     battery)
         case $2 in
             C)
-                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050-charging "Battery" "Battery is charging..."
+                notify-send -u low -h string:x-dunst-stack-tag:battery -i battery-050-charging "Battery" "Battery is charging..."
                 ;;
             D)
-                dunstify -u L -h string:x-dunst-stack-tag:battery -i battery-050 "Battery" "Battery is discharging..."
+                notify-send -u low -h string:x-dunst-stack-tag:battery -i battery-050 "Battery" "Battery is discharging..."
                 ;;
             F)
                 ;;
             N)
                 ;;
             U)
-                dunstify -u C -h string:x-dunst-stack-tag:battery -i battery-missing "Battery" "Battery status unknown"
+                notify-send -u critical -h string:x-dunst-stack-tag:battery -i battery-missing "Battery" "Battery status unknown"
                 ;;
         esac
         ;;
