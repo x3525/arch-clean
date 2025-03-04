@@ -10,7 +10,7 @@ configuration {
     icon-theme: "Papirus";
     max-history-size: 5;
     modi: "drun,power";
-    monitor: -5;
+    monitor: -1;
     sidebar-mode: false;
 
     entry {
