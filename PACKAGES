@@ -114,6 +114,7 @@ samba
 scrot
 smartmontools
 smbclient
+socat
 sof-firmware
 speech-dispatcher
 sqlmap
