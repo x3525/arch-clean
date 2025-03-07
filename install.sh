@@ -11,7 +11,7 @@ sudo pacman-key --init
 sudo pacman-key --populate
 
 # Install packages
-while ! cat -- PACKAGES | sudo pacman -Sy --noconfirm --needed -
+while ! cat -- PACKAGES | sudo pacman -Syu --noconfirm --needed -
 do
     echo "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r
