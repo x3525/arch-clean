@@ -45,8 +45,20 @@ sudo locale-gen
 # Build font information cache files
 fc-cache -fv
 
-# Block bluetooth
+# Enable the corresponding devices
+rfkill block wlan
+
+# Disable the corresponding devices
 rfkill block bluetooth
+
+# Enable and start the network synchronization service
+sudo timedatectl set-ntp true
+
+# Set the time zone
+sudo ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
+
+# Set the Hardware Clock from the System Clock
+sudo hwclock --systohc
 
 # Enable timers
 systemctl --user enable battery-notification.timer
