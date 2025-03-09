@@ -87,12 +87,16 @@ read -r
 
 # Install essential packages
 pacstrap -K /mnt base linux linux-firmware
+echo "Press enter to continue..."
+read -r
 
 # Generate an fstab file
 genfstab /mnt >> /mnt/etc/fstab
 
 # Change root into the new system (chroot)
 arch-chroot /mnt
+echo "Press enter to continue..."
+read -r
 
 # Verify the master keys
 pacman-key --init
