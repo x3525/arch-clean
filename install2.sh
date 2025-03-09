@@ -18,8 +18,12 @@ then
     exit 1
 fi
 
+# Erase all available signatures
+wipefs -a -f "$1"*
+read
+
 # Partiton the disks
-if ! sfdisk "$1" << EOF > /dev/null
+if ! sfdisk "$1" << EOF
 label: gpt
 
 start=        2048, size=     2097152, type=U
@@ -29,6 +33,7 @@ EOF
 then
     exit 1
 fi
+read
 
 # Format the partitions
 partitions=()
@@ -43,15 +48,22 @@ S=${partitions[1]}
 L=${partitions[2]}
 
 mkfs.fat -F 32 "$U"
+read
 mkswap "$S"
+read
 mkfs.ext4 "$L" -F
+read
 
 # Mount the file systems
 mount "$L" /mnt
+read
 mount "$U" /mnt/boot/efi --mkdir=0755
+read
 
 # Enable the swap partition
 swapon "$S"
+read
 
 # Update the mirror list
 reflector --country Germany --download-timeout 60 --latest 10 --protocol https --save /etc/pacman.d/mirrorlist
+read
