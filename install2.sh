@@ -28,7 +28,8 @@ fi
 
 # Erase all available signatures
 wipefs -a -f "$device"*
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 
 # Partiton the disks
 if ! sfdisk "$device" << EOF
@@ -41,7 +42,8 @@ EOF
 then
     exit 1
 fi
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 
 # Format the partitions
 partitions=()
@@ -56,22 +58,58 @@ S=${partitions[1]}
 L=${partitions[2]}
 
 mkfs.fat -F 32 "$U"
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 mkswap "$S"
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 mkfs.ext4 "$L" -F
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 
 # Mount the file systems
 mount "$L" /mnt
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 mount "$U" /mnt/boot/efi --mkdir=0755
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 
 # Enable the swap partition
 swapon "$S"
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
 
 # Update the mirror list
 reflector --country Germany --download-timeout 60 --latest 10 --protocol https --save /etc/pacman.d/mirrorlist
-read -r "Press enter to continue..."
+echo "Press enter to continue..."
+read -r
+
+# Install essential packages
+pacstrap -K /mnt base linux linux-firmware
+
+# Generate an fstab file
+genfstab /mnt >> /mnt/etc/fstab
+
+# Change root into the new system (chroot)
+arch-chroot /mnt
+
+# Verify the master keys
+pacman-key --init
+pacman-key --populate
+echo "Press enter to continue..."
+read -r
+
+# Install other packages
+while ! cat -- PACKAGES | pacman -Syu --noconfirm --needed -
+do
+    echo "Alas, Pacman failed. Tr[Y] agai[n]?"
+    read -r
+    case $REPLY in
+        [nN]*)
+            exit 1
+            ;;
+    esac
+done
+echo "Press enter to continue..."
+read -r
