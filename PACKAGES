@@ -114,6 +114,7 @@ rofi
 ruby
 samba
 scrot
+shellcheck
 smartmontools
 smbclient
 socat
