@@ -4,6 +4,14 @@ if [ $# -ne 1 ]
 then
     echo "Usage: $0 <device>"
     exit 1
+else
+    device=$1
+
+    if [ ! -b "$device" ]
+    then
+        echo "Not a block special!"
+        exit 1
+    fi
 fi
 
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" -ne 64 ]
@@ -19,11 +27,11 @@ then
 fi
 
 # Erase all available signatures
-wipefs -a -f "$1"*
-read
+wipefs -a -f "$device"*
+read -r
 
 # Partiton the disks
-if ! sfdisk "$1" << EOF
+if ! sfdisk "$device" << EOF
 label: gpt
 
 start=        2048, size=     2097152, type=U
@@ -33,7 +41,7 @@ EOF
 then
     exit 1
 fi
-read
+read -r
 
 # Format the partitions
 partitions=()
@@ -48,22 +56,22 @@ S=${partitions[1]}
 L=${partitions[2]}
 
 mkfs.fat -F 32 "$U"
-read
+read -r
 mkswap "$S"
-read
+read -r
 mkfs.ext4 "$L" -F
-read
+read -r
 
 # Mount the file systems
 mount "$L" /mnt
-read
+read -r
 mount "$U" /mnt/boot/efi --mkdir=0755
-read
+read -r
 
 # Enable the swap partition
 swapon "$S"
-read
+read -r
 
 # Update the mirror list
 reflector --country Germany --download-timeout 60 --latest 10 --protocol https --save /etc/pacman.d/mirrorlist
-read
+read -r
