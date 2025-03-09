@@ -28,7 +28,7 @@ fi
 
 # Erase all available signatures
 wipefs -a -f "$device"*
-read -r
+read -r "Press enter to continue..."
 
 # Partiton the disks
 if ! sfdisk "$device" << EOF
@@ -41,7 +41,7 @@ EOF
 then
     exit 1
 fi
-read -r
+read -r "Press enter to continue..."
 
 # Format the partitions
 partitions=()
@@ -56,22 +56,22 @@ S=${partitions[1]}
 L=${partitions[2]}
 
 mkfs.fat -F 32 "$U"
-read -r
+read -r "Press enter to continue..."
 mkswap "$S"
-read -r
+read -r "Press enter to continue..."
 mkfs.ext4 "$L" -F
-read -r
+read -r "Press enter to continue..."
 
 # Mount the file systems
 mount "$L" /mnt
-read -r
+read -r "Press enter to continue..."
 mount "$U" /mnt/boot/efi --mkdir=0755
-read -r
+read -r "Press enter to continue..."
 
 # Enable the swap partition
 swapon "$S"
-read -r
+read -r "Press enter to continue..."
 
 # Update the mirror list
 reflector --country Germany --download-timeout 60 --latest 10 --protocol https --save /etc/pacman.d/mirrorlist
-read -r
+read -r "Press enter to continue..."
