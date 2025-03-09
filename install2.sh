@@ -38,13 +38,13 @@ do
     partitions+=("$partition")
 done
 
-U=${partitions[1]}
-S=${partitions[2]}
-L=${partitions[3]}
+U=${partitions[0]}
+S=${partitions[1]}
+L=${partitions[2]}
 
 mkfs.fat -F 32 "$U"
 mkswap "$S"
-mkfs.ext4 "$L"
+mkfs.ext4 "$L" -F
 
 # Mount the file systems
 mount "$L" /mnt
