@@ -10,42 +10,34 @@ if [ $# -ne 2 ]
 then
     echo "Usage: $0 <device> <user>"
     exit 1
-else
-    device=$1
+fi
 
-    if [ ! -b "$device" ]
-    then
-        echo "Device is not a block special!"
-        exit 1
-    else
-        user=$2
+if [ ! -b "$1" ]
+then
+    echo "Device is not a block special!"
+    exit 1
+fi
 
-        echo -n "Enter password for root:"
-        read -r -s password_root
-        echo
-        echo -n "Enter password for root again:"
-        read -r -s password_root_again
-        echo
+read -r -s -p "Enter root password:" password_root
+echo
+read -r -s -p "Enter root password (again):"
+echo
 
-        if [ "$password_root" != "$password_root_again" ]
-        then
-            echo "Passwords do not match!"
-            exit 1
-        else
-            echo -n "Enter password for $user:"
-            read -r -s password_user
-            echo
-            echo -n "Enter password for $user again:"
-            read -r -s password_user_again
-            echo
+if [ -z "$REPLY" ] || [ "$password_root" != "$REPLY" ]
+then
+    echo "Passwords do not match!"
+    exit 1
+fi
 
-            if [ "$password_user" != "$password_user_again" ]
-            then
-                echo "Passwords do not match!"
-                exit 1
-            fi
-        fi
-    fi
+read -r -s -p "Enter user password:" password_user
+echo
+read -r -s -p "Enter user password (again):"
+echo
+
+if [ -z "$REPLY" ] || [ "$password_user" != "$REPLY" ]
+then
+    echo "Passwords do not match!"
+    exit 1
 fi
 
 if ! ping -q -c 1 -w 2 "$(ip route | grep "default" | cut -d " " -f 3)" >& /dev/null
@@ -55,10 +47,10 @@ then
 fi
 
 # Erase all available signatures
-wipefs -f -a "$device"*
+wipefs --force --all "$1"*
 
 # Partiton the disks
-sfdisk "$device" << EOF
+sfdisk "$1" << EOF
 label: gpt
 
 start=        2048, size=     2097152, type=U
@@ -69,25 +61,21 @@ EOF
 # Format the partitions
 partitions=()
 
-for partition in $(sfdisk --dump "$device" | grep "start" | cut -d ":" -f 1)
+for partition in $(sfdisk --dump "$1" | grep "start" | cut -d ":" -f 1)
 do
     partitions+=("$partition")
 done
 
-uefi=${partitions[0]}
-swap=${partitions[1]}
-ext4=${partitions[2]}
-
-mkfs.fat -F 32 "$uefi"
-mkswap "$swap"
-mkfs.ext4 "$ext4" -F
+mkfs.fat -F 32 "${partitions[0]}"
+mkswap "${partitions[1]}"
+mkfs.ext4 "${partitions[2]}" -F
 
 # Mount the file systems
-mount "$ext4" /mnt
-mount "$uefi" /mnt/boot/efi --mkdir=0755
+mount "${partitions[2]}" /mnt
+mount "${partitions[0]}" /mnt/boot/efi --mkdir=0755
 
 # Enable the swap partition
-swapon "$swap"
+swapon "${partitions[1]}"
 
 # Install packages
 while ! pacstrap -K /mnt - < PACKAGES
@@ -96,8 +84,8 @@ do
     read -r
     case $REPLY in
         [nN]*)
-            umount --recursive /mnt
-            swapoff "$swap"
+            umount -R /mnt
+            swapoff "${partitions[1]}"
             exit 1
             ;;
     esac
@@ -107,11 +95,11 @@ done
 genfstab /mnt >> /mnt/etc/fstab
 
 # Add a new user
-useradd --root /mnt -m -G wheel "$user"
+useradd --root /mnt -m -G wheel "$2"
 
 # Change passwords
 echo "$password_root" | passwd --root /mnt --stdin
-echo "$password_user" | passwd --root /mnt --stdin "$user"
+echo "$password_user" | passwd --root /mnt --stdin "$2"
 
 # Change root into the new system
 cp install_chroot.sh /mnt
