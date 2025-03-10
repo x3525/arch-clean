@@ -21,7 +21,7 @@ fi
 printf 'Enter root password 1:'; set +a; read -r -s r1; set -a; echo
 printf 'Enter root password 2:'; set +a; read -r -s r2; set -a; echo
 
-if [ -z "$r1" ] || [ "$r1" != "$r2" ]
+if [ "$r1" != "$r2" ]
 then
     echo "Passwords do not match!"
     exit 1
@@ -30,9 +30,15 @@ fi
 printf 'Enter user password 1:'; set +a; read -r -s u1; set -a; echo
 printf 'Enter user password 2:'; set +a; read -r -s u2; set -a; echo
 
-if [ -z "$u1" ] || [ "$u1" != "$u2" ]
+if [ "$u1" != "$u2" ]
 then
     echo "Passwords do not match!"
+    exit 1
+fi
+
+if [ -z "$r1" ] || [ -z "$u1" ]
+then
+    echo "Empty passwords are not allowed!"
     exit 1
 fi
 
@@ -70,6 +76,14 @@ mkswap    "${partitions[1]}"
 mount     "${partitions[2]}" /mnt
 mount     "${partitions[0]}" /mnt/boot/efi --mkdir=0755
 swapon    "${partitions[1]}"
+
+
+#lspci -k -d ::03xx | grep -i "Intel"
+#lspci -k -d ::03xx | grep -i "NVIDIA"
+#lspci -k -d ::03xx | grep -i "VMware"
+#lscpu | grep -i "Model name:" | grep -i "AMD"
+#lscpu | grep -i "Model name:" | grep -i "Intel"
+
 
 # Install packages
 while ! pacstrap -K /mnt - < PACKAGES
