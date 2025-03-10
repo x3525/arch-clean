@@ -26,89 +26,70 @@ then
     exit 1
 fi
 
-# Erase all available signatures
-wipefs -f -a "$device"*
-echo "wipefs: Done..."
-echo "Press enter to continue..."
-read -r
 
-# Partiton the disks
-if ! sfdisk "$device" << EOF
+installation_pre()
+{
+    # Erase all available signatures
+    wipefs -f -a "$device"*
+
+    # Partiton the disks
+    if ! sfdisk "$device" << EOF
 label: gpt
 
 start=        2048, size=     2097152, type=U
 start=     2099200, size=    33554432, type=S
 start=    35653632,                    type=L
 EOF
-then
-    exit 1
-fi
-echo "sfdisk: Done..."
-echo "Press enter to continue..."
-read -r
+    then
+        exit 1
+    fi
 
-# Format the partitions
-partitions=()
+    # Format the partitions
+    partitions=()
 
-for partition in $(sfdisk --dump "$device" | grep "start" | cut -d ":" -f 1)
-do
-    partitions+=("$partition")
-done
+    for partition in $(sfdisk --dump "$device" | grep "start" | cut -d ":" -f 1)
+    do
+        partitions+=("$partition")
+    done
 
-uefi=${partitions[0]}
-swap=${partitions[1]}
-ext4=${partitions[2]}
+    uefi=${partitions[0]}
+    swap=${partitions[1]}
+    ext4=${partitions[2]}
 
-mkfs.fat -F 32 "$uefi"
-echo "mkfs.fat: Done..."
-echo "Press enter to continue..."
-read -r
-mkswap "$swap"
-echo "mkswap: Done..."
-echo "Press enter to continue..."
-read -r
-mkfs.ext4 "$ext4" -F
-echo "mkfs.ext4: Done..."
-echo "Press enter to continue..."
-read -r
+    mkfs.fat -F 32 "$uefi"
+    mkswap "$swap"
+    mkfs.ext4 "$ext4" -F
 
-# Mount the file systems
-mount "$ext4" /mnt
-echo "mount ext4: Done..."
-echo "Press enter to continue..."
-read -r
-mount "$uefi" /mnt/boot/efi --mkdir=0755
-echo "mount uefi: Done..."
-echo "Press enter to continue..."
-read -r
+    # Mount the file systems
+    mount "$ext4" /mnt
+    mount "$uefi" /mnt/boot/efi --mkdir=0755
 
-# Enable the swap partition
-swapon "$swap"
-echo "swapon swap: Done..."
-echo "Press enter to continue..."
-read -r
+    # Enable the swap partition
+    swapon "$swap"
+}
 
-# Install packages
-while ! pacstrap -K /mnt - < PACKAGES
-do
-    echo "Alas, Pacman failed. Tr[Y] agai[n]?"
-    read -r
-    case $REPLY in
-        [nN]*)
-            exit 1
-            ;;
-    esac
-done
-echo "pacstrap: Done..."
-echo "Press enter to continue..."
-read -r
 
-# Generate an fstab file
-genfstab /mnt >> /mnt/etc/fstab
-echo "genfstab: Done..."
-echo "Press enter to continue..."
-read -r
+installation() {
+    # Install packages
+    while ! pacstrap -q -K /mnt - < PACKAGES
+    do
+        echo "Alas, Pacman failed. Tr[Y] agai[n]?"
+        read -r
+        case $REPLY in
+            [nN]*)
+                exit 1
+                ;;
+        esac
+    done
 
-# Change root into the new system
-cp install_chroot.sh /mnt
-arch-chroot /mnt "bash install_chroot.sh"
+    # Generate an fstab file
+    genfstab /mnt >> /mnt/etc/fstab
+
+    # Change root into the new system
+    cp install_chroot.sh /mnt
+    arch-chroot /mnt "bash install_chroot.sh"
+}
+
+
+installation_pre
+installation
