@@ -95,15 +95,10 @@ echo "$password_root" | passwd --root /mnt --stdin
 echo "$password_user" | passwd --root /mnt --stdin "$2"
 
 # sudoers
-cat << EOF > /mnt/etc/sudoers.d/wheel
-%wheel ALL=(ALL:ALL) ALL
-EOF
-
+echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
 chown root:root /mnt/etc/sudoers.d/wheel
 chmod 0440 /mnt/etc/sudoers.d/wheel
 
-# Install bootloader to the disk
-grub-install --target=x86_64-efi --efi-directory=/mnt/boot/efi
-
-# Generate the GRUB configuration file
-grub-mkconfig -o /mnt/boot/grub/grub.cfg
+# GRUB
+arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
