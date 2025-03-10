@@ -66,15 +66,13 @@ do
     partitions+=("$partition")
 done
 
+mkfs.ext4 "${partitions[2]}" -F
 mkfs.fat -F 32 "${partitions[0]}"
 mkswap "${partitions[1]}"
-mkfs.ext4 "${partitions[2]}" -F
 
 # Mount the file systems
 mount "${partitions[2]}" /mnt
 mount "${partitions[0]}" /mnt/boot/efi --mkdir=0755
-
-# Enable the swap partition
 swapon "${partitions[1]}"
 
 # Install packages
@@ -84,8 +82,8 @@ do
     read -r
     case $REPLY in
         [nN]*)
-            umount -R /mnt
-            swapoff "${partitions[1]}"
+            umount --recursive /mnt
+            swapoff -a
             exit 1
             ;;
     esac
@@ -103,4 +101,4 @@ echo "$password_user" | passwd --root /mnt --stdin "$2"
 
 # Change root into the new system
 cp install_chroot.sh /mnt
-arch-chroot /mnt "bash install_chroot.sh"
+arch-chroot -u "$2" /mnt bash install_chroot.sh
