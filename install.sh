@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]
+if [ $# -ne 2 ]
 then
-    echo "Usage: $0 <device>"
+    echo "Usage: $0 <device> <user>"
     exit 1
 else
     device=$1
@@ -11,6 +11,30 @@ else
     then
         echo "Device is not a block special!"
         exit 1
+    else
+        user=$2
+
+        echo -n "Enter password for root: "
+        read -r -s password_root
+        echo -n "Enter password again: "
+        read -r -s password_root_again
+
+        if [ "$password_root" -ne "$password_root_again" ]
+        then
+            echo "Passwords do not match!"
+            exit 1
+        else
+            echo -n "Enter password for $user: "
+            read -r -s password_user
+            echo -n "Enter password again: "
+            read -r -s password_user_again
+
+            if [ "$password_user" -ne "$password_user_again" ]
+            then
+                echo "Passwords do not match!"
+                exit 1
+            fi
+        fi
     fi
 fi
 
@@ -65,7 +89,7 @@ mount "$uefi" /mnt/boot/efi --mkdir=0755
 swapon "$swap"
 
 # Install packages
-while ! pacstrap -q -K /mnt - < PACKAGES
+while ! pacstrap -K /mnt - < PACKAGES
 do
     echo "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r
@@ -80,6 +104,13 @@ done
 
 # Generate an fstab file
 genfstab /mnt >> /mnt/etc/fstab
+
+# Add a new user
+useradd --root /mnt -m -G wheel "$user"
+
+# Change passwords
+echo "$password_root" | passwd --root /mnt --stdin
+echo "$password_root" | passwd --root /mnt --stdin "$user"
 
 # Change root into the new system
 cp install_chroot.sh /mnt
