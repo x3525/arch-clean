@@ -18,19 +18,19 @@ then
     exit 1
 fi
 
-read -r -p "Enter root password:" password_root
-read -r -p "Enter root password (again):"
+printf 'Enter root password 1:'; set +a; stty -echo; read -rs r1; set -a; stty echo; echo
+printf 'Enter root password 2:'; set +a; stty -echo; read -rs r2; set -a; stty echo; echo
 
-if [ -z "$REPLY" ] || [ "$password_root" != "$REPLY" ]
+if [ -z "$r1" ] || [ "$r1" != "$r2" ]
 then
     echo "Passwords do not match!"
     exit 1
 fi
 
-read -r -p "Enter user password:" password_user
-read -r -p "Enter user password (again):"
+printf 'Enter user password 1:'; set +a; stty -echo; read -rs u1; set -a; stty echo; echo
+printf 'Enter user password 2:'; set +a; stty -echo; read -rs u2; set -a; stty echo; echo
 
-if [ -z "$REPLY" ] || [ "$password_user" != "$REPLY" ]
+if [ -z "$u1" ] || [ "$u1" != "$u2" ]
 then
     echo "Passwords do not match!"
     exit 1
@@ -45,7 +45,7 @@ fi
 # Erase all available signatures
 wipefs --force --all "$1"*
 
-# Partiton the disks
+# Disk partiton
 sfdisk "$1" << EOF
 label: gpt
 
@@ -57,7 +57,7 @@ EOF
 # Format the partitions
 partitions=()
 
-for partition in $(sfdisk --dump "$1" | grep "start" | cut -d ":" -f 1)
+for partition in $(sfdisk --dump "$1" | grep "start" | cut -d ":" -f 1 | tr -d " ")
 do
     partitions+=("$partition")
 done
@@ -74,7 +74,8 @@ swapon    "${partitions[1]}"
 # Install packages
 while ! pacstrap -K /mnt - < PACKAGES
 do
-    read -r -p "Alas, Pacman failed. Tr[Y] agai[n]?"
+    echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
+    read -r
     case $REPLY in
         [nN]*)
             umount --recursive /mnt
@@ -91,13 +92,13 @@ genfstab /mnt >> /mnt/etc/fstab
 useradd --root /mnt -m -G wheel "$2"
 
 # Change passwords
-echo "$password_root" | passwd --root /mnt --stdin
-echo "$password_user" | passwd --root /mnt --stdin "$2"
+printf '%s' "$r1" | passwd --root /mnt --stdin
+printf '%s' "$u1" | passwd --root /mnt --stdin "$2"
 
 # sudoers
 echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
-chown root:root /mnt/etc/sudoers.d/wheel
-chmod 0440 /mnt/etc/sudoers.d/wheel
+chown --recursive root:root /mnt/etc/sudoers.d/*
+chmod --recursive 0440 /mnt/etc/sudoers.d/*
 
 # GRUB
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
