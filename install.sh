@@ -18,8 +18,8 @@ then
     exit 1
 fi
 
-printf 'Enter root password 1:'; set +a; stty -echo; read -rs r1; set -a; stty echo; echo
-printf 'Enter root password 2:'; set +a; stty -echo; read -rs r2; set -a; stty echo; echo
+printf 'Enter root password 1:'; set +a; read -r -s r1; set -a; echo
+printf 'Enter root password 2:'; set +a; read -r -s r2; set -a; echo
 
 if [ -z "$r1" ] || [ "$r1" != "$r2" ]
 then
@@ -27,8 +27,8 @@ then
     exit 1
 fi
 
-printf 'Enter user password 1:'; set +a; stty -echo; read -rs u1; set -a; stty echo; echo
-printf 'Enter user password 2:'; set +a; stty -echo; read -rs u2; set -a; stty echo; echo
+printf 'Enter user password 1:'; set +a; read -r -s u1; set -a; echo
+printf 'Enter user password 2:'; set +a; read -r -s u2; set -a; echo
 
 if [ -z "$u1" ] || [ "$u1" != "$u2" ]
 then
