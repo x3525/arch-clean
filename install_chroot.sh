@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ "$(id -u)" -eq 0 ]
+then
+    echo "You are root!"
+    exit 1
+fi
+
+# Verify the master keys
+sudo pacman-key --init
+sudo pacman-key --populate
+
 # Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
@@ -13,10 +23,6 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
 # Copy files !!!
 cp -r home/. ~
 sudo cp -r \\/. / --no-preserve=ownership
-
-# SUDOERS PERMISSIONS
-sudo chmod 0750 /etc/sudoers.d
-sudo chmod 0640 /etc/sudoers.d/*
 
 # Change default shell
 sudo chsh "$USER" --shell "$(which zsh)"
