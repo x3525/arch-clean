@@ -111,7 +111,7 @@ useradd --root /mnt -m -G wheel "$user"
 
 # Change passwords
 echo "$password_root" | passwd --root /mnt --stdin
-echo "$password_root" | passwd --root /mnt --stdin "$user"
+echo "$password_user" | passwd --root /mnt --stdin "$user"
 
 # Change root into the new system
 cp install_chroot.sh /mnt
