@@ -18,10 +18,8 @@ then
     exit 1
 fi
 
-read -r -s -p "Enter root password:" password_root
-echo
-read -r -s -p "Enter root password (again):"
-echo
+read -r -p "Enter root password:" password_root
+read -r -p "Enter root password (again):"
 
 if [ -z "$REPLY" ] || [ "$password_root" != "$REPLY" ]
 then
@@ -29,10 +27,8 @@ then
     exit 1
 fi
 
-read -r -s -p "Enter user password:" password_user
-echo
-read -r -s -p "Enter user password (again):"
-echo
+read -r -p "Enter user password:" password_user
+read -r -p "Enter user password (again):"
 
 if [ -z "$REPLY" ] || [ "$password_user" != "$REPLY" ]
 then
@@ -67,19 +63,18 @@ do
 done
 
 mkfs.ext4 "${partitions[2]}" -F
-mkfs.fat -F 32 "${partitions[0]}"
-mkswap "${partitions[1]}"
+mkfs.fat  "${partitions[0]}" -F 32
+mkswap    "${partitions[1]}"
 
 # Mount the file systems
-mount "${partitions[2]}" /mnt
-mount "${partitions[0]}" /mnt/boot/efi --mkdir=0755
-swapon "${partitions[1]}"
+mount     "${partitions[2]}" /mnt
+mount     "${partitions[0]}" /mnt/boot/efi --mkdir=0755
+swapon    "${partitions[1]}"
 
 # Install packages
 while ! pacstrap -K /mnt - < PACKAGES
 do
-    echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
-    read -r
+    read -r -p "Alas, Pacman failed. Tr[Y] agai[n]?"
     case $REPLY in
         [nN]*)
             umount --recursive /mnt
@@ -92,13 +87,23 @@ done
 # Generate an fstab file
 genfstab /mnt >> /mnt/etc/fstab
 
-# Add a new user
+# Add user
 useradd --root /mnt -m -G wheel "$2"
 
 # Change passwords
 echo "$password_root" | passwd --root /mnt --stdin
 echo "$password_user" | passwd --root /mnt --stdin "$2"
 
-# Change root into the new system
-cp install_chroot.sh /mnt
-arch-chroot -u "$2" /mnt bash install_chroot.sh
+# sudoers
+cat << EOF > /mnt/etc/sudoers.d/wheel
+%wheel ALL=(ALL:ALL) ALL
+EOF
+
+chown root:root /mnt/etc/sudoers.d/wheel
+chmod 0440 /mnt/etc/sudoers.d/wheel
+
+# Install bootloader to the disk
+grub-install --target=x86_64-efi --efi-directory=/mnt/boot/efi
+
+# Generate the GRUB configuration file
+grub-mkconfig -o /mnt/boot/grub/grub.cfg
