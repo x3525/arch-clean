@@ -18,28 +18,25 @@ then
     exit 1
 fi
 
-if ! echo "$2" | grep -qP '^[a-z][a-z0-9]{,31}$'
+if ! echo "$2" | grep -qP '^[a-z][a-z0-9]{,15}$'
 then
     echo "Given name is invalid!"
     exit 1
 fi
 
-set +a
+printf 'Enter password:'; set +a; read -r -s PASS_USER; set -a; echo
+printf 'Enter password:'; set +a; read -r -s USER_PASS; set -a; echo
 
-printf 'Enter password (root):'; read -r -s PASS_ROOT; echo
-printf 'Enter password (root):'
-
-if [ "$PASS_ROOT" != "$(read -r -s)" ]
+if [ "$PASS_USER" != "$USER_PASS" ]
 then
-    echo
     echo "Passwords do not match!"
     exit 1
 fi
 
-printf 'Enter password:'; read -r -s PASS_USER; echo
-printf 'Enter password:';
+printf 'Enter password (root):'; set +a; read -r -s PASS_ROOT; set -a; echo
+printf 'Enter password (root):'; set +a; read -r -s ROOT_PASS; set -a; echo
 
-if [ "$PASS_USER" != "$(read -r -s)" ]
+if [ "$PASS_ROOT" != "$ROOT_PASS" ]
 then
     echo "Passwords do not match!"
     exit 1
