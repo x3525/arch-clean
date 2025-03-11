@@ -18,7 +18,7 @@ then
     exit 1
 fi
 
-if ! echo "$2" | grep -qP '^[a-z][a-z0-9]{,15}$'
+if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$2"
 then
     echo "Given name is invalid!"
     exit 1
@@ -104,7 +104,7 @@ swapon    "${partitions[1]}"
 
 
 
-# Install packages
+# Determine additional packages to install
 packages=()
 
 if grep -q snd_sof /proc/modules
@@ -118,6 +118,17 @@ then
     packages+=(xf86-video-vmware)
 fi
 
+PCI_DEVICES=$(lspci -k -d ::03xx)
+
+if grep -qi Intel <<< "$PCI_DEVICES"
+then
+    packages+=(intel-media-driver)
+    packages+=(libva-intel-driver)
+    packages+=(mesa)
+    packages+=(vulkan-intel)
+fi
+
+# Install packages
 while ! pacstrap -K /mnt - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
