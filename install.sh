@@ -92,7 +92,7 @@ do
     read -r
     case $REPLY in
         [nN]*)
-            umount --recursive /mnt
+            umount -q -R /mnt
             swapoff -a
             exit 1
             ;;
@@ -111,8 +111,8 @@ printf '%s' "$u1" | passwd --root /mnt --stdin "$2"
 
 # sudoers
 echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
-chown --recursive root:root /mnt/etc/sudoers.d/*
-chmod --recursive 0440 /mnt/etc/sudoers.d/*
+chown -R root:root /mnt/etc/sudoers.d/*
+chmod -R 0440 /mnt/etc/sudoers.d/*
 
 # GRUB
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
