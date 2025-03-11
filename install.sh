@@ -55,9 +55,9 @@ wipefs --force --all "$1"*
 sfdisk "$1" << EOF
 label: gpt
 
-start=        2048, size=     2097152, type=U
-start=     2099200, size=    33554432, type=S
-start=    35653632,                    type=L
+start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
+start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
+start=    35653632,                    type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
 EOF
 
 # Format the partitions
