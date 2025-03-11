@@ -74,7 +74,7 @@ mkswap    "${partitions[1]}"
 
 # Mount the file systems
 mount     "${partitions[2]}" /mnt
-mount     "${partitions[0]}" /mnt/boot/efi --mkdir=0755
+mount     "${partitions[0]}" /mnt/boot/efi -m
 swapon    "${partitions[1]}"
 
 
