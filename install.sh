@@ -100,7 +100,7 @@ do
 done
 
 # Generate an fstab file
-genfstab /mnt > /mnt/etc/fstab
+genfstab -U /mnt > /mnt/etc/fstab
 
 # Add user
 useradd --root /mnt -m -G wheel "$2"
