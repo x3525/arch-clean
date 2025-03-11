@@ -54,12 +54,23 @@ then
     exit 1
 fi
 
+
+unmount()
+{
+    umount -q -R /mnt
+    swapoff -a
+}
+
+
+unmount
+
 # Erase all available signatures
 wipefs --force --all "$1"*
 
 # Disk partiton
-sfdisk "$1" << EOF
+sfdisk "$1" <<- EOF
 label: gpt
+unit: sectors
 
 start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
 start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
@@ -84,22 +95,35 @@ mount     "${partitions[0]}" /mnt/boot/efi -m
 swapon    "${partitions[1]}"
 
 
-#lspci -k -d ::03xx | grep -i Intel
-#lspci -k -d ::03xx | grep -i NVIDIA
-#lspci -k -d ::03xx | grep -i VMware
+
 #lscpu | grep -i 'Model name:' | grep -i AMD
 #lscpu | grep -i 'Model name:' | grep -i Intel
+#lspci -k -d ::03xx | grep -i AMD
+#lspci -k -d ::03xx | grep -i Intel
+#lspci -k -d ::03xx | grep -i NVIDIA
+
 
 
 # Install packages
+packages=()
+
+if grep -q snd_sof /proc/modules
+then
+    packages+=(sof-firmware)
+fi
+
+if [ "$(systemd-detect-virt)" != "none" ]
+then
+    packages+=(mesa)
+    packages+=(xf86-video-vmware)
+fi
+
 while ! pacstrap -K /mnt - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r
     case $REPLY in
         [nN]*)
-            umount -q -R /mnt
-            swapoff -a
             exit 1
             ;;
     esac
