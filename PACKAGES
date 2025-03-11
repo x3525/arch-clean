@@ -1,6 +1,7 @@
 7zip
 adwaita-cursors
 alacritty
+amd-ucode
 arandr
 ascii
 autorandr
@@ -46,6 +47,7 @@ i3lock
 i3status
 inetutils
 intel-media-driver
+intel-ucode
 iwd
 john
 jq
