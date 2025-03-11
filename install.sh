@@ -8,7 +8,7 @@ fi
 
 if [ $# -ne 2 ]
 then
-    echo "Usage: $0 <device> <user>"
+    echo "Usage: $0 DEVICE USER"
     exit 1
 fi
 
@@ -18,31 +18,40 @@ then
     exit 1
 fi
 
-printf 'Enter root password 1:'; set +a; read -r -s r1; set -a; echo
-printf 'Enter root password 2:'; set +a; read -r -s r2; set -a; echo
+if ! echo "$2" | grep -qP '^[a-z][a-z0-9]{,31}$'
+then
+    echo "Given name is invalid!"
+    exit 1
+fi
 
-if [ "$r1" != "$r2" ]
+set +a
+
+printf 'Enter password (root):'; read -r -s PASS_ROOT; echo
+printf 'Enter password (root):'
+
+if [ "$PASS_ROOT" != "$(read -r -s)" ]
+then
+    echo
+    echo "Passwords do not match!"
+    exit 1
+fi
+
+printf 'Enter password:'; read -r -s PASS_USER; echo
+printf 'Enter password:';
+
+if [ "$PASS_USER" != "$(read -r -s)" ]
 then
     echo "Passwords do not match!"
     exit 1
 fi
 
-printf 'Enter user password 1:'; set +a; read -r -s u1; set -a; echo
-printf 'Enter user password 2:'; set +a; read -r -s u2; set -a; echo
-
-if [ "$u1" != "$u2" ]
-then
-    echo "Passwords do not match!"
-    exit 1
-fi
-
-if [ -z "$r1" ] || [ -z "$u1" ]
+if [ -z "$PASS_ROOT" ] || [ -z "$PASS_USER" ]
 then
     echo "Empty passwords are not allowed!"
     exit 1
 fi
 
-if ! ping -q -c 1 -w 2 "$(ip route | grep "default" | cut -d " " -f 3)" >& /dev/null
+if ! ping -q -c 1 -w 2 "$(ip route | grep default | cut -d ' ' -f 3)" >& /dev/null
 then
     echo "Network is unreachable!"
     exit 1
@@ -63,7 +72,7 @@ EOF
 # Format the partitions
 partitions=()
 
-for partition in $(sfdisk --dump "$1" | grep "start" | cut -d ":" -f 1 | tr -d " ")
+for partition in $(sfdisk --dump "$1" | grep start | cut -d ':' -f 1 | tr -d ' ')
 do
     partitions+=("$partition")
 done
@@ -78,11 +87,11 @@ mount     "${partitions[0]}" /mnt/boot/efi -m
 swapon    "${partitions[1]}"
 
 
-#lspci -k -d ::03xx | grep -i "Intel"
-#lspci -k -d ::03xx | grep -i "NVIDIA"
-#lspci -k -d ::03xx | grep -i "VMware"
-#lscpu | grep -i "Model name:" | grep -i "AMD"
-#lscpu | grep -i "Model name:" | grep -i "Intel"
+#lspci -k -d ::03xx | grep -i Intel
+#lspci -k -d ::03xx | grep -i NVIDIA
+#lspci -k -d ::03xx | grep -i VMware
+#lscpu | grep -i 'Model name:' | grep -i AMD
+#lscpu | grep -i 'Model name:' | grep -i Intel
 
 
 # Install packages
@@ -106,8 +115,8 @@ genfstab -U /mnt > /mnt/etc/fstab
 useradd --root /mnt -m -G wheel "$2"
 
 # Change passwords
-printf '%s' "$r1" | passwd --root /mnt --stdin
-printf '%s' "$u1" | passwd --root /mnt --stdin "$2"
+printf '%s' "$PASS_ROOT" | passwd --root /mnt --stdin
+printf '%s' "$PASS_USER" | passwd --root /mnt --stdin "$2"
 
 # sudoers
 echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
