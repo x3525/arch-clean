@@ -21,7 +21,7 @@ set mouse=
 set nobackup
 set nocompatible
 set noshowmatch
-set scrolloff=999
+set scrolloff=0
 set shiftwidth=4
 set showmode
 set smartcase
