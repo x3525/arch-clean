@@ -94,16 +94,6 @@ mount     "${partitions[2]}" /mnt
 mount     "${partitions[0]}" /mnt/boot/efi -m
 swapon    "${partitions[1]}"
 
-
-
-#lscpu | grep -i 'Model name:' | grep -i AMD
-#lscpu | grep -i 'Model name:' | grep -i Intel
-#lspci -k -d ::03xx | grep -i AMD
-#lspci -k -d ::03xx | grep -i Intel
-#lspci -k -d ::03xx | grep -i NVIDIA
-
-
-
 # Determine additional packages to install
 packages=()
 
@@ -116,32 +106,27 @@ if [ "$(systemd-detect-virt)" != "none" ]
 then
     packages+=(mesa)
     packages+=(xf86-video-vmware)
-fi
-
-GRAPHICS_DEVICES=$(lspci -k -d ::03xx)
-
-if echo "$GRAPHICS_DEVICES" | grep -qi AMD
-then
-    packages+=(libva-mesa-driver)
-    packages+=(mesa)
-    packages+=(vulkan-radeon)
-    packages+=(xf86-video-amdgpu)
-    packages+=(xf86-video-ati)
-fi
-
-if echo "$GRAPHICS_DEVICES" | grep -qi Intel
-then
-    packages+=(intel-media-driver)
-    packages+=(libva-intel-driver)
-    packages+=(mesa)
-    packages+=(vulkan-intel)
-fi
-
-if echo "$GRAPHICS_DEVICES" | grep -qi NVIDIA
-then
-    packages+=(libva-mesa-driver)
-    packages+=(mesa)
-    packages+=(xf86-video-nouveau)
+else
+    case "$(lspci -d ::03xx)" in
+        *[aA][mM][dD]*)
+            packages+=(libva-mesa-driver)
+            packages+=(mesa)
+            packages+=(vulkan-radeon)
+            packages+=(xf86-video-amdgpu)
+            packages+=(xf86-video-ati)
+            ;;&
+        *[iI][nN][tT][eE][lL]*)
+            packages+=(intel-media-driver)
+            packages+=(libva-intel-driver)
+            packages+=(mesa)
+            packages+=(vulkan-intel)
+            ;;&
+        *[nN][vV][iI][dD][iI][aA]*)
+            packages+=(libva-mesa-driver)
+            packages+=(mesa)
+            packages+=(xf86-video-nouveau)
+            ;;&
+    esac
 fi
 
 # Install packages
