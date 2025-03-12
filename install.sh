@@ -1,12 +1,12 @@
 #!/bin/bash
 
-
 unmount()
 {
-    swapoff -a
-    umount -q -R /mnt
+    {
+        swapoff -a
+        umount -q -R /mnt
+    } &> /dev/null
 }
-
 
 trap unmount EXIT
 
@@ -18,17 +18,20 @@ fi
 
 if [ $# -ne 2 ]
 then
-    echo "Usage: $0 DEVICE USER"
+    echo "Usage: $0 BLOCK LOGIN"
     exit 1
 fi
 
-if [ ! -b "$1" ]
+BLOCK=$1
+LOGIN=$2
+
+if [ ! -b "$BLOCK" ]
 then
     echo "Device is not a block special!"
     exit 1
 fi
 
-if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$2"
+if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$LOGIN"
 then
     echo "Given name is invalid!"
     exit 1
@@ -58,7 +61,7 @@ then
     exit 1
 fi
 
-if ! ping -q -c 1 -w 2 "$(ip route | grep default | cut -d ' ' -f 3)" >& /dev/null
+if ! ping -q -c 1 -w 2 "$(ip route | grep default | cut -d ' ' -f 3)" &> /dev/null
 then
     echo "Network is unreachable!"
     exit 1
@@ -176,7 +179,7 @@ ln -sf /usr/share/zoneinfo/Europe/Istanbul /mnt/etc/localtime
 hwclock --systohc --adjfile=/mnt/etc/adjtime
 
 # User management
-if ! id "$2" >& /dev/null
+if ! id "$2" &> /dev/null
 then
     useradd -R /mnt -m -G wheel -s "$(which zsh)" "$2"
 fi
