@@ -174,6 +174,23 @@ ln -sf /usr/share/zoneinfo/Europe/Istanbul /mnt/etc/localtime
 # Set the Hardware Clock from the System Clock
 hwclock --systohc --adjfile=/mnt/etc/adjtime
 
+# locale.conf
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+echo "LC_TIME=tr_TR.UTF-8" >> /etc/locale.conf
+
+# vconsole.conf
+echo "KEYMAP=trq" > /etc/vconsole.conf
+
+# hostname
+echo "archlinux" > /etc/hostname
+
+# hosts
+cat <<- EOF > /etc/hosts
+127.0.0.1       localhost
+::1             localhost
+127.0.0.1       $(cat /etc/hostname)
+EOF
+
 # Add user
 if ! id "$2" >& /dev/null
 then
@@ -181,8 +198,8 @@ then
 fi
 
 # Change passwords
-printf "$PASS_ROOT" | passwd --root /mnt --stdin
-printf "$PASS_USER" | passwd --root /mnt --stdin "$2"
+printf '%s' "$PASS_ROOT" | passwd --root /mnt --stdin
+printf '%s' "$PASS_USER" | passwd --root /mnt --stdin "$2"
 
 # sudoers
 echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
@@ -192,3 +209,8 @@ chmod -R 0440 /mnt/etc/sudoers.d/*
 # GRUB
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+# Generate the locales
+# USE CHROOT.....
+#sed -e '/en_US.UTF-8/s/^#*//' -i /mnt/etc/locale.gen
+#sed -e '/tr_TR.UTF-8/s/^#*//' -i /mnt/etc/locale.gen
+#locale-gen
