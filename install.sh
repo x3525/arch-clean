@@ -1,29 +1,20 @@
 #!/bin/bash
 
-unmount()
-{
-    {
-        swapoff -a
-        umount -q -R /mnt
-    } &> /dev/null
-}
-
-trap unmount EXIT
-
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" != "64" ]
 then
     echo "System is not booted in 64-bit UEFI mode!"
     exit 1
 fi
 
-if [ $# -ne 2 ]
+if [ $# -ne 3 ]
 then
-    echo "Usage: $0 BLOCK LOGIN"
+    echo "Usage: $0 BLOCK MOUNT LOGIN"
     exit 1
 fi
 
 BLOCK=$1
-LOGIN=$2
+MOUNT=$2
+LOGIN=$3
 
 if [ ! -b "$BLOCK" ]
 then
@@ -31,9 +22,15 @@ then
     exit 1
 fi
 
+if [ ! -d "$MOUNT" ] && ! mkdir -p "$MOUNT" 2> /dev/null
+then
+    echo "Cannot create the mount directory!"
+    exit 1
+fi
+
 if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$LOGIN"
 then
-    echo "Given name is invalid!"
+    echo "Login name is invalid!"
     exit 1
 fi
 
@@ -66,6 +63,16 @@ then
     echo "Network is unreachable!"
     exit 1
 fi
+
+unmount()
+{
+    {
+        swapoff -a
+        umount -q -R "$MOUNT"
+    } &> /dev/null
+}
+
+trap unmount EXIT
 
 unmount
 
