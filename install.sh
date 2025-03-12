@@ -173,36 +173,16 @@ ln -sf /usr/share/zoneinfo/Europe/Istanbul /mnt/etc/localtime
 # Set the Hardware Clock from the System Clock
 hwclock --systohc --adjfile=/mnt/etc/adjtime
 
-# locale.conf
-echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
-echo "LC_TIME=tr_TR.UTF-8" >> /mnt/etc/locale.conf
-
-# vconsole.conf
-echo "KEYMAP=trq" > /mnt/etc/vconsole.conf
-
-# hostname
-echo "archlinux" > /mnt/etc/hostname
-
-# hosts
-cat <<- EOF > /mnt/etc/hosts
-127.0.0.1       localhost
-::1             localhost
-127.0.0.1       $(cat /mnt/etc/hostname)
-EOF
-
 # User management
 if ! id "$2" >& /dev/null
 then
-    useradd --root /mnt -m -G wheel "$2"
+    useradd -R /mnt -m -G wheel -s "$(which zsh)" "$2"
 fi
 
-printf '%s' "$PASS_ROOT" | passwd --root /mnt --stdin
-printf '%s' "$PASS_USER" | passwd --root /mnt --stdin "$2"
+printf '%s' "$PASS_ROOT" | passwd -R /mnt --stdin
+printf '%s' "$PASS_USER" | passwd -R /mnt --stdin "$2"
 
-cat <<- EOF > /mnt/etc/sudoers.d/wheel
-%wheel ALL=(ALL:ALL) ALL
-EOF
-
+# sudoers
 chown -R root:root /mnt/etc/sudoers.d/*
 chmod -R 0440 /mnt/etc/sudoers.d/*
 
@@ -213,8 +193,6 @@ mount -o bind  /dev  /mnt/dev
 mount -o bind  /sys/firmware/efi/efivars /mnt/sys/firmware/efi/efivars
 
 # Generate the locales
-echo "en_US.UTF-8 UTF-8" | tee /mnt/etc/locale.gen
-echo "tr_TR.UTF-8 UTF-8" | tee /mnt/etc/locale.gen -a
 chroot /mnt locale-gen
 
 # Enable timers
