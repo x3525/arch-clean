@@ -130,7 +130,6 @@ then
 else
     case "$(lspci -d ::03xx)" in
         *[aA][mM][dD]*)
-            PACKAGES+=(libva-mesa-driver)
             PACKAGES+=(mesa)
             PACKAGES+=(rocm-opencl-runtime)
             PACKAGES+=(vulkan-radeon)
@@ -145,7 +144,6 @@ else
             PACKAGES+=(vulkan-intel)
             ;;&
         *[nN][vV][iI][dD][iI][aA]*)
-            PACKAGES+=(libva-mesa-driver)
             PACKAGES+=(mesa)
             PACKAGES+=(opencl-nvidia)
             PACKAGES+=(xf86-video-nouveau)
