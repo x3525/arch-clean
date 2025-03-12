@@ -24,8 +24,8 @@ then
     exit 1
 fi
 
-printf "Enter password:"; set +a; read -r -s PASS_USER; set -a; echo
-printf "Enter password:"; set +a; read -r -s USER_PASS; set -a; echo
+printf "Enter password:"; set +a; read -r -s PASS_USER < /dev/tty; set -a; echo
+printf "Enter password:"; set +a; read -r -s USER_PASS < /dev/tty; set -a; echo
 
 if [ "$PASS_USER" != "$USER_PASS" ]
 then
@@ -33,8 +33,8 @@ then
     exit 1
 fi
 
-printf "Enter password (root):"; set +a; read -r -s PASS_ROOT; set -a; echo
-printf "Enter password (root):"; set +a; read -r -s ROOT_PASS; set -a; echo
+printf "Enter password (root):"; set +a; read -r -s PASS_ROOT < /dev/tty; set -a; echo
+printf "Enter password (root):"; set +a; read -r -s ROOT_PASS < /dev/tty; set -a; echo
 
 if [ "$PASS_ROOT" != "$ROOT_PASS" ]
 then
@@ -155,7 +155,7 @@ fi
 while ! pacstrap -K /mnt "${PACKAGES[@]}" - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
-    read -r
+    read -r < /dev/tty
     case $REPLY in
         [nN]*)
             exit 1
