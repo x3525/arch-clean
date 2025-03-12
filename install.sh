@@ -74,7 +74,8 @@ while [ "$(systemctl is-active archlinux-keyring-wkd-sync.service)" != "inactive
 do
     sleep 1
 done
-exit 1
+
+
 unmount()
 {
     umount -q -R /mnt
