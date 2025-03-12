@@ -54,7 +54,27 @@ then
     exit 1
 fi
 
+echo "Waiting for time synchronization to complete..."
 
+while [ "$(timedatectl show --property=NTPSynchronized --value)" != "yes" ]
+do
+    sleep 1
+done
+
+echo "Waiting for automatic mirror selection to complete...."
+
+while [ "$(systemctl is-active reflector.service)" != "inactive" ]
+do
+    sleep 1
+done
+
+echo "Waiting for Arch Linux keyring synchronization to complete..."
+
+while [ "$(systemctl is-active archlinux-keyring-wkd-sync.service)" != "inactive" ]
+do
+    sleep 1
+done
+exit 1
 unmount()
 {
     umount -q -R /mnt
