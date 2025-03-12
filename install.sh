@@ -95,42 +95,45 @@ mount     "${partitions[0]}" /mnt/boot/efi -m
 swapon    "${partitions[1]}"
 
 # Determine additional packages to install
-packages=()
+PACKAGES=()
 
 if grep -q snd_sof /proc/modules
 then
-    packages+=(sof-firmware)
+    PACKAGES+=(sof-firmware)
 fi
 
 if [ "$(systemd-detect-virt)" != "none" ]
 then
-    packages+=(mesa)
-    packages+=(xf86-video-vmware)
+    PACKAGES+=(mesa)
+    PACKAGES+=(xf86-video-vmware)
 else
     case "$(lspci -d ::03xx)" in
         *[aA][mM][dD]*)
-            packages+=(libva-mesa-driver)
-            packages+=(mesa)
-            packages+=(vulkan-radeon)
-            packages+=(xf86-video-amdgpu)
-            packages+=(xf86-video-ati)
+            PACKAGES+=(libva-mesa-driver)
+            PACKAGES+=(mesa)
+            PACKAGES+=(rocm-opencl-runtime)
+            PACKAGES+=(vulkan-radeon)
+            PACKAGES+=(xf86-video-amdgpu)
+            PACKAGES+=(xf86-video-ati)
             ;;&
         *[iI][nN][tT][eE][lL]*)
-            packages+=(intel-media-driver)
-            packages+=(libva-intel-driver)
-            packages+=(mesa)
-            packages+=(vulkan-intel)
+            PACKAGES+=(intel-compute-runtime)
+            PACKAGES+=(intel-media-driver)
+            PACKAGES+=(libva-intel-driver)
+            PACKAGES+=(mesa)
+            PACKAGES+=(vulkan-intel)
             ;;&
         *[nN][vV][iI][dD][iI][aA]*)
-            packages+=(libva-mesa-driver)
-            packages+=(mesa)
-            packages+=(xf86-video-nouveau)
+            PACKAGES+=(libva-mesa-driver)
+            PACKAGES+=(mesa)
+            PACKAGES+=(opencl-nvidia)
+            PACKAGES+=(xf86-video-nouveau)
             ;;&
     esac
 fi
 
 # Install packages
-while ! pacstrap -K /mnt - < PACKAGES
+while ! pacstrap -K /mnt "${PACKAGES[@]}" - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r
