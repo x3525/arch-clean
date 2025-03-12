@@ -118,14 +118,30 @@ then
     packages+=(xf86-video-vmware)
 fi
 
-PCI_DEVICES=$(lspci -k -d ::03xx)
+GRAPHICS_DEVICES=$(lspci -k -d ::03xx)
 
-if grep -qi Intel <<< "$PCI_DEVICES"
+if echo "$GRAPHICS_DEVICES" | grep -qi AMD
+then
+    packages+=(libva-mesa-driver)
+    packages+=(mesa)
+    packages+=(vulkan-radeon)
+    packages+=(xf86-video-amdgpu)
+    packages+=(xf86-video-ati)
+fi
+
+if echo "$GRAPHICS_DEVICES" | grep -qi Intel
 then
     packages+=(intel-media-driver)
     packages+=(libva-intel-driver)
     packages+=(mesa)
     packages+=(vulkan-intel)
+fi
+
+if echo "$GRAPHICS_DEVICES" | grep -qi NVIDIA
+then
+    packages+=(libva-mesa-driver)
+    packages+=(mesa)
+    packages+=(xf86-video-nouveau)
 fi
 
 # Install packages
