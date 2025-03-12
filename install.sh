@@ -24,8 +24,8 @@ then
     exit 1
 fi
 
-printf 'Enter password:'; set +a; read -r -s PASS_USER; set -a; echo
-printf 'Enter password:'; set +a; read -r -s USER_PASS; set -a; echo
+printf "Enter password:"; set +a; read -r -s PASS_USER; set -a; echo
+printf "Enter password:"; set +a; read -r -s USER_PASS; set -a; echo
 
 if [ "$PASS_USER" != "$USER_PASS" ]
 then
@@ -33,8 +33,8 @@ then
     exit 1
 fi
 
-printf 'Enter password (root):'; set +a; read -r -s PASS_ROOT; set -a; echo
-printf 'Enter password (root):'; set +a; read -r -s ROOT_PASS; set -a; echo
+printf "Enter password (root):"; set +a; read -r -s PASS_ROOT; set -a; echo
+printf "Enter password (root):"; set +a; read -r -s ROOT_PASS; set -a; echo
 
 if [ "$PASS_ROOT" != "$ROOT_PASS" ]
 then
@@ -168,6 +168,12 @@ done
 # Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
+# Set the time zone
+ln -sf /usr/share/zoneinfo/Europe/Istanbul /mnt/etc/localtime
+
+# Set the Hardware Clock from the System Clock
+hwclock --systohc --adjfile=/mnt/etc/adjtime
+
 # Add user
 if ! id "$2" >& /dev/null
 then
@@ -175,8 +181,8 @@ then
 fi
 
 # Change passwords
-printf '%s' "$PASS_ROOT" | passwd --root /mnt --stdin
-printf '%s' "$PASS_USER" | passwd --root /mnt --stdin "$2"
+printf "$PASS_ROOT" | passwd --root /mnt --stdin
+printf "$PASS_USER" | passwd --root /mnt --stdin "$2"
 
 # sudoers
 echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
