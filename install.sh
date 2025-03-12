@@ -174,20 +174,20 @@ ln -sf /usr/share/zoneinfo/Europe/Istanbul /mnt/etc/localtime
 hwclock --systohc --adjfile=/mnt/etc/adjtime
 
 # locale.conf
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
-echo "LC_TIME=tr_TR.UTF-8" >> /etc/locale.conf
+echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
+echo "LC_TIME=tr_TR.UTF-8" >> /mnt/etc/locale.conf
 
 # vconsole.conf
-echo "KEYMAP=trq" > /etc/vconsole.conf
+echo "KEYMAP=trq" > /mnt/etc/vconsole.conf
 
 # hostname
-echo "archlinux" > /etc/hostname
+echo "archlinux" > /mnt/etc/hostname
 
 # hosts
-cat <<- EOF > /etc/hosts
+cat <<- EOF > /mnt/etc/hosts
 127.0.0.1       localhost
 ::1             localhost
-127.0.0.1       $(cat /etc/hostname)
+127.0.0.1       $(cat /mnt/etc/hostname)
 EOF
 
 # User management
