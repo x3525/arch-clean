@@ -183,8 +183,10 @@ printf '%s' "$PASS_ROOT" | passwd -R /mnt --stdin
 printf '%s' "$PASS_USER" | passwd -R /mnt --stdin "$2"
 
 # sudoers
-chown -R root:root /mnt/etc/sudoers.d/*
-chmod -R 0440 /mnt/etc/sudoers.d/*
+cat <<- EOF > /mnt/etc/sudoers.d/wheel
+%wheel ALL=(ALL:ALL) ALL
+EOF
+chmod -R 0440 /mnt/etc/sudoers.d
 
 # Prepare the chroot jail
 mount -t proc  /proc /mnt/proc
