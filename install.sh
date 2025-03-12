@@ -191,26 +191,48 @@ cat <<- EOF > /etc/hosts
 127.0.0.1       $(cat /etc/hostname)
 EOF
 
-# Add user
+# User management
 if ! id "$2" >& /dev/null
 then
     useradd --root /mnt -m -G wheel "$2"
 fi
 
-# Change passwords
 printf '%s' "$PASS_ROOT" | passwd --root /mnt --stdin
 printf '%s' "$PASS_USER" | passwd --root /mnt --stdin "$2"
 
-# sudoers
-echo '%wheel ALL=(ALL:ALL) ALL' | tee /mnt/etc/sudoers.d/wheel
+cat <<- EOF > /mnt/etc/sudoers.d/wheel
+%wheel ALL=(ALL:ALL) ALL
+EOF
+
 chown -R root:root /mnt/etc/sudoers.d/*
 chmod -R 0440 /mnt/etc/sudoers.d/*
 
-# GRUB
-arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+# Prepare the chroot jail
+mount -t proc  /proc /mnt/proc
+mount -t sysfs /sys  /mnt/sys
+mount -o bind  /dev  /mnt/dev
+mount -o bind  /sys/firmware/efi/efivars /mnt/sys/firmware/efi/efivars
+
 # Generate the locales
-# USE CHROOT.....
-#sed -e '/en_US.UTF-8/s/^#*//' -i /mnt/etc/locale.gen
-#sed -e '/tr_TR.UTF-8/s/^#*//' -i /mnt/etc/locale.gen
-#locale-gen
+echo "en_US.UTF-8 UTF-8" | tee /mnt/etc/locale.gen
+echo "tr_TR.UTF-8 UTF-8" | tee /mnt/etc/locale.gen -a
+chroot /mnt locale-gen
+
+# Enable timers
+chroot /mnt systemctl enable fstrim.timer
+chroot /mnt systemctl enable reflector.timer
+
+# Enable services
+chroot /mnt systemctl enable lightdm.service
+chroot /mnt systemctl enable NetworkManager.service
+chroot /mnt systemctl enable systemd-timesyncd.service
+
+# Disable services
+chroot /mnt systemctl disable autorandr-lid-listener.service
+chroot /mnt systemctl disable autorandr.service
+
+# GRUB installation
+chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+
+# GRUB main configuration file
+chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
