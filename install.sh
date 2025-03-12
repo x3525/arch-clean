@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+unmount()
+{
+    swapoff -a
+    umount -q -R /mnt
+}
+
+
+trap unmount EXIT
+
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" != "64" ]
 then
     echo "System is not booted in 64-bit UEFI mode!"
@@ -54,18 +64,10 @@ then
     exit 1
 fi
 
-
-unmount()
-{
-    umount -q -R /mnt
-    swapoff -a
-}
-
-
 unmount
 
 # Erase all available signatures
-wipefs --force --all "$1"*
+wipefs -f -a "$1"*
 
 # Disk partiton
 sfdisk "$1" <<- EOF
