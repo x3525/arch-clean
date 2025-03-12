@@ -27,9 +27,6 @@ sudo cp -r \\/. / --no-preserve=ownership
 # Change default shell
 sudo chsh "$USER" --shell "$(which zsh)"
 
-# Generate the locales
-sudo locale-gen
-
 # Build font information cache files
 fc-cache -fv
 
@@ -41,23 +38,3 @@ rfkill block bluetooth
 
 # Enable and start the network synchronization service
 sudo timedatectl set-ntp true
-
-# Set the time zone
-sudo ln -sf /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
-
-# Set the Hardware Clock from the System Clock
-sudo hwclock --systohc
-
-# Enable timers
-systemctl --user enable battery-notification.timer
-sudo systemctl enable fstrim.timer
-sudo systemctl enable reflector.timer
-
-# Enable services
-sudo systemctl enable lightdm.service
-sudo systemctl enable NetworkManager.service
-sudo systemctl enable systemd-timesyncd.service
-
-# Disable services
-sudo systemctl disable autorandr-lid-listener.service
-sudo systemctl disable autorandr.service
