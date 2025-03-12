@@ -24,9 +24,6 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
 cp -r home/. ~
 sudo cp -r \\/. / --no-preserve=ownership
 
-# Change default shell
-sudo chsh "$USER" --shell "$(which zsh)"
-
 # Build font information cache files
 fc-cache -fv
 
