@@ -101,7 +101,7 @@ do
     sleep 1
 done
 
-echo "Waiting for automatic mirror selection to complete...."
+echo "Waiting for automatic mirror selection to complete..."
 
 while [ "$(systemctl is-active reflector.service)" != "inactive" ]
 do
