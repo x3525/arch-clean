@@ -153,7 +153,7 @@ else
 fi
 
 # Install packages
-while ! pacstrap -K /mnt "${PACKAGES[@]}" - < PACKAGES
+while ! pacstrap -K /mnt "${PACKAGES[@]}"
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r < /dev/tty
