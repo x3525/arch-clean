@@ -45,7 +45,6 @@ i3-wm
 i3lock
 i3status
 inetutils
-intel-media-driver
 iwd
 john
 jq
@@ -57,7 +56,6 @@ libinput
 libnotify
 libpulse
 libreoffice-still
-libva-intel-driver
 libwebp
 lightdm
 lightdm-gtk-greeter
@@ -69,7 +67,6 @@ man-pages
 mariadb
 mate-calc
 medusa
-mesa
 metasploit
 net-snmp
 net-tools
@@ -118,7 +115,6 @@ shellcheck
 smartmontools
 smbclient
 socat
-sof-firmware
 speech-dispatcher
 sqlmap
 sshpass
@@ -142,8 +138,6 @@ upx
 usbutils
 vim
 vlc
-vulkan-intel
-vulkan-radeon
 wget
 which
 whois
@@ -154,10 +148,6 @@ wpa_supplicant
 xarchiver
 xdg-utils
 xdotool
-xf86-video-amdgpu
-xf86-video-ati
-xf86-video-nouveau
-xf86-video-vmware
 xorg-server
 xorg-xev
 xorg-xinit
