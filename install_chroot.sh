@@ -35,3 +35,6 @@ rfkill block bluetooth
 
 # Enable and start the network synchronization service
 sudo timedatectl set-ntp true
+
+# Enable timers
+systemctl --user enable battery-notification.timer
