@@ -54,27 +54,6 @@ then
     exit 1
 fi
 
-echo "Waiting for time synchronization to complete..."
-
-while [ "$(timedatectl show --property=NTPSynchronized --value)" != "yes" ]
-do
-    sleep 1
-done
-
-echo "Waiting for automatic mirror selection to complete...."
-
-while [ "$(systemctl is-active reflector.service)" != "inactive" ]
-do
-    sleep 1
-done
-
-echo "Waiting for Arch Linux keyring synchronization to complete..."
-
-while [ "$(systemctl is-active archlinux-keyring-wkd-sync.service)" != "inactive" ]
-do
-    sleep 1
-done
-
 
 unmount()
 {
@@ -114,6 +93,27 @@ mkswap    "${partitions[1]}"
 mount     "${partitions[2]}" /mnt
 mount     "${partitions[0]}" /mnt/boot/efi -m
 swapon    "${partitions[1]}"
+
+echo "Waiting for time synchronization to complete..."
+
+while [ "$(timedatectl show --property=NTPSynchronized --value)" != "yes" ]
+do
+    sleep 1
+done
+
+echo "Waiting for automatic mirror selection to complete...."
+
+while [ "$(systemctl is-active reflector.service)" != "inactive" ]
+do
+    sleep 1
+done
+
+echo "Waiting for Arch Linux keyring synchronization to complete..."
+
+while [ "$(systemctl is-active archlinux-keyring-wkd-sync.service)" != "inactive" ]
+do
+    sleep 1
+done
 
 # Determine additional packages to install
 PACKAGES=()
@@ -169,7 +169,10 @@ done
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Add user
-useradd --root /mnt -m -G wheel "$2"
+if ! id "$2" >& /dev/null
+then
+    useradd --root /mnt -m -G wheel "$2"
+fi
 
 # Change passwords
 printf '%s' "$PASS_ROOT" | passwd --root /mnt --stdin
