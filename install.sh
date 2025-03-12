@@ -211,7 +211,12 @@ chroot /mnt systemctl disable autorandr-lid-listener.service
 chroot /mnt systemctl disable autorandr.service
 
 # GRUB installation
-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+if [ "$(lsblk /dev/sda -o HOTPLUG -d -n)" != "1" ]
+then
+    chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+else
+    chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable
+fi
 
 # GRUB main configuration file
 chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
