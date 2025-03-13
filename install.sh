@@ -404,6 +404,97 @@ Section "InputClass"
     Option "TappingDrag" "true"
 EndSection
 EOF
+cat <<- EOF | tee "$MOUNT"/etc/bluetooth/input.conf
+[General]
+UserspaceHID=true
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/gtk-3.0/settings.ini
+[Settings]
+gtk-application-prefer-dark-theme = true
+gtk-button-images = true
+gtk-cursor-theme-name = Adwaita
+gtk-cursor-theme-size = 16
+gtk-enable-event-sounds = true
+gtk-enable-input-feedback-sounds = true
+gtk-font-name = Noto Sans 12
+gtk-icon-theme-name = Papirus
+gtk-menu-images = true
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/lightdm/lightdm-gtk-greeter.conf
+[greeter]
+active-monitor = #cursor
+clock-format = %H:%M:%S
+font-name = Noto Sans Mono 10
+indicators = ~session;~separator;~layout;~spacer;~clock;~spacer;~power
+screensaver-timeout = 0
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/lightdm/lightdm.conf.d/00-manual.conf
+[Seat:*]
+allow-guest=false
+greeter-allow-guest=false
+greeter-hide-users=true
+greeter-show-manual-login=true
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/modprobe.d/blacklist-bluetooth.conf
+blacklist bluetooth
+blacklist btusb
+blacklist hidp
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/modules-load.d/uhid.conf
+uhid
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/polkit-1/rules.d/power.rules
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.login1.hibernate" ||
+        action.id == "org.freedesktop.login1.hibernate-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.hibernate-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.power-off" ||
+        action.id == "org.freedesktop.login1.power-off-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.reboot" ||
+        action.id == "org.freedesktop.login1.reboot-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.reboot-multiple-sessions"
+    ) {
+        return polkit.Result.YES;
+    }
+});
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/security/faillock.conf
+silent
+deny = 5
+fail_interval = 900
+unlock_time = 300
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/systemd/logind.conf
+[Login]
+HandleHibernateKey=ignore
+HandleLidSwitch=ignore
+HandleLidSwitchDocked=ignore
+HandleLidSwitchExternalPower=ignore
+HandlePowerKey=ignore
+HandleRebootKey=ignore
+HandleSuspendKey=ignore
+IdleAction=ignore
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/systemd/sleep.conf
+[Sleep]
+AllowHibernation=no
+AllowHybridSleep=no
+AllowSuspend=no
+AllowSuspendThenHibernate=no
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/systemd/system.conf
+[Manager]
+DefaultTimeoutStopSec=30s
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/xdg/reflector/reflector.conf
+--country Germany
+--download-timeout 120
+--latest 10
+--protocol https
+--save /etc/pacman.d/mirrorlist
+--sort rate
+EOF
 
 # /usr
 cat <<- EOF | tee "$MOUNT"/usr/share/icons/default/index.theme
