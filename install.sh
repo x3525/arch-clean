@@ -95,7 +95,7 @@ EOF
 # Format the partitions
 partitions=()
 
-for partition in $(sfdisk --dump "$1" | grep start | cut -d ':' -f 1 | tr -d ' ')
+for partition in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
 do
     partitions+=("$partition")
 done
@@ -105,8 +105,8 @@ mkfs.fat  "${partitions[0]}" -F 32
 mkswap    "${partitions[1]}"
 
 # Mount the file systems
-mount     "${partitions[2]}" /mnt
-mount     "${partitions[0]}" /mnt/boot/efi -m
+mount     "${partitions[2]}" "$MOUNT"
+mount     "${partitions[0]}" "$MOUNT"/boot/efi -m
 swapon    "${partitions[1]}"
 
 echo "Waiting for time synchronization to complete..."
@@ -168,7 +168,7 @@ else
 fi
 
 # Install packages
-while ! pacstrap -K /mnt base linux linux-firmware "${PACKAGES[@]}"
+while ! pacstrap -K "$MOUNT" base linux linux-firmware "${PACKAGES[@]}"
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r < /dev/tty
@@ -180,54 +180,54 @@ do
 done
 
 # Generate an fstab file
-genfstab -U /mnt > /mnt/etc/fstab
+genfstab -U "$MOUNT" > "$MOUNT"/etc/fstab
 
 # Set the time zone
-ln -sf /usr/share/zoneinfo/Europe/Istanbul /mnt/etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Istanbul "$MOUNT"/etc/localtime
 
 # Set the Hardware Clock from the System Clock
-hwclock --systohc --adjfile=/mnt/etc/adjtime
+hwclock --systohc --adjfile="$MOUNT"/etc/adjtime
 
 # User management
-if ! id "$2" &> /dev/null
+if ! id "$LOGIN" &> /dev/null
 then
-    useradd -R /mnt -m -G wheel -s "$(which zsh)" "$2"
+    useradd -R "$MOUNT" -m -G wheel -s "$(which zsh)" "$LOGIN"
 fi
 
-printf '%s' "$PASSROOT" | passwd -R /mnt --stdin
-printf '%s' "$PASSUSER" | passwd -R /mnt --stdin "$2"
+printf '%s' "$PASSROOT" | passwd -R "$MOUNT" --stdin
+printf '%s' "$PASSUSER" | passwd -R "$MOUNT" --stdin "$LOGIN"
 
 # Prepare the chroot jail
-mount -t proc  /proc /mnt/proc
-mount -t sysfs /sys  /mnt/sys
-mount -o bind  /dev  /mnt/dev
-mount -o bind  /sys/firmware/efi/efivars /mnt/sys/firmware/efi/efivars
+mount -t proc  /proc "$MOUNT"/proc
+mount -t sysfs /sys  "$MOUNT"/sys
+mount -o bind  /dev  "$MOUNT"/dev
+mount -o bind  /sys/firmware/efi/efivars "$MOUNT"/sys/firmware/efi/efivars
 
 # Generate the locales
-chroot /mnt locale-gen
+chroot "$MOUNT" locale-gen
 
 # Enable timers
-chroot /mnt systemctl enable fstrim.timer
-chroot /mnt systemctl enable reflector.timer
+chroot "$MOUNT" systemctl enable fstrim.timer
+chroot "$MOUNT" systemctl enable reflector.timer
 
 # Enable services
-chroot /mnt systemctl enable lightdm.service
-chroot /mnt systemctl enable NetworkManager.service
-chroot /mnt systemctl enable systemd-timesyncd.service
+chroot "$MOUNT" systemctl enable lightdm.service
+chroot "$MOUNT" systemctl enable NetworkManager.service
+chroot "$MOUNT" systemctl enable systemd-timesyncd.service
 
 # Disable services
-chroot /mnt systemctl disable autorandr-lid-listener.service
-chroot /mnt systemctl disable autorandr.service
+chroot "$MOUNT" systemctl disable autorandr-lid-listener.service
+chroot "$MOUNT" systemctl disable autorandr.service
 
 # GRUB installation
-case "$(lsblk "$1" -o HOTPLUG -d -n)" in
+case "$(lsblk "$BLOCK" -o HOTPLUG -d -n)" in
     0)
-        chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+        chroot "$MOUNT" grub-install --target=x86_64-efi --efi-directory=/boot/efi
         ;;&
     1)
-        chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable
+        chroot "$MOUNT" grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable
         ;;&
     *)
-        chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+        chroot "$MOUNT" grub-mkconfig -o /boot/grub/grub.cfg
         ;;
 esac
