@@ -1,23 +1,30 @@
 #!/bin/bash
 
-unmount()
+e ()
+{
+    exit 1
+}
+
+unmount ()
 {
     {
         swapoff -a
         umount -q -R "$MOUNT"
     } &> /dev/null
+
+    return 0
 }
 
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" != "64" ]
 then
     echo "System is not booted in 64-bit UEFI mode!"
-    exit 1
+    e
 fi
 
 if [ $# -ne 3 ]
 then
     echo "Usage: $0 BLOCK MOUNT LOGIN"
-    exit 1
+    e
 fi
 
 BLOCK=$1
@@ -27,19 +34,19 @@ LOGIN=$3
 if [ ! -b "$BLOCK" ]
 then
     echo "Device is not a block special!"
-    exit 1
+    e
 fi
 
 if ! mkdir -p "$MOUNT" &> /dev/null
 then
     echo "Cannot create the mount directory!"
-    exit 1
+    e
 fi
 
 if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$LOGIN"
 then
     echo "Login name is invalid!"
-    exit 1
+    e
 fi
 
 set +a; read -s -r -p "Enter password:" PASSUSER < /dev/tty; set -a; echo
@@ -48,7 +55,7 @@ set +a; read -s -r -p "Enter password:" USERPASS < /dev/tty; set -a; echo
 if [ -z "$PASSUSER" ] || [ "$PASSUSER" != "$USERPASS" ]
 then
     echo "Passwords do not match!"
-    exit 1
+    e
 fi
 
 set +a; read -s -r -p "Enter password (root):" PASSROOT < /dev/tty; set -a; echo
@@ -57,24 +64,26 @@ set +a; read -s -r -p "Enter password (root):" ROOTPASS < /dev/tty; set -a; echo
 if [ -z "$PASSROOT" ] || [ "$PASSROOT" != "$ROOTPASS" ]
 then
     echo "Passwords do not match!"
-    exit 1
+    e
 fi
 
 if ! ping -q -c 1 -w 2 "$(ip route | grep default | cut -d ' ' -f 3)" &> /dev/null
 then
     echo "Network is unreachable!"
-    exit 1
+    e
 fi
 
 trap unmount EXIT
 
 unmount
 
+trap e ERR
+
 # Erase all available signatures
-wipefs -f -a "$1"*
+wipefs -f -a "$BLOCK"*
 
 # Disk partiton
-sfdisk "$1" <<- EOF
+sfdisk "$BLOCK" <<- EOF
 label: gpt
 unit: sectors
 
@@ -165,7 +174,7 @@ do
     read -r < /dev/tty
     case $REPLY in
         [nN]*)
-            exit 1
+            e
             ;;
     esac
 done
