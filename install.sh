@@ -2,7 +2,16 @@
 
 e ()
 {
-    exit 1
+    echo -n "Continue a[N]ywa[y]?"
+    read -r < /dev/tty
+
+    case $REPLY in
+        [yY]*)
+            ;;
+        *)
+            exit 34
+            ;;
+    esac
 }
 
 unmount ()
@@ -18,13 +27,13 @@ unmount ()
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" != "64" ]
 then
     echo "System is not booted in 64-bit UEFI mode!"
-    e
+    exit 1
 fi
 
 if [ $# -ne 3 ]
 then
     echo "Usage: $0 BLOCK MOUNT LOGIN"
-    e
+    exit 1
 fi
 
 BLOCK=$1
@@ -34,19 +43,19 @@ LOGIN=$3
 if [ ! -b "$BLOCK" ]
 then
     echo "Device is not a block special!"
-    e
+    exit 1
 fi
 
 if ! mkdir -p "$MOUNT" &> /dev/null
 then
     echo "Cannot create the mount directory!"
-    e
+    exit 1
 fi
 
 if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$LOGIN"
 then
     echo "Login name is invalid!"
-    e
+    exit 1
 fi
 
 set +a; read -s -r -p "Enter password:" PASSUSER < /dev/tty; set -a; echo
@@ -55,7 +64,7 @@ set +a; read -s -r -p "Enter password:" USERPASS < /dev/tty; set -a; echo
 if [ -z "$PASSUSER" ] || [ "$PASSUSER" != "$USERPASS" ]
 then
     echo "Passwords do not match!"
-    e
+    exit 1
 fi
 
 set +a; read -s -r -p "Enter password (root):" PASSROOT < /dev/tty; set -a; echo
@@ -64,13 +73,13 @@ set +a; read -s -r -p "Enter password (root):" ROOTPASS < /dev/tty; set -a; echo
 if [ -z "$PASSROOT" ] || [ "$PASSROOT" != "$ROOTPASS" ]
 then
     echo "Passwords do not match!"
-    e
+    exit 1
 fi
 
 if ! ping -q -c 1 -w 2 "$(ip route | grep default | cut -d ' ' -f 3)" &> /dev/null
 then
     echo "Network is unreachable!"
-    e
+    exit 1
 fi
 
 trap unmount EXIT
@@ -330,14 +339,7 @@ fi
 # Install packages
 while ! pacstrap -K "$MOUNT" base linux linux-firmware "${packages[@]}"
 do
-    echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
-    read -r < /dev/tty
-
-    case $REPLY in
-        [nN]*)
-            e
-            ;;
-    esac
+    false
 done
 
 # Generate an fstab file
