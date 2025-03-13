@@ -105,7 +105,7 @@ mount     "${partitions[0]}" "$MOUNT"/boot/efi -m
 swapon    "${partitions[1]}"
 
 # Wait for time synchronization to complete...
-while [ "$(timedatectl show --property=NTPSynchronized --value)" != "yes" ]
+while [ "$(timedatectl show --property NTPSynchronized --value)" != "yes" ]
 do
     echo -n .
     sleep 2
@@ -181,7 +181,7 @@ genfstab -U "$MOUNT" > "$MOUNT"/etc/fstab
 ln -sf /usr/share/zoneinfo/Europe/Istanbul "$MOUNT"/etc/localtime
 
 # Set the Hardware Clock from the System Clock
-hwclock --systohc --adjfile="$MOUNT"/etc/adjtime
+hwclock --systohc --adjfile "$MOUNT"/etc/adjtime
 
 # Add login
 if ! id "$LOGIN" &> /dev/null
