@@ -93,19 +93,19 @@ start=    35653632,                    type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
 EOF
 
 # Format the partitions
-for part in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
+for partition in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
 do
-    parts+=("$part")
+    partitions+=("$partition")
 done
 
-mkfs.ext4 "${parts[2]}" -F
-mkfs.fat  "${parts[0]}" -F 32
-mkswap    "${parts[1]}"
+mkfs.ext4 "${partitions[2]}" -F
+mkfs.fat  "${partitions[0]}" -F 32
+mkswap    "${partitions[1]}"
 
 # Mount the file systems
-mount     "${parts[2]}" "$MOUNT"
-mount     "${parts[0]}" "$MOUNT"/boot/efi -m
-swapon    "${parts[1]}"
+mount     "${partitions[2]}" "$MOUNT"
+mount     "${partitions[0]}" "$MOUNT"/boot/efi -m
+swapon    "${partitions[1]}"
 
 # Wait for time synchronization to complete
 while [ "$(timedatectl show --property=NTPSynchronized --value)" != "yes" ]
