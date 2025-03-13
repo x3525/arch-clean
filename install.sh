@@ -332,6 +332,7 @@ while ! pacstrap -K "$MOUNT" base linux linux-firmware "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r < /dev/tty
+
     case $REPLY in
         [nN]*)
             e
@@ -347,6 +348,68 @@ ln -sf /usr/share/zoneinfo/Europe/Istanbul "$MOUNT"/etc/localtime
 
 # Set the Hardware Clock from the System Clock
 hwclock --systohc --adjfile="$MOUNT"/etc/adjtime
+
+# /etc
+cat <<- EOF | tee "$MOUNT"/etc/hostname
+archlinux
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/hosts
+127.0.0.1       localhost
+::1             localhost
+127.0.0.1       archlinux
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/locale.conf
+LANG=en_US.UTF-8
+LC_TIME=tr_TR.UTF-8
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/locale.gen
+en_US.UTF-8 UTF-8
+tr_TR.UTF-8 UTF-8
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/vconsole.conf
+KEYMAP=trq
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/X11/xorg.conf.d/00-keyboard.conf
+Section "InputClass"
+    Identifier "Keyboard"
+    MatchIsKeyboard "true"
+    Option "XkbLayout" "tr"
+EndSection
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/X11/xorg.conf.d/10-monitor.conf
+Section "Extensions"
+    Option "DPMS" "false"
+EndSection
+Section "ServerFlags"
+    Option "BlankTime" "0"
+    Option "DontVTSwitch" "false"
+    Option "DontZap" "true"
+    Option "OffTime" "0"
+    Option "StandbyTime" "0"
+    Option "SuspendTime" "0"
+EndSection
+EOF
+cat <<- EOF | tee "$MOUNT"/etc/X11/xorg.conf.d/40-touchpad.conf
+Section "InputClass"
+    Identifier "Touchpad"
+    Driver "libinput"
+    MatchDevicePath "/dev/input/event*"
+    MatchIsTouchpad "true"
+    Option "AccelSpeed" "0.1"
+    Option "DisableWhileTyping" "true"
+    Option "HorizontalScrolling" "true"
+    Option "NaturalScrolling" "true"
+    Option "ScrollMethod" "twofinger"
+    Option "Tapping" "true"
+    Option "TappingDrag" "true"
+EndSection
+EOF
+
+# /usr
+cat <<- EOF | tee "$MOUNT"/usr/share/icons/default/index.theme
+[Icon Theme]
+Inherits=Papirus
+EOF
 
 # User management
 if ! id "$LOGIN" &> /dev/null
