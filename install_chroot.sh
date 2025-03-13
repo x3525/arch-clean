@@ -7,8 +7,8 @@ then
 fi
 
 # Verify the master keys
-sudo pacman-key --init
-sudo pacman-key --populate
+#....................... sudo pacman-key --init
+#....................... sudo pacman-key --populate
 
 # Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -22,19 +22,19 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-
 
 # Copy files !!!
 cp -r home/. ~
-sudo cp -r \\/. / --no-preserve=ownership
+#....................... sudo cp -r \\/. / --no-preserve=ownership
 
 # Build font information cache files
 fc-cache -fv
 
 # Enable the corresponding devices
-rfkill block wlan
+rfkill unblock wlan
 
 # Disable the corresponding devices
 rfkill block bluetooth
 
 # Enable and start the network synchronization service
-sudo timedatectl set-ntp true
+#....................... sudo timedatectl set-ntp true
 
 # Enable timers
 systemctl --user enable battery-notification.timer
