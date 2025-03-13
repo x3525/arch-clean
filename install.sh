@@ -7,12 +7,26 @@ e ()
 
 unmount ()
 {
-    {
-        swapoff -a
-        umount -q -R "$MOUNT"
-    } &> /dev/null
+    umount -q -R "$MOUNT"  &> /dev/null
 
     return 0
+}
+
+partition ()
+{
+    sfdisk "$BLOCK" << EOF
+label: gpt
+unit: sectors
+
+start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
+start=     2099200,                    type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
+EOF
+}
+
+format ()
+{
+    mkfs.ext4 "${partitions[1]}" -F
+    mkfs.fat  "${partitions[0]}" -F 32
 }
 
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" -ne 64 ]
@@ -28,17 +42,11 @@ then
 fi
 
 BLOCK=$1
-MOUNT=$2
+MOUNT=$2/5967328296455939
 
 if [ ! -b "$BLOCK" ]
 then
     echo "Device is not a block special!"
-    e
-fi
-
-if ! mkdir -p "$MOUNT" &> /dev/null
-then
-    echo "Cannot create the mount directory!"
     e
 fi
 
@@ -80,30 +88,17 @@ unmount
 
 trap e ERR
 
-# Disk partition
-sfdisk "$BLOCK" <<- EOF
-label: gpt
-unit: sectors
-
-start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
-start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
-start=    35653632,                    type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
-EOF
-
-# Format the partitions
-for partition in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
+for part in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
 do
-    partitions+=("$partition")
+    partitions+=("$part")
 done
 
-mkfs.ext4 "${partitions[2]}" -F
-mkfs.fat  "${partitions[0]}" -F 32
-mkswap    "${partitions[1]}"
+[ -d "$MOUNT" ] || partition
+[ -d "$MOUNT" ] || format
 
 # Mount the file systems
-mount     "${partitions[2]}" "$MOUNT"
-mount     "${partitions[0]}" "$MOUNT"/boot/efi -m
-swapon    "${partitions[1]}"
+mount "${partitions[1]}" -m "$MOUNT"
+mount "${partitions[0]}" -m "$MOUNT"/boot/efi
 
 # Wait for time synchronization to complete...
 while [ "$(timedatectl show --property NTPSynchronized --value)" != "yes" ]
