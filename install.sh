@@ -1,5 +1,13 @@
 #!/bin/bash
 
+unmount()
+{
+    {
+        swapoff -a
+        umount -q -R "$MOUNT"
+    } &> /dev/null
+}
+
 if [ "$(cat /sys/firmware/efi/fw_platform_size)" != "64" ]
 then
     echo "System is not booted in 64-bit UEFI mode!"
@@ -22,7 +30,7 @@ then
     exit 1
 fi
 
-if [ ! -d "$MOUNT" ] && ! mkdir -p "$MOUNT" 2> /dev/null
+if ! mkdir -p "$MOUNT" &> /dev/null
 then
     echo "Cannot create the mount directory!"
     exit 1
@@ -34,27 +42,21 @@ then
     exit 1
 fi
 
-printf "Enter password:"; set +a; read -r -s PASS_USER < /dev/tty; set -a; echo
-printf "Enter password:"; set +a; read -r -s USER_PASS < /dev/tty; set -a; echo
+set +a; read -s -r -p "Enter password:" PASSUSER < /dev/tty; set -a; echo
+set +a; read -s -r -p "Enter password:" USERPASS < /dev/tty; set -a; echo
 
-if [ "$PASS_USER" != "$USER_PASS" ]
+if [ -z "$PASSUSER" ] || [ "$PASSUSER" != "$USERPASS" ]
 then
     echo "Passwords do not match!"
     exit 1
 fi
 
-printf "Enter password (root):"; set +a; read -r -s PASS_ROOT < /dev/tty; set -a; echo
-printf "Enter password (root):"; set +a; read -r -s ROOT_PASS < /dev/tty; set -a; echo
+set +a; read -s -r -p "Enter password (root):" PASSROOT < /dev/tty; set -a; echo
+set +a; read -s -r -p "Enter password (root):" ROOTPASS < /dev/tty; set -a; echo
 
-if [ "$PASS_ROOT" != "$ROOT_PASS" ]
+if [ -z "$PASSROOT" ] || [ "$PASSROOT" != "$ROOTPASS" ]
 then
     echo "Passwords do not match!"
-    exit 1
-fi
-
-if [ -z "$PASS_ROOT" ] || [ -z "$PASS_USER" ]
-then
-    echo "Empty passwords are not allowed!"
     exit 1
 fi
 
@@ -63,14 +65,6 @@ then
     echo "Network is unreachable!"
     exit 1
 fi
-
-unmount()
-{
-    {
-        swapoff -a
-        umount -q -R "$MOUNT"
-    } &> /dev/null
-}
 
 trap unmount EXIT
 
@@ -191,8 +185,8 @@ then
     useradd -R /mnt -m -G wheel -s "$(which zsh)" "$2"
 fi
 
-printf '%s' "$PASS_ROOT" | passwd -R /mnt --stdin
-printf '%s' "$PASS_USER" | passwd -R /mnt --stdin "$2"
+printf '%s' "$PASSROOT" | passwd -R /mnt --stdin
+printf '%s' "$PASSUSER" | passwd -R /mnt --stdin "$2"
 
 # Prepare the chroot jail
 mount -t proc  /proc /mnt/proc
