@@ -196,8 +196,8 @@ echo -n "$PASSUSER" | passwd -R "$MOUNT" --stdin "$LOGIN"
 # Prepare the chroot jail
 mount -t proc  /proc "$MOUNT"/proc
 mount -t sysfs /sys  "$MOUNT"/sys
-mount -o bind  /dev  "$MOUNT"/dev
-mount -o bind  /sys/firmware/efi/efivars "$MOUNT"/sys/firmware/efi/efivars
+mount --bind   /dev  "$MOUNT"/dev
+mount --bind   /sys/firmware/efi/efivars "$MOUNT"/sys/firmware/efi/efivars
 
 # Verify the master keys
 chroot "$MOUNT" pacman-key --init
