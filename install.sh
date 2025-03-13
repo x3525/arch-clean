@@ -502,14 +502,15 @@ cat <<- EOF | tee "$MOUNT"/usr/share/icons/default/index.theme
 Inherits=Papirus
 EOF
 
-# User management
+# Add login
 if ! id "$LOGIN" &> /dev/null
 then
     useradd -R "$MOUNT" -m -G wheel -s "$(which zsh)" "$LOGIN"
 fi
 
-printf '%s' "$PASSROOT" | passwd -R "$MOUNT" --stdin
-printf '%s' "$PASSUSER" | passwd -R "$MOUNT" --stdin "$LOGIN"
+# Change user passwords
+echo -n "$PASSROOT" | passwd -R "$MOUNT" --stdin
+echo -n "$PASSUSER" | passwd -R "$MOUNT" --stdin "$LOGIN"
 
 # Prepare the chroot jail
 mount -t proc  /proc "$MOUNT"/proc
