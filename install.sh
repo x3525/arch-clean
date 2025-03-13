@@ -21,15 +21,14 @@ then
     e
 fi
 
-if [ $# -ne 3 ]
+if [ $# -ne 2 ]
 then
-    echo "Usage: $0 BLOCK MOUNT LOGIN"
+    echo "Usage: $0 BLOCK MOUNT"
     e
 fi
 
 BLOCK=$1
 MOUNT=$2
-LOGIN=$3
 
 if [ ! -b "$BLOCK" ]
 then
@@ -43,14 +42,16 @@ then
     e
 fi
 
-if ! grep -qP '^[a-z][a-z0-9]{,15}$' <<< "$LOGIN"
+read -r -p "Login:" LOGIN < /dev/tty
+
+if ! grep -qP '^[a-z][a-z0-9][a-z0-9]{,30}$' <<< "$LOGIN"
 then
-    echo "Login name is invalid!"
+    echo "Given login name is invalid!"
     e
 fi
 
-set +a; read -s -r -p "Enter password:" PASSUSER < /dev/tty; set -a; echo
-set +a; read -s -r -p "Enter password:" USERPASS < /dev/tty; set -a; echo
+set +a; read -s -r -p "Password:" PASSUSER < /dev/tty; set -a; echo
+set +a; read -s -r -p "Password:" USERPASS < /dev/tty; set -a; echo
 
 if [ -z "$PASSUSER" ] || [ "$PASSUSER" != "$USERPASS" ]
 then
@@ -58,8 +59,8 @@ then
     e
 fi
 
-set +a; read -s -r -p "Enter password (root):" PASSROOT < /dev/tty; set -a; echo
-set +a; read -s -r -p "Enter password (root):" ROOTPASS < /dev/tty; set -a; echo
+set +a; read -s -r -p "Password (root):" PASSROOT < /dev/tty; set -a; echo
+set +a; read -s -r -p "Password (root):" ROOTPASS < /dev/tty; set -a; echo
 
 if [ -z "$PASSROOT" ] || [ "$PASSROOT" != "$ROOTPASS" ]
 then
