@@ -82,7 +82,7 @@ trap e ERR
 # Erase all available signatures
 wipefs -f -a "$BLOCK"*
 
-# Disk partiton
+# Disk partition
 sfdisk "$BLOCK" <<- EOF
 label: gpt
 unit: sectors
