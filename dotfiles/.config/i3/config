@@ -1,10 +1,10 @@
 include config.d/*.conf
 
 # Screen locker
-exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/bin/locker.sh
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/scripts/locker.sh
 
 # Executing applications
-exec_always --no-startup-id ~/bin/restart.sh ~/.config/autostart/desktop.d
+exec_always --no-startup-id ~/scripts/restart.sh ~/.config/autostart/desktop.d
 
 focus_follows_mouse no
 
