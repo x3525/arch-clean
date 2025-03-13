@@ -554,6 +554,10 @@ mount -t sysfs /sys  "$MOUNT"/sys
 mount -o bind  /dev  "$MOUNT"/dev
 mount -o bind  /sys/firmware/efi/efivars "$MOUNT"/sys/firmware/efi/efivars
 
+# Verify the master keys
+chroot "$MOUNT" pacman-key --init
+chroot "$MOUNT" pacman-key --populate
+
 # Generate the locales
 chroot "$MOUNT" locale-gen
 
