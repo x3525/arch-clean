@@ -93,82 +93,242 @@ start=    35653632,                    type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
 EOF
 
 # Format the partitions
-partitions=()
-
-for partition in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
+for part in $(sfdisk --dump "$BLOCK" | grep start | cut -d ':' -f 1 | tr -d ' ')
 do
-    partitions+=("$partition")
+    parts+=("$part")
 done
 
-mkfs.ext4 "${partitions[2]}" -F
-mkfs.fat  "${partitions[0]}" -F 32
-mkswap    "${partitions[1]}"
+mkfs.ext4 "${parts[2]}" -F
+mkfs.fat  "${parts[0]}" -F 32
+mkswap    "${parts[1]}"
 
 # Mount the file systems
-mount     "${partitions[2]}" "$MOUNT"
-mount     "${partitions[0]}" "$MOUNT"/boot/efi -m
-swapon    "${partitions[1]}"
+mount     "${parts[2]}" "$MOUNT"
+mount     "${parts[0]}" "$MOUNT"/boot/efi -m
+swapon    "${parts[1]}"
 
-echo "Waiting for time synchronization to complete..."
-
+# Wait for time synchronization to complete
 while [ "$(timedatectl show --property=NTPSynchronized --value)" != "yes" ]
 do
-    sleep 1
+    echo -n .
+    sleep 2
 done
 
-echo "Waiting for automatic mirror selection to complete..."
-
+# Wait for automatic mirror selection to complete
 while [ "$(systemctl is-active reflector.service)" != "inactive" ]
 do
-    sleep 1
+    echo -n .
+    sleep 2
 done
 
-echo "Waiting for Arch Linux keyring synchronization to complete..."
-
+# Wait for Arch Linux keyring synchronization to complete
 while [ "$(systemctl is-active archlinux-keyring-wkd-sync.service)" != "inactive" ]
 do
-    sleep 1
+    echo -n .
+    sleep 2
 done
 
-# Determine additional packages to install
-#PACKAGES=()
-PACKAGES=(7zip adwaita-cursors alacritty arandr ascii autorandr bind brightnessctl cifs-utils cmake cronie cups curl debugedit dex dmenu dos2unix dosfstools dunst efibootmgr exfat-utils fakeroot feh ffmpeg firefox flameshot flatpak freerdp2 fuse2 gcc gdb git github-cli glab go grub gst-plugin-pipewire gtk3 gtk4 gvfs hashcat hashcat-utils hcxtools hsetroot hydra i3-wm i3lock i3status inetutils iwd john jq kcolorchooser kolourpaint lib32-gcc-libs lib32-glibc libinput libnotify libpulse libreoffice-still libwebp lightdm lightdm-gtk-greeter linux-headers lxsession-gtk3 make man-db man-pages mariadb mate-calc medusa metasploit net-snmp net-tools networkmanager nfs-utils nmap noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ntfs-3g openbsd-netcat openldap openssh openvpn pacman-contrib pacutils pamixer papirus-icon-theme pavucontrol perl-file-mimeinfo php picom pipewire pipewire-alsa pipewire-jack pipewire-pulse playerctl plocate pocl polkit postgresql proxychains-ng python python-pip qt6-multimedia qt6-multimedia-ffmpeg rdesktop redis reflector rofi ruby samba scrot shellcheck smartmontools smbclient socat speech-dispatcher sqlmap sshpass sshuttle sudo tcpdump thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tidy tk traceroute trash-cli tree ttf-jetbrains-mono ttf-meslo-nerd udisks2 unzip upx usbutils vim vlc wget which whois wireless_tools wireplumber wireshark-qt wpa_supplicant xarchiver xdg-utils xdotool xorg-server xorg-xev xorg-xinit xorg-xinput xorg-xrandr xsel xss-lock xterm zip zsh)
+echo
 
+packages+=(7zip)
+packages+=(adwaita-cursors)
+packages+=(alacritty)
+packages+=(arandr)
+packages+=(ascii)
+packages+=(autorandr)
+packages+=(bind)
+packages+=(brightnessctl)
+packages+=(cifs-utils)
+packages+=(cmake)
+packages+=(cronie)
+packages+=(cups)
+packages+=(curl)
+packages+=(debugedit)
+packages+=(dex)
+packages+=(dmenu)
+packages+=(dos2unix)
+packages+=(dosfstools)
+packages+=(dunst)
+packages+=(efibootmgr)
+packages+=(exfat-utils)
+packages+=(fakeroot)
+packages+=(feh)
+packages+=(ffmpeg)
+packages+=(firefox)
+packages+=(flameshot)
+packages+=(flatpak)
+packages+=(freerdp2)
+packages+=(fuse2)
+packages+=(gcc)
+packages+=(gdb)
+packages+=(git)
+packages+=(github-cli)
+packages+=(glab)
+packages+=(go)
+packages+=(grub)
+packages+=(gst-plugin-pipewire)
+packages+=(gtk3)
+packages+=(gtk4)
+packages+=(gvfs)
+packages+=(hashcat)
+packages+=(hashcat-utils)
+packages+=(hcxtools)
+packages+=(hsetroot)
+packages+=(hydra)
+packages+=(i3-wm)
+packages+=(i3lock)
+packages+=(i3status)
+packages+=(inetutils)
+packages+=(iwd)
+packages+=(john)
+packages+=(jq)
+packages+=(kcolorchooser)
+packages+=(kolourpaint)
+packages+=(lib32-gcc-libs)
+packages+=(lib32-glibc)
+packages+=(libinput)
+packages+=(libnotify)
+packages+=(libpulse)
+packages+=(libreoffice-still)
+packages+=(libwebp)
+packages+=(lightdm)
+packages+=(lightdm-gtk-greeter)
+packages+=(linux-headers)
+packages+=(lxsession-gtk3)
+packages+=(make)
+packages+=(man-db)
+packages+=(man-pages)
+packages+=(mariadb)
+packages+=(mate-calc)
+packages+=(medusa)
+packages+=(metasploit)
+packages+=(net-snmp)
+packages+=(net-tools)
+packages+=(networkmanager)
+packages+=(nfs-utils)
+packages+=(nmap)
+packages+=(noto-fonts)
+packages+=(noto-fonts-cjk)
+packages+=(noto-fonts-emoji)
+packages+=(noto-fonts-extra)
+packages+=(ntfs-3g)
+packages+=(openbsd-netcat)
+packages+=(openldap)
+packages+=(openssh)
+packages+=(openvpn)
+packages+=(pacman-contrib)
+packages+=(pacutils)
+packages+=(pamixer)
+packages+=(papirus-icon-theme)
+packages+=(pavucontrol)
+packages+=(perl-file-mimeinfo)
+packages+=(php)
+packages+=(picom)
+packages+=(pipewire)
+packages+=(pipewire-alsa)
+packages+=(pipewire-jack)
+packages+=(pipewire-pulse)
+packages+=(playerctl)
+packages+=(plocate)
+packages+=(pocl)
+packages+=(polkit)
+packages+=(postgresql)
+packages+=(proxychains-ng)
+packages+=(python)
+packages+=(python-pip)
+packages+=(qt6-multimedia)
+packages+=(qt6-multimedia-ffmpeg)
+packages+=(rdesktop)
+packages+=(redis)
+packages+=(reflector)
+packages+=(rofi)
+packages+=(ruby)
+packages+=(samba)
+packages+=(scrot)
+packages+=(shellcheck)
+packages+=(smartmontools)
+packages+=(smbclient)
+packages+=(socat)
+packages+=(speech-dispatcher)
+packages+=(sqlmap)
+packages+=(sshpass)
+packages+=(sshuttle)
+packages+=(sudo)
+packages+=(tcpdump)
+packages+=(thunar)
+packages+=(thunar-archive-plugin)
+packages+=(thunar-media-tags-plugin)
+packages+=(thunar-volman)
+packages+=(tidy)
+packages+=(tk)
+packages+=(traceroute)
+packages+=(trash-cli)
+packages+=(tree)
+packages+=(ttf-jetbrains-mono)
+packages+=(ttf-meslo-nerd)
+packages+=(udisks2)
+packages+=(unzip)
+packages+=(upx)
+packages+=(usbutils)
+packages+=(vim)
+packages+=(vlc)
+packages+=(wget)
+packages+=(which)
+packages+=(whois)
+packages+=(wireless_tools)
+packages+=(wireplumber)
+packages+=(wireshark-qt)
+packages+=(wpa_supplicant)
+packages+=(xarchiver)
+packages+=(xdg-utils)
+packages+=(xdotool)
+packages+=(xorg-server)
+packages+=(xorg-xev)
+packages+=(xorg-xinit)
+packages+=(xorg-xinput)
+packages+=(xorg-xrandr)
+packages+=(xsel)
+packages+=(xss-lock)
+packages+=(xterm)
+packages+=(zip)
+packages+=(zsh)
+
+# Determine additional packages to install
 if grep -q snd_sof /proc/modules
 then
-    PACKAGES+=(sof-firmware)
+    packages+=(sof-firmware)
 fi
 
 if [ "$(systemd-detect-virt)" != "none" ]
 then
-    PACKAGES+=(mesa)
-    PACKAGES+=(xf86-video-vmware)
+    packages+=(mesa)
+    packages+=(xf86-video-vmware)
 else
     case "$(lspci -d ::03xx)" in
         *[aA][mM][dD]*)
-            PACKAGES+=(mesa)
-            PACKAGES+=(rocm-opencl-runtime)
-            PACKAGES+=(vulkan-radeon)
-            PACKAGES+=(xf86-video-amdgpu)
-            PACKAGES+=(xf86-video-ati)
+            packages+=(mesa)
+            packages+=(rocm-opencl-runtime)
+            packages+=(vulkan-radeon)
+            packages+=(xf86-video-amdgpu)
+            packages+=(xf86-video-ati)
             ;;&
         *[iI][nN][tT][eE][lL]*)
-            PACKAGES+=(intel-compute-runtime)
-            PACKAGES+=(intel-media-driver)
-            PACKAGES+=(libva-intel-driver)
-            PACKAGES+=(mesa)
-            PACKAGES+=(vulkan-intel)
+            packages+=(intel-compute-runtime)
+            packages+=(intel-media-driver)
+            packages+=(libva-intel-driver)
+            packages+=(mesa)
+            packages+=(vulkan-intel)
             ;;&
         *[nN][vV][iI][dD][iI][aA]*)
-            PACKAGES+=(mesa)
-            PACKAGES+=(opencl-nvidia)
-            PACKAGES+=(xf86-video-nouveau)
+            packages+=(mesa)
+            packages+=(opencl-nvidia)
+            packages+=(xf86-video-nouveau)
             ;;&
     esac
 fi
 
 # Install packages
-while ! pacstrap -K "$MOUNT" base linux linux-firmware "${PACKAGES[@]}"
+while ! pacstrap -K "$MOUNT" base linux linux-firmware "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]?"
     read -r < /dev/tty
