@@ -1,8 +1,29 @@
 #!/bin/bash
 
-. functions.sh
+function wait()
+{
+    for u
+    do
+        echo "Currently waiting for ${u} to complete..."
 
-if no::uefi
+        case ${u} in
+            *.timer)
+                while [ -z "$(systemctl show -P ActiveEnterTimestamp "${u}")" ]
+                do
+                    sleep 1
+                done
+                ;;
+            *)
+                while [ "$(systemctl is-active "${u}")" != "inactive" ]
+                do
+                    sleep 1
+                done
+                ;;
+        esac
+    done
+}
+
+if [ ! -d /sys/firmware/efi ]
 then
     echo "System is not booted in UEFI mode!"
     exit 1
@@ -14,17 +35,15 @@ then
     exit 1
 fi
 
-DEVICE=${1}
-
-if [ ! -b "${DEVICE}" ]
+if [ ! -b "${1}" ]
 then
     echo "Device is not a block special!"
     exit 1
 fi
 
-LOGIN=${2}
+LC_CTYPE=C
 
-if no::name "${LOGIN}"
+if [[ ! ${2} =~ ^[a-z][a-z0-9][a-z0-9]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
@@ -39,7 +58,7 @@ then
     exit 1
 fi
 
-if no::connection
+if ! ping -q -c 1 -w 2 "$(ip route | grep -m 1 default | cut -d ' ' -f 3)" &> /dev/null
 then
     echo "Network is unreachable!"
     exit 1
@@ -47,29 +66,21 @@ fi
 
 echo "Starting sanity checks..."
 
-EPOCH=$(date +%s)
-
-while no::ntp
+while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
 do
-    if [ $(( $(date +%s) - EPOCH )) -gt 10 ]
-    then
-        echo "Time synchronization not completing!"
-        exit 1
-    fi
-
     sleep 1
 done
 
 # Wait for automatic mirror selection to complete
-unit::wait reflector.service
+wait reflector.service
 
 # Wait for Arch Linux keyring synchronization to complete
-unit::wait archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+wait archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -e
 set -o pipefail
 
-sfdisk "${DEVICE}" << EOF
+sfdisk "${1}" << EOF
 label: gpt
 unit: sectors
 
@@ -78,21 +89,19 @@ start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
 start=    35653632,                    type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
 EOF
 
-EFI_SYSTEM_PARTITION=$(part::get "${DEVICE}" C12A7328-F81F-11D2-BA4B-00A0C93EC93B)
-LINUX_SWAP=$(part::get "${DEVICE}" 0657FD6D-A4AB-43C4-84E5-0933C84B4F4F)
-LINUX_ROOT_X86_64=$(part::get "${DEVICE}" 4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709)
+DUMP=$(sfdisk "${1}" --dump)
 
 # Format the partitions
-mkfs.fat "${EFI_SYSTEM_PARTITION}" -F 32
-mkfs.ext4 "${LINUX_ROOT_X86_64}" -F
+mkfs.fat "(sed -nE 's/(^[^ ]+).+type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B,.+/\1/p' <<< "${DUMP}")" -F 32
+mkfs.ext4 "(sed -nE 's/(^[^ ]+).+type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709,.+/\1/p' <<< "${DUMP}")" -F
 
 # Mount the file systems
-mount -m "${LINUX_ROOT_X86_64}" /mnt
-mount -m "${EFI_SYSTEM_PARTITION}" /mnt/boot/efi
+mount -m "(sed -nE 's/(^[^ ]+).+type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709,.+/\1/p' <<< "${DUMP}")" /mnt
+mount -m "(sed -nE 's/(^[^ ]+).+type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B,.+/\1/p' <<< "${DUMP}")" /mnt/boot/efi
 
 # SWAP
-mkswap "${LINUX_SWAP}"
-swapon "${LINUX_SWAP}"
+mkswap "(sed -nE 's/(^[^ ]+).+type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F,.+/\1/p' <<< "${DUMP}")"
+swapon "(sed -nE 's/(^[^ ]+).+type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F,.+/\1/p' <<< "${DUMP}")"
 
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
@@ -133,20 +142,20 @@ genfstab -U /mnt > /mnt/etc/fstab
 # Set the Hardware Clock from the System Clock
 hwclock --systohc --adjfile=/mnt/etc/adjtime
 
+useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${2}" 2> /dev/null
+
+echo "${ROOT}" | passwd -R /mnt --stdin
+echo "${PASS}" | passwd -R /mnt --stdin "${2}"
+
 cp -r rootfs/. /mnt
 
 # Generate the locales
 arch-chroot /mnt locale-gen
 
-useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${LOGIN}" 2> /dev/null
-
-echo "${ROOT}" | passwd -R /mnt --stdin
-echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
-
 arch-chroot /mnt systemctl enable fstrim.timer reflector.timer
 arch-chroot /mnt systemctl enable lightdm.service NetworkManager.service systemd-timesyncd.service
 
-case "$(lsblk "${DEVICE}" -o HOTPLUG -n -d)" in
+case "$(lsblk "${1}" -o HOTPLUG -n -d)" in
     0)
         arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
         ;;&
