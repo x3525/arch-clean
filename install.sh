@@ -31,11 +31,14 @@ fi
 
 if [ $# -ne 2 ]
 then
-    echo "Usage: ${0} DEVICE LOGIN"
+    echo "Usage: ${0} BLOCK LOGIN"
     exit 1
 fi
 
-if [ ! -b "${1}" ]
+BLOCK=${1}
+LOGIN=${2}
+
+if [ ! -b "${BLOCK}" ]
 then
     echo "Device is not a block special!"
     exit 1
@@ -43,7 +46,7 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! ${2} =~ ^[a-z][a-z0-9][a-z0-9]{,30}$ ]]
+if [[ ! ${LOGIN} =~ ^[a-z][a-z0-9][a-z0-9]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
@@ -80,7 +83,7 @@ wait archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 set -e
 set -o pipefail
 
-sfdisk -w always -W always "${1}" << EOF
+sfdisk -w always -W always "${BLOCK}" << EOF
 label: gpt
 unit: sectors
 
@@ -89,7 +92,7 @@ start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
 start=    35653632,                    type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
 EOF
 
-DUMP=$(sfdisk "${1}" --dump)
+DUMP=$(sfdisk "${BLOCK}" --dump)
 
 U=$(awk '/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}' <<< "${DUMP}")
 S=$(awk '/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}' <<< "${DUMP}")
@@ -144,10 +147,10 @@ genfstab -U /mnt > /mnt/etc/fstab
 # Set the Hardware Clock from the System Clock
 hwclock --systohc --adjfile=/mnt/etc/adjtime
 
-useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${2}" 2> /dev/null
+useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${LOGIN}" 2> /dev/null
 
 echo "${ROOT}" | passwd -R /mnt --stdin
-echo "${PASS}" | passwd -R /mnt --stdin "${2}"
+echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
 
 cp -r rootfs/. /mnt
 
@@ -157,7 +160,7 @@ arch-chroot /mnt locale-gen
 arch-chroot /mnt systemctl enable fstrim.timer reflector.timer
 arch-chroot /mnt systemctl enable lightdm.service NetworkManager.service systemd-timesyncd.service
 
-case "$(lsblk "${1}" -o HOTPLUG -n -d)" in
+case "$(lsblk "${BLOCK}" -o HOTPLUG -n -d)" in
     0)
         arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
         ;;&
