@@ -11,7 +11,6 @@ dex
 dmenu
 dos2unix
 dosfstools
-dosfstools
 dunst
 efibootmgr
 exfat-utils
@@ -99,8 +98,6 @@ sshuttle
 sudo
 thunar
 thunar-archive-plugin
-thunar-media-tags-plugin
-thunar-volman
 tidy
 tk
 traceroute
