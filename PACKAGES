@@ -1,6 +1,7 @@
 7zip
 alacritty
 arandr
+archiso
 ascii
 autorandr
 bind
@@ -81,6 +82,7 @@ playerctl
 plocate
 polkit
 proxychains-ng
+pv
 python
 python-pip
 qt6-multimedia
