@@ -40,6 +40,7 @@ john
 jq
 kcolorchooser
 kolourpaint
+libnotify
 libreoffice-still
 libwebp
 lightdm
@@ -52,6 +53,7 @@ mate-calc
 medusa
 mesa
 metasploit
+nasm
 net-snmp
 net-tools
 networkmanager
