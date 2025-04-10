@@ -87,6 +87,7 @@ proxychains-ng
 pv
 python
 python-pip
+python-pipx
 qt6-multimedia
 qt6-multimedia-ffmpeg
 reflector
