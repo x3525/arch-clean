@@ -85,6 +85,7 @@ plocate
 polkit
 proxychains-ng
 pv
+pyenv
 python
 python-pip
 python-pipx
