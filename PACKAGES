@@ -26,6 +26,7 @@ github-cli
 go
 grub
 gtk3
+gtk4
 gvfs
 hashcat
 hashcat-utils
@@ -121,6 +122,7 @@ vlc
 wget
 which
 whois
+wireshark-qt
 wpa_supplicant
 xarchiver
 xdg-utils
