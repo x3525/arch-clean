@@ -1,4 +1,5 @@
 7zip
+aircrack-ng
 alacritty
 arandr
 archiso
@@ -122,6 +123,7 @@ vlc
 wget
 which
 whois
+wireless_tools
 wireshark-qt
 wpa_supplicant
 xarchiver
