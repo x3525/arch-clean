@@ -94,6 +94,7 @@ python-pip
 python-pipx
 qt6-multimedia
 qt6-multimedia-ffmpeg
+redshift
 reflector
 rofi
 ruby
