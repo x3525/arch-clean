@@ -39,6 +39,7 @@ hydra
 i3-wm
 i3lock
 i3status
+impacket
 inetutils
 john
 jq
@@ -126,6 +127,7 @@ wget
 which
 whois
 wireless_tools
+wireshark-cli
 wireshark-qt
 wpa_supplicant
 xarchiver
