@@ -135,6 +135,7 @@ wpa_supplicant
 xarchiver
 xdg-utils
 xorg-server
+xorg-server-xvfb
 xorg-xev
 xsel
 xss-lock
