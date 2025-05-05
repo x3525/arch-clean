@@ -94,6 +94,7 @@ proxychains-ng
 pv
 pyenv
 python
+python-html2text
 python-pip
 python-pipx
 qt6-multimedia
