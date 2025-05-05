@@ -9,6 +9,7 @@ bind
 brightnessctl
 cronie
 cups
+debugedit
 dex
 dmenu
 dos2unix
@@ -16,6 +17,7 @@ dosfstools
 dunst
 efibootmgr
 exfat-utils
+fakeroot
 feh
 firefox
 flameshot
