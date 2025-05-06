@@ -25,6 +25,7 @@ freerdp2
 fuse2
 gammastep
 gcc
+gdb
 git
 github-cli
 go
@@ -75,12 +76,14 @@ ntfs-3g
 openbsd-netcat
 openldap
 openssh
+openssl
 openvpn
 pamixer
 papirus-icon-theme
 pavucontrol
 perl
 perl-file-mimeinfo
+perl-libwww
 php
 picom
 pipewire
