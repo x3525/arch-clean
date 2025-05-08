@@ -139,6 +139,7 @@ wireshark-qt
 wpa_supplicant
 xarchiver
 xdg-utils
+xdotool
 xorg-server
 xorg-server-xvfb
 xorg-xev
