@@ -52,8 +52,8 @@ then
     exit 1
 fi
 
-PASS=$(systemd-ask-password --timeout=0 --echo=no --emoji=no "Password:")
-ROOT=$(systemd-ask-password --timeout=0 --echo=no --emoji=no "Password (root):")
+PASS=$(systemd-ask-password --timeout=0 --echo=no --emoji=no "Password")
+ROOT=$(systemd-ask-password --timeout=0 --echo=no --emoji=no "Password (root)")
 
 if [ -z "${PASS}" ] || [ -z "${ROOT}" ]
 then
@@ -133,6 +133,7 @@ fi
 while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}" - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]? "
+
     read -r
 
     case $REPLY in
@@ -145,7 +146,7 @@ done
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Set the Hardware Clock from the System Clock
-hwclock --systohc --adjfile=/mnt/etc/adjtime
+hwclock -w --adjfile=/mnt/etc/adjtime
 
 useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${LOGIN}" 2> /dev/null
 
@@ -160,7 +161,7 @@ arch-chroot /mnt locale-gen
 arch-chroot /mnt systemctl enable fstrim.timer reflector.timer
 arch-chroot /mnt systemctl enable lightdm.service NetworkManager.service systemd-timesyncd.service
 
-case "$(lsblk "${BLOCK}" -o HOTPLUG -n -d)" in
+case "$(lsblk -n -d "${BLOCK}" -o HOTPLUG)" in
     0)
         arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
         ;;&
