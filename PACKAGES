@@ -47,7 +47,7 @@ i3lock
 i3status
 impacket
 inetutils
-iptables
+iptables-nft
 john
 jq
 kcolorchooser
