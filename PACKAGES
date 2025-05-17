@@ -44,7 +44,6 @@ i3lock
 i3status
 impacket
 inetutils
-iptables-nft
 john
 jq
 kcolorchooser
@@ -113,7 +112,6 @@ socat
 speech-dispatcher
 sqlmap
 sshpass
-sshuttle
 thunar
 thunar-archive-plugin
 tidy
