@@ -130,7 +130,7 @@ then
     packages+=(sof-firmware)
 fi
 
-while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}" - < PACKAGES
+while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}" - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Tr[Y] agai[n]? "
 

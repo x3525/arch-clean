@@ -10,7 +10,6 @@ brightnessctl
 cmake
 cronie
 cups
-debugedit
 dex
 dmenu
 dos2unix
@@ -19,14 +18,12 @@ dunst
 efibootmgr
 exfat-utils
 exploitdb
-fakeroot
 feh
 firefox
 flameshot
 freerdp2
 fuse2
 gammastep
-gcc
 gdb
 git
 github-cli
@@ -59,7 +56,6 @@ libwebp
 lightdm
 lightdm-gtk-greeter
 lxsession-gtk3
-make
 man-db
 man-pages
 mate-calc
@@ -118,7 +114,6 @@ speech-dispatcher
 sqlmap
 sshpass
 sshuttle
-sudo
 thunar
 thunar-archive-plugin
 tidy
@@ -135,7 +130,6 @@ usbutils
 vim
 vlc
 wget
-which
 whois
 wireless_tools
 wireshark-cli
