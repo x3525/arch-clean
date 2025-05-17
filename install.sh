@@ -153,7 +153,7 @@ useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${LOGIN}" 2> /dev/null
 echo "${ROOT}" | passwd -R /mnt --stdin
 echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
 
-cp -r rootfs/. /mnt
+cp -r */ /mnt
 
 # Generate the locales
 arch-chroot /mnt locale-gen
