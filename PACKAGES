@@ -66,6 +66,7 @@ net-snmp
 net-tools
 networkmanager
 networkmanager-openvpn
+nfs-utils
 nm-connection-editor
 nmap
 noto-fonts
