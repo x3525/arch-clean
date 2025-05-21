@@ -113,6 +113,7 @@ socat
 speech-dispatcher
 sqlmap
 sshpass
+tcpdump
 thunar
 thunar-archive-plugin
 tidy
