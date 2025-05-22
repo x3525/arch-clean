@@ -5,11 +5,14 @@ arandr
 archiso
 ascii
 autorandr
+bat
 bind
 brightnessctl
+btop
 cmake
 cronie
 cups
+curl
 dex
 dmenu
 dos2unix
@@ -37,7 +40,6 @@ hashcat-utils
 hcxtools
 hostapd
 hsetroot
-htop
 hydra
 i3-wm
 i3lock
