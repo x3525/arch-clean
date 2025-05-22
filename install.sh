@@ -61,7 +61,7 @@ then
     exit 1
 fi
 
-if ! ping -q -c 1 -w 2 "$(ip route | grep -m 1 default | cut -d ' ' -f 3)" &> /dev/null
+if ! ping -q -c 1 -w 2 1.1.1.1 > /dev/null 2>&1
 then
     echo "Network is unreachable!"
     exit 1
