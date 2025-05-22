@@ -125,6 +125,11 @@ case "$(lspci -d ::03xx)" in
         ;;
 esac
 
+if [ "$(systemd-detect-virt)" != "none" ]
+then
+    packages+=(xf86-video-vmware)
+fi
+
 if grep -q snd_sof /proc/modules
 then
     packages+=(sof-firmware)
@@ -153,7 +158,7 @@ useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${LOGIN}" 2> /dev/null
 echo "${ROOT}" | passwd -R /mnt --stdin
 echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
 
-cp -r */ /mnt
+cp -r -- */ /mnt
 
 # Generate the locales
 arch-chroot /mnt locale-gen
