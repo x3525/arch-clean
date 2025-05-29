@@ -8,7 +8,6 @@ autorandr
 bat
 bind
 brightnessctl
-btop
 cmake
 cronie
 cups
@@ -40,6 +39,7 @@ hashcat-utils
 hcxtools
 hostapd
 hsetroot
+htop
 hydra
 i3-wm
 i3lock
