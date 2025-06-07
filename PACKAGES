@@ -105,6 +105,7 @@ python-pip
 python-pipx
 qt6-multimedia
 qt6-multimedia-ffmpeg
+rdesktop
 reflector
 rofi
 ruby
