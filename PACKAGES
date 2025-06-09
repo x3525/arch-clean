@@ -142,6 +142,7 @@ xarchiver
 xdg-utils
 xdotool
 xorg-server
+xorg-server-xephyr
 xorg-server-xvfb
 xorg-xev
 xsel
