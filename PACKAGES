@@ -33,6 +33,7 @@ go
 grub
 gtk3
 gtk4
+gucharmap
 gvfs
 hashcat
 hashcat-utils
