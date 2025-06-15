@@ -61,7 +61,7 @@ then
     exit 1
 fi
 
-if ! ping -q -c 1 -w 2 1.1.1.1 > /dev/null 2>&1
+if ! ping -q -c 1 -w 3 1.1.1.1 > /dev/null 2>&1
 then
     echo "Network is unreachable!"
     exit 1
