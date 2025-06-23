@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function Wait()
+Wait()
 {
     for u
     do
