@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Wait()
+WAIT()
 {
     for u
     do
@@ -75,10 +75,10 @@ do
 done
 
 # Wait for automatic mirror selection to complete
-Wait reflector.service
+WAIT reflector.service
 
 # Wait for Arch Linux keyring synchronization to complete
-Wait archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+WAIT archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -e
 set -o pipefail
