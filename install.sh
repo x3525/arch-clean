@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WAIT()
+zzzz()
 {
     for u
     do
@@ -31,6 +31,7 @@ fi
 
 if [ $# -ne 2 ]
 then
+    lsblk
     echo "Usage: ${0} BLOCK LOGIN"
     exit 1
 fi
@@ -52,8 +53,8 @@ then
     exit 1
 fi
 
-PASS=$(systemd-ask-password --timeout=0 --echo=no --emoji=no "Password")
-ROOT=$(systemd-ask-password --timeout=0 --echo=no --emoji=no "Password (root)")
+PASS=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password")
+ROOT=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password (root)")
 
 if [ -z "${PASS}" ] || [ -z "${ROOT}" ]
 then
@@ -75,10 +76,10 @@ do
 done
 
 # Wait for automatic mirror selection to complete
-WAIT reflector.service
+zzzz reflector.service
 
 # Wait for Arch Linux keyring synchronization to complete
-WAIT archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+zzzz archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -e
 set -o pipefail
@@ -113,7 +114,6 @@ case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
         packages+=(vulkan-radeon)
         packages+=(xf86-video-amdgpu)
-        packages+=(xf86-video-ati)
         ;;&
     *[iI][nN][tT][eE][lL]*)
         packages+=(intel-media-driver)
@@ -148,12 +148,10 @@ do
     esac
 done
 
+# Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
-# Set the Hardware Clock from the System Clock
-hwclock -w --adjfile=/mnt/etc/adjtime
-
-useradd -R /mnt -m -G wheel -s /usr/bin/zsh "${LOGIN}" 2> /dev/null
+useradd -R /mnt -m -s "$(which zsh)" -G wheel "${LOGIN}"
 
 echo "${ROOT}" | passwd -R /mnt --stdin
 echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
@@ -162,6 +160,9 @@ cp -r -- */ /mnt
 
 # Generate the locales
 arch-chroot /mnt locale-gen
+
+# Set the Hardware Clock from the System Clock
+arch-chroot /mnt hwclock --systohc
 
 arch-chroot /mnt systemctl enable fstrim.timer reflector.timer
 arch-chroot /mnt systemctl enable lightdm.service NetworkManager.service systemd-timesyncd.service
