@@ -125,11 +125,6 @@ case "$(lspci -d ::03xx)" in
         ;;
 esac
 
-if [ "$(systemd-detect-virt)" != "none" ]
-then
-    packages+=(xf86-video-vmware)
-fi
-
 if grep -q snd_sof /proc/modules
 then
     packages+=(sof-firmware)
