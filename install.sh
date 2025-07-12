@@ -63,11 +63,12 @@ then
     exit 1
 fi
 
-PASS=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password")
+P=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password (user)")
+R=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password (root)")
 
-if [ -z "${PASS}" ]
+if [ -z "${P}" ] || [ -z "${R}" ]
 then
-    echo "Empty password not allowed!"
+    echo "Empty passwords are not allowed!"
     exit 1
 fi
 
@@ -200,8 +201,8 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 useradd -R /mnt -m -s "$(which zsh)" -G wheel "${LOGIN}"
 
-echo "${PASS}" | passwd -R /mnt --stdin
-echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
+echo "${R}" | passwd -R /mnt --stdin
+echo "${P}" | passwd -R /mnt --stdin "${LOGIN}"
 
 cp -r -- */ /mnt
 
