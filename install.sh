@@ -124,7 +124,7 @@ case $1 in
 
         for subvol in "${SUBVOLUMES[@]}"
         do
-            btrfs subvolume create /mnt/"$subvol"
+            btrfs subvolume create /mnt/@"$subvol"
         done
 
         umount /mnt
@@ -150,7 +150,7 @@ mount -m "${U}" /mnt/boot/efi
 
 # Determine additional packages to install
 
-case "$(lscpu -J | jq -r '.[][] | select(.field | test("Vendor ID:")) | .data' | xargs)" in
+case "$(grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
         packages+=(amd-ucode)
         ;;
