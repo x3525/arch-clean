@@ -146,7 +146,7 @@ case $1 in
         ;;
 esac
 
-mount -m "${U}" /mnt/boot/efi
+mount -m "${U}" /mnt/efi
 
 # Determine additional packages to install
 
@@ -213,10 +213,10 @@ arch-chroot /mnt systemctl enable lightdm.service NetworkManager.service systemd
 
 case "$(lsblk -n -d "${BLOCK}" -o HOTPLUG)" in
     0)
-        arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
+        arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
         ;;&
     1)
-        arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --removable
+        arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
         ;;&
     *)
         arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
