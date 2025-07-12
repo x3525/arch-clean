@@ -64,11 +64,10 @@ then
 fi
 
 PASS=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password")
-ROOT=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password (root)")
 
-if [ -z "${PASS}" ] || [ -z "${ROOT}" ]
+if [ -z "${PASS}" ]
 then
-    echo "Empty passwords are not allowed!"
+    echo "Empty password not allowed!"
     exit 1
 fi
 
@@ -77,6 +76,11 @@ then
     echo "Network is unreachable!"
     exit 1
 fi
+
+trap 'echo "Encountered errors during installation!"' EXIT
+
+set -e
+set -o pipefail
 
 echo "Starting sanity checks..."
 
@@ -91,8 +95,7 @@ zzzz reflector.service
 # Wait for Arch Linux keyring synchronization to complete
 zzzz archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
-set -e
-set -o pipefail
+set -x
 
 sfdisk -w always -W always "${BLOCK}" << EOF
 label: gpt
@@ -197,7 +200,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 useradd -R /mnt -m -s "$(which zsh)" -G wheel "${LOGIN}"
 
-echo "${ROOT}" | passwd -R /mnt --stdin
+echo "${PASS}" | passwd -R /mnt --stdin
 echo "${PASS}" | passwd -R /mnt --stdin "${LOGIN}"
 
 cp -r -- */ /mnt
