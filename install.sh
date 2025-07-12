@@ -29,15 +29,25 @@ then
     exit 1
 fi
 
-if [ $# -ne 2 ]
+if [ $# -ne 3 ]
 then
     lsblk
-    echo "Usage: ${0} BLOCK LOGIN"
+    echo "Usage: ${0} btrfs|ext4 BLOCK LOGIN"
     exit 1
 fi
 
-BLOCK=${1}
-LOGIN=${2}
+BLOCK=${2}
+LOGIN=${3}
+
+case $1 in
+    btrfs|ext4)
+        :
+        ;;
+    *)
+        echo "File system is not supported!"
+        exit 1
+        ;;
+esac
 
 if [ ! -b "${BLOCK}" ]
 then
@@ -99,16 +109,55 @@ U=$(awk '/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}' <<< "${DUMP}")
 S=$(awk '/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}' <<< "${DUMP}")
 L=$(awk '/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}' <<< "${DUMP}")
 
-mkfs.vfat "${U}" -F 32
-mkfs.ext4 "${L}" -F
-
-mount -m "${L}" /mnt
-mount -m "${U}" /mnt/boot/efi
+mkfs.fat "${U}" -F 32
 
 mkswap "${S}"
 swapon "${S}"
 
+case $1 in
+    btrfs)
+        mkfs.btrfs "${L}" -f
+
+        mount -m "${L}" /mnt
+
+        SUBVOLUMES=("" home)
+
+        for subvol in "${SUBVOLUMES[@]}"
+        do
+            btrfs subvolume create /mnt/"$subvol"
+        done
+
+        umount /mnt
+
+        for subvol in "${SUBVOLUMES[@]}"
+        do
+            mount -m -o noatime,compress=zstd,space_cache=v2,subvol=@"$subvol" "${L}" /mnt/"$subvol"
+        done
+
+        packages+=(btrfs-progs)
+        packages+=(grub-btrfs)
+        packages+=(inotify-tools)
+        packages+=(snapper)
+        ;;
+    ext4)
+        mkfs.ext4 "${L}" -F
+
+        mount -m "${L}" /mnt
+        ;;
+esac
+
+mount -m "${U}" /mnt/boot/efi
+
 # Determine additional packages to install
+
+case "$(lscpu -J | jq -r '.[][] | select(.field | test("Vendor ID:")) | .data' | xargs)" in
+    *[aA][mM][dD]*)
+        packages+=(amd-ucode)
+        ;;
+    *[iI][nN][tT][eE][lL]*)
+        packages+=(intel-ucode)
+        ;;
+esac
 
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
