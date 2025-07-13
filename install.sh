@@ -29,25 +29,15 @@ then
     exit 1
 fi
 
-if [ $# -ne 3 ]
+if [ $# -ne 2 ]
 then
     lsblk
-    echo "Usage: ${0} btrfs|ext4 BLOCK LOGIN"
+    echo "Usage: ${0} BLOCK LOGIN"
     exit 1
 fi
 
-BLOCK=${2}
-LOGIN=${3}
-
-case $1 in
-    btrfs|ext4)
-        :
-        ;;
-    *)
-        echo "File system is not supported!"
-        exit 1
-        ;;
-esac
+BLOCK=${1}
+LOGIN=${2}
 
 if [ ! -b "${BLOCK}" ]
 then
@@ -78,11 +68,6 @@ then
     exit 1
 fi
 
-trap 'echo "Encountered errors during installation!"' EXIT
-
-set -e
-set -o pipefail
-
 echo "Starting sanity checks..."
 
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
@@ -97,6 +82,8 @@ zzzz reflector.service
 zzzz archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -x
+set -e
+set -o pipefail
 
 sfdisk -w always -W always "${BLOCK}" << EOF
 label: gpt
@@ -113,44 +100,14 @@ U=$(awk '/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}' <<< "${DUMP}")
 S=$(awk '/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}' <<< "${DUMP}")
 L=$(awk '/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}' <<< "${DUMP}")
 
-mkfs.fat "${U}" -F 32
+mkfs.vfat "${U}" -F 32
+mkfs.ext4 "${L}" -F
+
+mount -m "${L}" /mnt
+mount -m "${U}" /mnt/efi
 
 mkswap "${S}"
 swapon "${S}"
-
-case $1 in
-    btrfs)
-        mkfs.btrfs "${L}" -f
-
-        mount -m "${L}" /mnt
-
-        SUBVOLUMES=("" home)
-
-        for subvol in "${SUBVOLUMES[@]}"
-        do
-            btrfs subvolume create /mnt/@"$subvol"
-        done
-
-        umount /mnt
-
-        for subvol in "${SUBVOLUMES[@]}"
-        do
-            mount -m -o noatime,compress=zstd,space_cache=v2,subvol=@"$subvol" "${L}" /mnt/"$subvol"
-        done
-
-        packages+=(btrfs-progs)
-        packages+=(grub-btrfs)
-        packages+=(inotify-tools)
-        packages+=(snapper)
-        ;;
-    ext4)
-        mkfs.ext4 "${L}" -F
-
-        mount -m "${L}" /mnt
-        ;;
-esac
-
-mount -m "${U}" /mnt/efi
 
 # Determine additional packages to install
 
