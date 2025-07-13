@@ -133,6 +133,7 @@ upx
 usbutils
 vim
 vlc
+vlc-plugin-ffmpeg
 wget
 whois
 wireless_tools
