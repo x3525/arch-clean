@@ -29,6 +29,12 @@ then
     exit 1
 fi
 
+if ! ping 1.1.1.1 -c 1 -W 3 > /dev/null 2>&1
+then
+    echo "Network is unreachable!"
+    exit 1
+fi
+
 if [ $# -ne 2 ]
 then
     lsblk
@@ -59,12 +65,6 @@ R=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Password (root)")
 if [ -z "${P}" ] || [ -z "${R}" ]
 then
     echo "Empty passwords are not allowed!"
-    exit 1
-fi
-
-if ! ping 1.1.1.1 -c 1 -W 3 > /dev/null 2>&1
-then
-    echo "Network is unreachable!"
     exit 1
 fi
 
