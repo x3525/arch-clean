@@ -1,7 +1,6 @@
 #!/bin/bash
 
-zzzz()
-{
+zzzz () {
     for u
     do
         echo "Currently waiting for ${u} to complete..."
