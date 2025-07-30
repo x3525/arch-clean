@@ -169,7 +169,7 @@ arch-chroot /mnt locale-gen
 arch-chroot /mnt hwclock --systohc
 
 arch-chroot /mnt systemctl enable fstrim.timer reflector.timer
-arch-chroot /mnt systemctl enable lightdm.service NetworkManager.service systemd-timesyncd.service
+arch-chroot /mnt systemctl enable systemd-timesyncd.service lightdm.service NetworkManager.service
 
 case "$(lsblk -n -d "${BLOCK}" -o HOTPLUG)" in
     0)
