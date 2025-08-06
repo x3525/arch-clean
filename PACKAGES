@@ -147,6 +147,7 @@ xorg-server
 xorg-server-xephyr
 xorg-server-xvfb
 xorg-xev
+xorg-xrandr
 xsel
 xss-lock
 xterm
