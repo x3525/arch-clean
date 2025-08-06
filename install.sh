@@ -130,7 +130,11 @@ case "$(lspci -d ::03xx)" in
         packages+=(vulkan-intel)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
+        packages+=(vulkan-nouveau)
         packages+=(xf86-video-nouveau)
+        ;;&
+    *)
+        packages+=(mesa)
         ;;
 esac
 
