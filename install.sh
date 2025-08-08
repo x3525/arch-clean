@@ -108,7 +108,7 @@ mount -m "${U}" /mnt/efi
 mkswap "${S}"
 swapon "${S}"
 
-# Determine additional packages to install
+# Additional Packages
 
 case "$(grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
