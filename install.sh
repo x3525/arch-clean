@@ -159,10 +159,14 @@ done
 # Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
-useradd -R /mnt -m -s "$(which zsh)" -G wheel "${LOGIN}"
+# Create a new user
+useradd --root=/mnt -m -s "$(which zsh)" -G wheel "${LOGIN}"
 
-echo "${R}" | passwd -R /mnt --stdin
-echo "${P}" | passwd -R /mnt --stdin "${LOGIN}"
+# Change password (root)
+echo "${R}" | passwd --root=/mnt --stdin
+
+# Change password (user)
+echo "${P}" | passwd --root=/mnt --stdin "${LOGIN}"
 
 cp -r -- */ /mnt
 
@@ -172,8 +176,16 @@ arch-chroot /mnt locale-gen
 # Set the Hardware Clock from the System Clock
 arch-chroot /mnt hwclock --systohc
 
-arch-chroot /mnt systemctl enable fstrim.timer reflector.timer
-arch-chroot /mnt systemctl enable systemd-timesyncd.service lightdm.service NetworkManager.service
+# Enable timers
+arch-chroot /mnt systemctl enable fstrim.timer
+arch-chroot /mnt systemctl enable reflector.timer
+
+# Enable services
+arch-chroot /mnt systemctl enable lightdm.service
+arch-chroot /mnt systemctl enable NetworkManager.service
+arch-chroot /mnt systemctl enable systemd-timesyncd.service
+
+# GRUB
 
 case "$(lsblk -n -d "${BLOCK}" -o HOTPLUG)" in
     0)
