@@ -125,9 +125,9 @@ case "$(lspci -d ::03xx)" in
         packages+=(xf86-video-amdgpu)
         ;;&
     *[iI][nN][tT][eE][lL]*)
+        packages+=(vulkan-intel)
         packages+=(intel-media-driver)
         packages+=(libva-intel-driver)
-        packages+=(vulkan-intel)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
         packages+=(vulkan-nouveau)
