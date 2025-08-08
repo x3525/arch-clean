@@ -185,16 +185,8 @@ arch-chroot /mnt systemctl enable lightdm.service
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt systemctl enable systemd-timesyncd.service
 
-# GRUB
+# Install GRUB to a device
+arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
 
-case "$(lsblk -n -d "${BLOCK}" -o HOTPLUG)" in
-    0)
-        arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
-        ;;&
-    1)
-        arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
-        ;;&
-    *)
-        arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-        ;;
-esac
+# Generate a GRUB configuration file
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
