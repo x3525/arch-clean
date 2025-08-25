@@ -71,6 +71,7 @@ python-pipx
 qt6-multimedia
 qt6-multimedia-ffmpeg
 reflector
+rlwrap
 rofi
 shellcheck
 socat
