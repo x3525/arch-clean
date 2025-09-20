@@ -1,10 +1,10 @@
 #!/bin/bash
 
-online () {
+online() {
     command ping 1.1.1.1 -c 1 -W 3 > /dev/null
 }
 
-zzzz () {
+zzzz() {
     for u
     do
         command echo "Currently waiting for ${u} to complete..."
