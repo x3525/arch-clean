@@ -172,7 +172,7 @@ command swapon "${S}"
 
 while ! command pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}" - < PACKAGES
 do
-    command echo -n "Alas, Pacman failed. Tr[Y] agai[n]? "
+    command echo -n "Alas, Pacman failed. Try agai[n]? "
 
     read -r || command echo
 
