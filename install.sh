@@ -141,7 +141,9 @@ esac
 
 if command grep -q snd_sof /proc/modules
 then
-    packages+=(sof-firmware)
+    packages+=(
+        sof-firmware
+    )
 fi
 
 command echo "Starting sanity checks..."
