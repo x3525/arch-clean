@@ -66,16 +66,20 @@ fi
 
 case "$(command lspci -d ::03xx)" in
     *[aA][mM][dD]*)
-        packages+=(mesa)
-        packages+=(vulkan-radeon)
-        packages+=(xf86-video-ati)
-        packages+=(xf86-video-amdgpu)
+        packages+=(
+            mesa
+            vulkan-radeon
+            xf86-video-ati
+            xf86-video-amdgpu
+        )
         ;;&
     *[iI][nN][tT][eE][lL]*)
-        packages+=(mesa)
-        packages+=(vulkan-intel)
-        packages+=(intel-media-driver)
-        packages+=(libva-intel-driver)
+        packages+=(
+            mesa
+            vulkan-intel
+            intel-media-driver
+            libva-intel-driver
+        )
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
         command echo "[1] NVIDIA kernel modules - module sources"
@@ -91,21 +95,27 @@ case "$(command lspci -d ::03xx)" in
 
             case $REPLY in
                 1)
-                    packages+=(dkms)
-                    packages+=(nvidia-dkms)
-                    packages+=(libva-nvidia-driver)
+                    packages+=(
+                        dkms
+                        nvidia-dkms
+                        libva-nvidia-driver
+                    )
                     break
                     ;;
                 2)
-                    packages+=(dkms)
-                    packages+=(nvidia-open-dkms)
-                    packages+=(libva-nvidia-driver)
+                    packages+=(
+                        dkms
+                        nvidia-open-dkms
+                        libva-nvidia-driver
+                    )
                     break
                     ;;
                 3)
-                    packages+=(mesa)
-                    packages+=(vulkan-nouveau)
-                    packages+=(xf86-video-nouveau)
+                    packages+=(
+                        mesa
+                        vulkan-nouveau
+                        xf86-video-nouveau
+                    )
                     break
                     ;;
                 [qQ])
@@ -118,10 +128,14 @@ esac
 
 case "$(command grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
-        packages+=(amd-ucode)
+        packages+=(
+            amd-ucode
+        )
         ;;
     *[iI][nN][tT][eE][lL]*)
-        packages+=(intel-ucode)
+        packages+=(
+            intel-ucode
+        )
         ;;
 esac
 
