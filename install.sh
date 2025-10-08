@@ -13,13 +13,15 @@ zzzz() {
             *.timer)
                 while [ -z "$(systemctl show -P ActiveEnterTimestamp "${u}")" ]
                 do
-                    if online; then sleep 1; else exit 1; fi
+                    online || exit 1
+                    sleep 1
                 done
                 ;;
             *.service)
                 while [ "$(systemctl is-active "${u}")" != "inactive" ]
                 do
-                    if online; then sleep 1; else exit 1; fi
+                    online || exit 1
+                    sleep 1
                 done
                 ;;
         esac
@@ -132,9 +134,11 @@ fi
 
 echo "Starting sanity checks..."
 
+# Wait for time synchronization to complete
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
 do
-    if online; then sleep 1; else exit 1; fi
+    online || exit 1
+    sleep 1
 done
 
 # Wait for automatic mirror selection to complete
