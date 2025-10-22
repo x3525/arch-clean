@@ -142,6 +142,8 @@ done
 
 zzzz reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
+pacman -Syp "${packages[@]}" - < PACKAGES > /dev/null || exit 1
+
 set -o xtrace
 set -o errexit
 set -o pipefail
