@@ -57,8 +57,8 @@ then
     exit 1
 fi
 
-User=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter password (user)")
-Root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter password (root)")
+User=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+Root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
 if [ -z "${User}" ] || [ -z "${Root}" ]
 then
@@ -140,8 +140,7 @@ do
     sleep 1
 done
 
-zzzz reflector.service
-zzzz archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+zzzz reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -o xtrace
 set -o errexit
