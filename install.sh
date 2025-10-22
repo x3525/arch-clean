@@ -57,8 +57,8 @@ then
     exit 1
 fi
 
-User=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "password (user)")
-Root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "password (root)")
+User=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter password (user)")
+Root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter password (root)")
 
 if [ -z "${User}" ] || [ -z "${Root}" ]
 then
@@ -134,17 +134,13 @@ fi
 
 echo "Starting sanity checks..."
 
-# Wait for time synchronization to complete
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
 do
     online || exit 1
     sleep 1
 done
 
-# Wait for automatic mirror selection to complete
 zzzz reflector.service
-
-# Wait for Arch Linux keyring synchronization to complete
 zzzz archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -o xtrace
