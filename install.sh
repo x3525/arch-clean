@@ -7,18 +7,18 @@ online() {
 zzzz() {
     for u
     do
-        echo "Currently waiting for ${u} to complete..."
+        echo "Currently waiting for $u to complete..."
 
-        case ${u} in
+        case $u in
             *.timer)
-                while [ -z "$(systemctl show -P ActiveEnterTimestamp "${u}")" ]
+                while [ -z "$(systemctl show -P ActiveEnterTimestamp "$u")" ]
                 do
                     online || exit 1
                     sleep 1
                 done
                 ;;
             *.service)
-                while [ "$(systemctl is-active "${u}")" != "inactive" ]
+                while [ "$(systemctl is-active "$u")" != "inactive" ]
                 do
                     online || exit 1
                     sleep 1
@@ -36,14 +36,14 @@ fi
 
 if [ $# -ne 2 ]
 then
-    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "${0}" "BLOCK" "LOGIN"
+    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "BLOCK" "LOGIN"
     exit 1
 fi
 
-Block=${1}
-Login=${2}
+Block=$1
+Login=$2
 
-if [ ! -b "${Block}" ]
+if [ ! -b "$Block" ]
 then
     echo "Device is not a block special!"
     exit 1
@@ -51,7 +51,7 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! ${Login} =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $Login =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
@@ -60,7 +60,7 @@ fi
 User=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
 Root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "${User}" ] || [ -z "${Root}" ]
+if [ -z "$User" ] || [ -z "$Root" ]
 then
     echo "Empty passwords are not allowed!"
     exit 1
@@ -148,7 +148,7 @@ set -o xtrace
 set -o errexit
 set -o pipefail
 
-sfdisk -w always -W always "${Block}" << EOF
+sfdisk -w always -W always "$Block" << EOF
 label: gpt
 unit: sectors
 
@@ -161,16 +161,16 @@ read -r U S L < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "${Block}" -d)" | paste -s)
+' <<< "$(sfdisk "$Block" -d)" | paste -s)
 
-mkfs.vfat "${U}" -F 32
-mkfs.ext4 "${L}" -F
+mkfs.vfat "$U" -F 32
+mkfs.ext4 "$L" -F
 
-mount -m "${L}" /mnt
-mount -m "${U}" /mnt/efi
+mount -m "$L" /mnt
+mount -m "$U" /mnt/efi
 
-mkswap "${S}"
-swapon "${S}"
+mkswap "$S"
+swapon "$S"
 
 while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}" - < PACKAGES
 do
@@ -191,13 +191,13 @@ cp -r -- */ /mnt
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -G wheel -m "${Login}"
+useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$Login"
 
 # Change password (user)
-echo "${User}" | passwd -R /mnt -s "${Login}"
+echo "$User" | passwd -R /mnt -s "$Login"
 
 # Change password (root)
-echo "${Root}" | passwd -R /mnt -s
+echo "$Root" | passwd -R /mnt -s
 
 # Generate the locales
 arch-chroot /mnt locale-gen
