@@ -68,16 +68,16 @@ fi
 
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
-        packages+=(mesa)
-        packages+=(vulkan-radeon)
-        packages+=(xf86-video-ati)
-        packages+=(xf86-video-amdgpu)
+        Packages+=(mesa)
+        Packages+=(vulkan-radeon)
+        Packages+=(xf86-video-ati)
+        Packages+=(xf86-video-amdgpu)
         ;;&
     *[iI][nN][tT][eE][lL]*)
-        packages+=(mesa)
-        packages+=(vulkan-intel)
-        packages+=(intel-media-driver)
-        packages+=(libva-intel-driver)
+        Packages+=(mesa)
+        Packages+=(vulkan-intel)
+        Packages+=(intel-media-driver)
+        Packages+=(libva-intel-driver)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
         echo "[1] NVIDIA kernel modules - module sources (nvidia-dkms ...)"
@@ -92,21 +92,21 @@ case "$(lspci -d ::03xx)" in
 
             case $REPLY in
                 1)
-                    packages+=(dkms)
-                    packages+=(nvidia-dkms)
-                    packages+=(libva-nvidia-driver)
+                    Packages+=(dkms)
+                    Packages+=(nvidia-dkms)
+                    Packages+=(libva-nvidia-driver)
                     break
                     ;;
                 2)
-                    packages+=(dkms)
-                    packages+=(nvidia-open-dkms)
-                    packages+=(libva-nvidia-driver)
+                    Packages+=(dkms)
+                    Packages+=(nvidia-open-dkms)
+                    Packages+=(libva-nvidia-driver)
                     break
                     ;;
                 3)
-                    packages+=(mesa)
-                    packages+=(vulkan-nouveau)
-                    packages+=(xf86-video-nouveau)
+                    Packages+=(mesa)
+                    Packages+=(vulkan-nouveau)
+                    Packages+=(xf86-video-nouveau)
                     break
                     ;;
                 [cC])
@@ -119,16 +119,16 @@ esac
 
 case "$(grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
-        packages+=(amd-ucode)
+        Packages+=(amd-ucode)
         ;;
     *[iI][nN][tT][eE][lL]*)
-        packages+=(intel-ucode)
+        Packages+=(intel-ucode)
         ;;
 esac
 
 if grep -q snd_sof /proc/modules
 then
-    packages+=(sof-firmware)
+    Packages+=(sof-firmware)
 fi
 
 echo "Starting sanity checks..."
