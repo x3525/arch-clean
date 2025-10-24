@@ -8,7 +8,7 @@ online() {
     fi
 }
 
-hold() {
+w4it() {
     for u
     do
         echo "Currently waiting for $u to complete..."
@@ -40,14 +40,14 @@ fi
 
 if [ $# -ne 2 ]
 then
-    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "DEVICE" "LOGIN"
+    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "BLOCK" "LOGIN"
     exit 1
 fi
 
-dvc=$1
-lgn=$2
+bl0ck=$1
+l0gin=$2
 
-if [ ! -b "$dvc" ]
+if [ ! -b "$bl0ck" ]
 then
     echo "Device is not a block special!"
     exit 1
@@ -55,16 +55,16 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! $lgn =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $l0gin =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
 fi
 
-user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
-root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+us3r=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+r00t=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "$user" ] || [ -z "$root" ]
+if [ -z "$us3r" ] || [ -z "$r00t" ]
 then
     echo "Empty passwords are not allowed!"
     exit 1
@@ -145,13 +145,13 @@ do
     sleep 1
 done
 
-hold reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+w4it reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -o xtrace
 set -o errexit
 set -o pipefail
 
-sfdisk -w always -W always "$dvc" << EOF
+sfdisk -w always -W always "$bl0ck" << EOF
 label: gpt
 unit: sectors
 
@@ -164,7 +164,7 @@ read -r U S L < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$dvc" -d)" | paste -s)
+' <<< "$(sfdisk "$bl0ck" -d)" | paste -s)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
@@ -194,13 +194,13 @@ cp -r -- */ /mnt
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$lgn"
+useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$l0gin"
 
 # Change password (user)
-echo "$user" | passwd -R /mnt -s "$lgn"
+echo "$us3r" | passwd -R /mnt -s "$l0gin"
 
 # Change password (root)
-echo "$root" | passwd -R /mnt -s
+echo "$r00t" | passwd -R /mnt -s
 
 # Generate the locales
 arch-chroot /mnt locale-gen
