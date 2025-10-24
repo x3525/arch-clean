@@ -34,6 +34,14 @@ then
     exit 1
 fi
 
+if [ ! -f PACKAGES ]
+then
+    echo "PACKAGES file not found!"
+    exit 1
+else
+    mapfile -t pckgs < PACKAGES
+fi
+
 if [ $# -ne 2 ]
 then
     printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "BLOCK" "LOGIN"
@@ -65,8 +73,6 @@ then
     echo "Empty passwords are not allowed!"
     exit 1
 fi
-
-mapfile -t pckgs < PACKAGES
 
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
