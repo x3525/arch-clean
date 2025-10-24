@@ -1,10 +1,14 @@
 #!/bin/bash
 
 online() {
-    ping 1.1.1.1 -c 1 -W 3 > /dev/null
+    if ! ping 1.1.1.1 -c 1 -w 3 > /dev/null 2>&1
+    then
+        echo "No internet connection!"
+        return 1
+    fi
 }
 
-zzzz() {
+hold() {
     for u
     do
         echo "Currently waiting for $u to complete..."
@@ -90,7 +94,7 @@ case "$(lspci -d ::03xx)" in
         do
             echo -n "What is your choi[c]e? "
 
-            read -r || echo
+            read -r
 
             case $REPLY in
                 1)
@@ -111,7 +115,7 @@ case "$(lspci -d ::03xx)" in
                     pckgs+=(xf86-video-nouveau)
                     break
                     ;;
-                [cC])
+                c|C)
                     exit 1
                     ;;
             esac
@@ -141,7 +145,7 @@ do
     sleep 1
 done
 
-zzzz reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+hold reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 set -o xtrace
 set -o errexit
@@ -173,11 +177,15 @@ swapon "$S"
 
 while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${pckgs[@]}"
 do
-    echo -n "Alas, Pacman failed. Targets to remove: "
+    echo -n "Alas, Pacman failed. Try agai[n]? "
 
-    read -r -a r || echo
+    read -r
 
-    mapfile -t pckgs < <(printf %s\\n "${pckgs[@]}" | grep -vFx "${r[@]:-}")
+    case $REPLY in
+        n|N)
+            exit 1
+            ;;
+    esac
 done
 
 cp -r -- */ /mnt
