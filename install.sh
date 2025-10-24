@@ -1,11 +1,7 @@
 #!/bin/bash
 
 online() {
-    if ! ping 1.1.1.1 -c 1 -w 3 > /dev/null 2>&1
-    then
-        echo "No internet connection!"
-        return 1
-    fi
+    ping 1.1.1.1 -c 1 -w 1 > /dev/null 2>&1 || echo "No internet connection!"
 }
 
 w4it() {
@@ -17,14 +13,14 @@ w4it() {
             *.timer)
                 while [ -z "$(systemctl show -P ActiveEnterTimestamp "$u")" ]
                 do
-                    online || exit 1
+                    online
                     sleep 1
                 done
                 ;;
             *.service)
                 while [ "$(systemctl is-active "$u")" != "inactive" ]
                 do
-                    online || exit 1
+                    online
                     sleep 1
                 done
                 ;;
@@ -141,7 +137,7 @@ echo "Starting sanity checks..."
 
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
 do
-    online || exit 1
+    online
     sleep 1
 done
 
