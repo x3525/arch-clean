@@ -91,7 +91,7 @@ case "$(lspci -d ::03xx)" in
         echo "[1] NVIDIA kernel modules - module sources (nvidia-dkms ...)"
         echo "[2] NVIDIA open kernel modules - module sources (nvidia-open-dkms ...)"
         echo "[3] Open Source 3D acceleration driver for nVidia cards (xf86-video-nouveau ...)"
-        echo "[Q]"
+        echo "[q]"
 
         while true
         do
@@ -119,9 +119,6 @@ case "$(lspci -d ::03xx)" in
                     break
                     ;;
                 q|Q)
-                    exit 1
-                    ;;
-                *)
                     exit 1
                     ;;
             esac
