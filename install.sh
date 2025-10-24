@@ -66,6 +66,8 @@ then
     exit 1
 fi
 
+mapfile -t pckgs < PACKAGES
+
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
         pckgs+=(mesa)
@@ -169,17 +171,13 @@ mount -m "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${pckgs[@]}" - < PACKAGES
+while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${pckgs[@]}"
 do
-    echo -n "Alas, Pacman failed. Try agai[n]? "
+    echo -n "Alas, Pacman failed. Targets to remove: "
 
-    read -r || echo
+    read -r -a r || echo
 
-    case $REPLY in
-        [nN])
-            exit 1
-            ;;
-    esac
+    mapfile -t pckgs < <(printf %s\\n "${pckgs[@]}" | grep -vFx "${r[@]:-}")
 done
 
 cp -r -- */ /mnt
