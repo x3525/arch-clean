@@ -36,14 +36,14 @@ fi
 
 if [ $# -ne 2 ]
 then
-    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "BLOCK" "LOGIN"
+    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "DEVICE" "LOGIN"
     exit 1
 fi
 
-Block=$1
-Login=$2
+dvc=$1
+lgn=$2
 
-if [ ! -b "$Block" ]
+if [ ! -b "$dvc" ]
 then
     echo "Device is not a block special!"
     exit 1
@@ -51,16 +51,16 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! $Login =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $lgn =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
 fi
 
-User=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
-Root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "$User" ] || [ -z "$Root" ]
+if [ -z "$user" ] || [ -z "$root" ]
 then
     echo "Empty passwords are not allowed!"
     exit 1
@@ -68,16 +68,16 @@ fi
 
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
-        Packages+=(mesa)
-        Packages+=(vulkan-radeon)
-        Packages+=(xf86-video-ati)
-        Packages+=(xf86-video-amdgpu)
+        pckgs+=(mesa)
+        pckgs+=(vulkan-radeon)
+        pckgs+=(xf86-video-ati)
+        pckgs+=(xf86-video-amdgpu)
         ;;&
     *[iI][nN][tT][eE][lL]*)
-        Packages+=(mesa)
-        Packages+=(vulkan-intel)
-        Packages+=(intel-media-driver)
-        Packages+=(libva-intel-driver)
+        pckgs+=(mesa)
+        pckgs+=(vulkan-intel)
+        pckgs+=(intel-media-driver)
+        pckgs+=(libva-intel-driver)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
         echo "[1] NVIDIA kernel modules - module sources (nvidia-dkms ...)"
@@ -92,21 +92,21 @@ case "$(lspci -d ::03xx)" in
 
             case $REPLY in
                 1)
-                    Packages+=(dkms)
-                    Packages+=(nvidia-dkms)
-                    Packages+=(libva-nvidia-driver)
+                    pckgs+=(dkms)
+                    pckgs+=(nvidia-dkms)
+                    pckgs+=(libva-nvidia-driver)
                     break
                     ;;
                 2)
-                    Packages+=(dkms)
-                    Packages+=(nvidia-open-dkms)
-                    Packages+=(libva-nvidia-driver)
+                    pckgs+=(dkms)
+                    pckgs+=(nvidia-open-dkms)
+                    pckgs+=(libva-nvidia-driver)
                     break
                     ;;
                 3)
-                    Packages+=(mesa)
-                    Packages+=(vulkan-nouveau)
-                    Packages+=(xf86-video-nouveau)
+                    pckgs+=(mesa)
+                    pckgs+=(vulkan-nouveau)
+                    pckgs+=(xf86-video-nouveau)
                     break
                     ;;
                 [cC])
@@ -119,16 +119,16 @@ esac
 
 case "$(grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
-        Packages+=(amd-ucode)
+        pckgs+=(amd-ucode)
         ;;
     *[iI][nN][tT][eE][lL]*)
-        Packages+=(intel-ucode)
+        pckgs+=(intel-ucode)
         ;;
 esac
 
 if grep -q snd_sof /proc/modules
 then
-    Packages+=(sof-firmware)
+    pckgs+=(sof-firmware)
 fi
 
 echo "Starting sanity checks..."
@@ -145,7 +145,7 @@ set -o xtrace
 set -o errexit
 set -o pipefail
 
-sfdisk -w always -W always "$Block" << EOF
+sfdisk -w always -W always "$dvc" << EOF
 label: gpt
 unit: sectors
 
@@ -158,7 +158,7 @@ read -r U S L < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$Block" -d)" | paste -s)
+' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
@@ -169,7 +169,7 @@ mount -m "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${Packages[@]}" - < PACKAGES
+while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${pckgs[@]}" - < PACKAGES
 do
     echo -n "Alas, Pacman failed. Try agai[n]? "
 
@@ -188,13 +188,13 @@ cp -r -- */ /mnt
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$Login"
+useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$lgn"
 
 # Change password (user)
-echo "$User" | passwd -R /mnt -s "$Login"
+echo "$user" | passwd -R /mnt -s "$lgn"
 
 # Change password (root)
-echo "$Root" | passwd -R /mnt -s
+echo "$root" | passwd -R /mnt -s
 
 # Generate the locales
 arch-chroot /mnt locale-gen
