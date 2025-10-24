@@ -39,7 +39,7 @@ then
     echo "PACKAGES file not found!"
     exit 1
 else
-    mapfile -t pckgs < PACKAGES
+    mapfile -t packages < PACKAGES
 fi
 
 if [ $# -ne 2 ]
@@ -76,16 +76,16 @@ fi
 
 case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
-        pckgs+=(mesa)
-        pckgs+=(vulkan-radeon)
-        pckgs+=(xf86-video-ati)
-        pckgs+=(xf86-video-amdgpu)
+        packages+=(mesa)
+        packages+=(vulkan-radeon)
+        packages+=(xf86-video-ati)
+        packages+=(xf86-video-amdgpu)
         ;;&
     *[iI][nN][tT][eE][lL]*)
-        pckgs+=(mesa)
-        pckgs+=(vulkan-intel)
-        pckgs+=(intel-media-driver)
-        pckgs+=(libva-intel-driver)
+        packages+=(mesa)
+        packages+=(vulkan-intel)
+        packages+=(intel-media-driver)
+        packages+=(libva-intel-driver)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
         echo "[1] NVIDIA kernel modules - module sources (nvidia-dkms ...)"
@@ -101,21 +101,21 @@ case "$(lspci -d ::03xx)" in
 
             case $REPLY in
                 1)
-                    pckgs+=(dkms)
-                    pckgs+=(nvidia-dkms)
-                    pckgs+=(libva-nvidia-driver)
+                    packages+=(dkms)
+                    packages+=(nvidia-dkms)
+                    packages+=(libva-nvidia-driver)
                     break
                     ;;
                 2)
-                    pckgs+=(dkms)
-                    pckgs+=(nvidia-open-dkms)
-                    pckgs+=(libva-nvidia-driver)
+                    packages+=(dkms)
+                    packages+=(nvidia-open-dkms)
+                    packages+=(libva-nvidia-driver)
                     break
                     ;;
                 3)
-                    pckgs+=(mesa)
-                    pckgs+=(vulkan-nouveau)
-                    pckgs+=(xf86-video-nouveau)
+                    packages+=(mesa)
+                    packages+=(vulkan-nouveau)
+                    packages+=(xf86-video-nouveau)
                     break
                     ;;
                 q|Q)
@@ -128,16 +128,16 @@ esac
 
 case "$(grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
-        pckgs+=(amd-ucode)
+        packages+=(amd-ucode)
         ;;
     *[iI][nN][tT][eE][lL]*)
-        pckgs+=(intel-ucode)
+        packages+=(intel-ucode)
         ;;
 esac
 
 if grep -q snd_sof /proc/modules
 then
-    pckgs+=(sof-firmware)
+    packages+=(sof-firmware)
 fi
 
 echo "Starting sanity checks..."
@@ -178,7 +178,7 @@ mount -m "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${pckgs[@]}"
+while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Try agai[n]? "
 
