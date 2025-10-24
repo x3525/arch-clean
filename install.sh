@@ -61,10 +61,10 @@ then
     exit 1
 fi
 
-usr=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
-spr=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "$usr" ] || [ -z "$spr" ]
+if [ -z "$user" ] || [ -z "$root" ]
 then
     echo "Empty passwords are not allowed!"
     exit 1
@@ -197,10 +197,10 @@ genfstab -U /mnt > /mnt/etc/fstab
 useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$lgn"
 
 # Change password (user)
-echo "$usr" | passwd -R /mnt -s "$lgn"
+echo "$user" | passwd -R /mnt -s "$lgn"
 
 # Change password (root)
-echo "$spr" | passwd -R /mnt -s
+echo "$root" | passwd -R /mnt -s
 
 # Generate the locales
 arch-chroot /mnt locale-gen
