@@ -219,6 +219,7 @@ arch-chroot /mnt systemctl enable reflector.timer
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt systemctl enable lightdm.service
 arch-chroot /mnt systemctl enable systemd-timesyncd.service
+arch-chroot /mnt systemctl enable tuned.service
 
 # Install GRUB to a device
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
