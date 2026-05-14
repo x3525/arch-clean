@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function online() {
-    ping 1.1.1.1 -c 1 -w 1 > /dev/null 2>&1 || echo "No internet connection!"
+    ping ping.archlinux.org -c 1 -w 1 > /dev/null 2>&1 || echo "No internet connection!"
 }
 
 function linger() {
