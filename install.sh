@@ -48,10 +48,10 @@ then
     exit 1
 fi
 
-_block=$1
-_login=$2
+dvc=$1
+lgn=$2
 
-if [ ! -b "$_block" ]
+if [ ! -b "$dvc" ]
 then
     echo "Device is not a block special!"
     exit 1
@@ -59,18 +59,20 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! $_login =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $lgn =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
 fi
 
-user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
-root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+user1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+user2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+root1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+root2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "$user" ] || [ -z "$root" ]
+if [ -z "$user1" ] || [ -z "$user2" ] || [[ "$user1" != "$user2" ]] || [ -z "$root1" ] || [ -z "$root2" ] || [[ "$root1" != "$root2" ]]
 then
-    echo "Empty passwords are not allowed!"
+    echo "Passwords do not match!"
     exit 1
 fi
 
@@ -147,7 +149,7 @@ set -o xtrace
 set -o errexit
 set -o pipefail
 
-sfdisk -w always -W always "$_block" << EOF
+sfdisk -w always -W always "$dvc" << EOF
 label: gpt
 unit: sectors
 
@@ -160,7 +162,7 @@ read -r U S L < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$_block" -d)" | paste -s)
+' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
@@ -190,13 +192,13 @@ cp -r -- */ /mnt
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$_login"
+useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$lgn"
 
 # Change password (user)
-echo "$user" | passwd -R /mnt -s "$_login"
+echo "$user1" | passwd -R /mnt -s "$lgn"
 
 # Change password (root)
-echo "$root" | passwd -R /mnt -s
+echo "$root1" | passwd -R /mnt -s
 
 # Generate the locales
 arch-chroot /mnt locale-gen
