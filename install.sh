@@ -48,10 +48,10 @@ then
     exit 1
 fi
 
-block=$1
-login=$2
+_block=$1
+_login=$2
 
-if [ ! -b "$block" ]
+if [ ! -b "$_block" ]
 then
     echo "Device is not a block special!"
     exit 1
@@ -59,7 +59,7 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! $login =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $_login =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
@@ -147,7 +147,7 @@ set -o xtrace
 set -o errexit
 set -o pipefail
 
-sfdisk -w always -W always "$block" << EOF
+sfdisk -w always -W always "$_block" << EOF
 label: gpt
 unit: sectors
 
@@ -160,7 +160,7 @@ read -r U S L < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$block" -d)" | paste -s)
+' <<< "$(sfdisk "$_block" -d)" | paste -s)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
@@ -190,10 +190,10 @@ cp -r -- */ /mnt
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$login"
+useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$_login"
 
 # Change password (user)
-echo "$user" | passwd -R /mnt -s "$login"
+echo "$user" | passwd -R /mnt -s "$_login"
 
 # Change password (root)
 echo "$root" | passwd -R /mnt -s
