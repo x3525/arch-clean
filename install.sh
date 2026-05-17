@@ -86,6 +86,7 @@ case "$(lspci -d ::03xx)" in
     *[iI][nN][tT][eE][lL]*)
         packages+=(mesa)
         packages+=(vulkan-intel)
+        packages+=(intel-gpu-tools)
         packages+=(intel-media-driver)
         packages+=(libva-intel-driver)
         ;;&
