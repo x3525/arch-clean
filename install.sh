@@ -115,7 +115,7 @@ case "$(lspci -d ::03xx)" in
                     break
                     ;;
                 q|Q)
-                    exit 1
+                    exit 0
                     ;;
             esac
         done
