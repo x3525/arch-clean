@@ -38,7 +38,7 @@ john
 jq
 kolourpaint
 libreoffice-still
-lxsession
+lxqt-policykit-agent
 man-db
 man-pages
 mate-calc
@@ -64,6 +64,7 @@ pipewire-alsa
 pipewire-jack
 pipewire-pulse
 plocate
+polkit
 proxychains-ng
 pv
 pyenv
