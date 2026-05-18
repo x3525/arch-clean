@@ -2,6 +2,6 @@ polkit.addRule(function(action, subject) {
     if (subject.isInGroup("wheel")) {
         return polkit.Result.YES;
     } else {
-        return polkit.Result.NO;
+        return polkit.Result.AUTH_ADMIN;
     }
 });
