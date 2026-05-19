@@ -91,30 +91,22 @@ case "$(lspci -d ::03xx)" in
         packages+=(libva-intel-driver)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
-        echo "[1] NVIDIA open kernel modules - module sources"
-        echo "[2] Open Source 3D acceleration driver for nVidia cards"
-        echo "[q]"
-
-        while true
+        select _ in nvidia-open-dkms xf86-video-nouveau
         do
-            echo -n "What is your choice? "
-
-            read -r
-
             case $REPLY in
                 1)
+                    packages+=("$_")
                     packages+=(dkms)
-                    packages+=(nvidia-open-dkms)
                     packages+=(libva-nvidia-driver)
                     break
                     ;;
                 2)
+                    packages+=("$_")
                     packages+=(mesa)
                     packages+=(vulkan-nouveau)
-                    packages+=(xf86-video-nouveau)
                     break
                     ;;
-                q|Q)
+                *)
                     exit 0
                     ;;
             esac
