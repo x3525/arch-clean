@@ -5,20 +5,20 @@ function online() {
 }
 
 function linger() {
-    for u
+    for unit
     do
-        echo "Currently waiting for $u to complete..."
+        echo "Currently waiting for $unit to complete..."
 
-        case $u in
+        case $unit in
             *.timer)
-                while [ -z "$(systemctl show -P ActiveEnterTimestamp "$u")" ]
+                while [ -z "$(systemctl show -P ActiveEnterTimestamp "$unit")" ]
                 do
                     online
                     sleep 1
                 done
                 ;;
             *.service)
-                while [ "$(systemctl is-active "$u")" != "inactive" ]
+                while [ "$(systemctl is-active "$unit")" != "inactive" ]
                 do
                     online
                     sleep 1
