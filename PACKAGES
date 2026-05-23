@@ -9,6 +9,7 @@ bat
 breeze-gtk
 brightnessctl
 dex
+dolphin
 dosfstools
 dunst
 efibootmgr
@@ -27,13 +28,13 @@ grub
 gtk3
 gtk4
 gucharmap
-gvfs
 htop
 i3-wm
 i3lock
 i3status
 jq
 kolourpaint
+libnotify
 libreoffice-still
 man-db
 man-pages
@@ -71,8 +72,6 @@ rofi
 ruby
 rubygems
 shellcheck
-thunar
-thunar-archive-plugin
 tk
 trash-cli
 tree
