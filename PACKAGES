@@ -9,7 +9,6 @@ bat
 breeze-gtk
 brightnessctl
 dex
-dolphin
 dosfstools
 dunst
 efibootmgr
@@ -17,6 +16,7 @@ exfat-utils
 feh
 ffmpeg
 ffmpeg4.4
+ffmpegthumbnailer
 firefox
 flameshot
 fuse2
@@ -28,10 +28,12 @@ grub
 gtk3
 gtk4
 gucharmap
+gvfs
 htop
 i3-wm
 i3lock
 i3status
+icoextract
 jq
 kolourpaint
 libnotify
@@ -61,6 +63,7 @@ polkit
 pv
 pyenv
 python
+python-pillow
 python-pip
 qt5ct
 qt6ct
@@ -72,11 +75,14 @@ rofi
 ruby
 rubygems
 shellcheck
+thunar
+thunar-archive-plugin
 tk
 trash-cli
 tree
 ttf-jetbrains-mono
 ttf-meslo-nerd
+tumbler
 unzip
 vim
 vlc
