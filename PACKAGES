@@ -33,7 +33,6 @@ htop
 i3-wm
 i3lock
 i3status
-icoextract
 jq
 kolourpaint
 libnotify
@@ -63,7 +62,6 @@ polkit
 pv
 pyenv
 python
-python-pillow
 python-pip
 qt5ct
 qt6ct
