@@ -70,7 +70,7 @@ user2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password
 root1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 root2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "$user1" ] || [ -z "$user2" ] || [[ "$user1" != "$user2" ]] || [ -z "$root1" ] || [ -z "$root2" ] || [[ "$root1" != "$root2" ]]
+if [ -z "$user1" ] || [ -z "$user2" ] || [ "$user1" != "$user2" ] || [ -z "$root1" ] || [ -z "$root2" ] || [ "$root1" != "$root2" ]
 then
     echo "Passwords do not match!"
     exit 1
