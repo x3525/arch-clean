@@ -185,7 +185,7 @@ cp -r -- */ /mnt
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -G wheel -m "$lgn"
+useradd -R /mnt -s /usr/bin/zsh -m -G wheel "$lgn"
 
 # Change password (user)
 echo "$user1" | passwd -R /mnt -s "$lgn"
