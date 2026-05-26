@@ -188,10 +188,10 @@ genfstab -U /mnt > /mnt/etc/fstab
 useradd -R /mnt -s /usr/bin/zsh -m -G wheel "$lgn"
 
 # Change password (user)
-echo "$user1" | passwd -R /mnt -s "$lgn"
+echo "$user1" | passwd -s -R /mnt "$lgn"
 
 # Change password (root)
-echo "$root1" | passwd -R /mnt -s
+echo "$root1" | passwd -s -R /mnt
 
 # Generate the locales
 arch-chroot /mnt locale-gen
