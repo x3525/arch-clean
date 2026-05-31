@@ -58,15 +58,6 @@ else
     name=$1
 fi
 
-select disk in $(lsblk -dnp -o NAME)
-do
-    if [ ! -b "$disk" ]
-    then
-        continue
-    fi
-    break
-done
-
 user1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
 user2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
 root1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
@@ -77,6 +68,15 @@ then
     echo "Passwords do not match!"
     exit 1
 fi
+
+select disk in $(lsblk -dnp -o NAME)
+do
+    if [ ! -b "$disk" ]
+    then
+        continue
+    fi
+    break
+done
 
 echo "Starting sanity checks..."
 
