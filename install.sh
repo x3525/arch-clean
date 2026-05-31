@@ -133,6 +133,12 @@ start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
 start=    35653632,                    type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
 EOF
 
+# Inform the operating system kernel of partition table changes
+partprobe "$disk"
+
+# Wait for pending udev events
+udevadm settle
+
 read -r U S L < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
