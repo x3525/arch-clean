@@ -59,9 +59,9 @@ fi
 
 case $3 in
     2)
-        IFS=: read -r f l _ < <(parted -m $dvc unit s print free | grep free | cut -d : -f 2-4 | tr -d s | sort -t : -k 3,3nr | head -n 1)
+        IFS=: read -r f l _ < <(parted -m "$dvc" unit s print free | grep free | cut -d : -f 2-4 | tr -d s | sort -t : -k 3,3nr | head -n 1)
 
-        sectors=$((16 * 1024 ** 3 / $(</sys/block/${dvc##*/}/queue/logical_block_size)))
+        sectors=$((16 * 1024 ** 3 / $(</sys/block/"${dvc##*/}"/queue/logical_block_size)))
         ;;
     *)
         exit 0
@@ -155,7 +155,7 @@ set -o pipefail
 
 case $3 in
     1)
-        sfdisk -w always -W always $dvc << EOF
+        sfdisk -w always -W always "$dvc" << EOF
 label: gpt
 unit: sectors
 
@@ -171,9 +171,9 @@ read -r U S L < <(awk '
 ' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 ;;
     2)
-        before=$(lsblk -nrpo NAME $dvc)
+        before=$(lsblk -nrpo NAME "$dvc")
 
-        sfdisk --append $dvc << EOF
+        sfdisk --append "$dvc" << EOF
 label: gpt
 unit: sectors
 
@@ -185,13 +185,13 @@ read -r U < <(awk '
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 ' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 
-        after=$(lsblk -nrpo NAME $dvc)
+        after=$(lsblk -nrpo NAME "$dvc")
 
-        read -r S L < <(comm -1 -3 <(echo $before | sort) <(echo $after | sort) | paste -s)
+        read -r S L < <(comm -1 -3 <(echo "$before" | sort) <(echo "$after" | sort) | paste -s)
         ;;
 esac
 
-partprobe $dvc
+partprobe "$dvc"
 udevadm settle
 
 case $3 in
