@@ -42,28 +42,30 @@ else
     mapfile -t packages < PACKAGES
 fi
 
-if [ $# -ne 2 ]
+if [ $# -ne 1 ]
 then
-    printf "Usage: %s \e[4m%s\e[0m \e[4m%s\e[0m\n" "$0" "DISK" "NAME"
-    exit 1
-fi
-
-disk=$1
-name=$2
-
-if [ ! -b "$disk" ]
-then
-    echo "Device is not a block special!"
+    printf "Usage: %s \e[4m%s\e[0m\n" "$0" "NAME"
     exit 1
 fi
 
 LC_CTYPE=C
 
-if [[ ! $name =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $1 =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
+else
+    name=$1
 fi
+
+select disk in $(lsblk -dnp -o NAME)
+do
+    if [ ! -b "$disk" ]
+    then
+        continue
+    fi
+    break
+done
 
 user1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
 user2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
