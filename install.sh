@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 function online() {
     ping ping.archlinux.org -c 1 -w 1 > /dev/null 2>&1 || echo "No internet connection!"
@@ -86,17 +86,23 @@ done
 
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
-set -o xtrace
-set -o errexit
-set -o pipefail
+lbs=$(</sys/block/"${disk##*/}"/queue/logical_block_size)
+
+sectors1=$((01 * 1024 ** 3 / lbs))
+sectors2=$((16 * 1024 ** 3 / lbs))
+sectors3=
+
+start1=$((01 * 1024 ** 2 / lbs))
+start2=$((start1 + sectors1))
+start3=$((start2 + sectors2))
 
 sfdisk -w always -W always "$disk" << EOF
 label: gpt
 unit: sectors
 
-start=        2048, size=     2097152, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
-start=     2099200, size=    33554432, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
-start=    35653632,                    type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
+start=$start1,size=$sectors1,type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
+start=$start2,size=$sectors2,type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
+start=$start3,size=$sectors3,type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
 EOF
 
 # Inform the operating system kernel of partition table changes
