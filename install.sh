@@ -90,26 +90,9 @@ case "$(lspci -d ::03xx)" in
         packages+=(libva-intel-driver)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
-        select package in nvidia-open-dkms xf86-video-nouveau
-        do
-            case $REPLY in
-                1)
-                    packages+=("$package")
-                    packages+=(dkms)
-                    packages+=(libva-nvidia-driver)
-                    break
-                    ;;
-                2)
-                    packages+=("$package")
-                    packages+=(mesa)
-                    packages+=(vulkan-nouveau)
-                    break
-                    ;;
-                *)
-                    exit 0
-                    ;;
-            esac
-        done
+        packages+=(dkms)
+        packages+=(nvidia-open-dkms)
+        packages+=(libva-nvidia-driver)
         ;;
 esac
 
