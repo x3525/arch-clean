@@ -214,7 +214,7 @@ mount -m "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers os-prober "${packages[@]}"
+while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Try agai[n]? "
 
