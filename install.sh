@@ -76,40 +76,6 @@ then
     exit 1
 fi
 
-case "$(lspci -d ::03xx)" in
-    *[aA][mM][dD]*)
-        packages+=(mesa)
-        packages+=(vulkan-radeon)
-        packages+=(xf86-video-ati)
-        packages+=(xf86-video-amdgpu)
-        ;;&
-    *[iI][nN][tT][eE][lL]*)
-        packages+=(mesa)
-        packages+=(vulkan-intel)
-        packages+=(intel-media-driver)
-        packages+=(libva-intel-driver)
-        ;;&
-    *[nN][vV][iI][dD][iI][aA]*)
-        packages+=(dkms)
-        packages+=(nvidia-open-dkms)
-        packages+=(libva-nvidia-driver)
-        ;;
-esac
-
-case "$(grep vendor_id /proc/cpuinfo)" in
-    *[aA][mM][dD]*)
-        packages+=(amd-ucode)
-        ;;
-    *[iI][nN][tT][eE][lL]*)
-        packages+=(intel-ucode)
-        ;;
-esac
-
-if grep -q snd_sof /proc/modules
-then
-    packages+=(sof-firmware)
-fi
-
 echo "Starting sanity checks..."
 
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
@@ -155,6 +121,40 @@ mount -m "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
+case "$(lspci -d ::03xx)" in
+    *[aA][mM][dD]*)
+        packages+=(mesa)
+        packages+=(vulkan-radeon)
+        packages+=(xf86-video-ati)
+        packages+=(xf86-video-amdgpu)
+        ;;&
+    *[iI][nN][tT][eE][lL]*)
+        packages+=(mesa)
+        packages+=(vulkan-intel)
+        packages+=(intel-media-driver)
+        packages+=(libva-intel-driver)
+        ;;&
+    *[nN][vV][iI][dD][iI][aA]*)
+        packages+=(dkms)
+        packages+=(nvidia-open-dkms)
+        packages+=(libva-nvidia-driver)
+        ;;
+esac
+
+case "$(grep vendor_id /proc/cpuinfo)" in
+    *[aA][mM][dD]*)
+        packages+=(amd-ucode)
+        ;;
+    *[iI][nN][tT][eE][lL]*)
+        packages+=(intel-ucode)
+        ;;
+esac
+
+if grep -q snd_sof /proc/modules
+then
+    packages+=(sof-firmware)
+fi
+
 while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Try agai[n]? "
@@ -198,7 +198,7 @@ arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt systemctl enable systemd-timesyncd.service
 
 # Install GRUB to a device
-arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --removable
+arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 
 # Generate a GRUB configuration file
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
