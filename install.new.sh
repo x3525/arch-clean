@@ -164,14 +164,14 @@ start= 2099200,size=33554432,type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
 start=35653632,              type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
 EOF
 
-read -r U S L < <(awk '
-/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
-/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
-/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$dvc" -d)" | paste -s)
+#read -r U S L < <(awk '
+#/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
+#/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
+#/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
+#' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 ;;
     2)
-        before=$(lsblk -nrpo NAME "$dvc")
+#        before=$(lsblk -nrpo NAME "$dvc")
 
         sfdisk --append "$dvc" << EOF
 label: gpt
@@ -181,15 +181,21 @@ start=              $f,size=                $sectors,type=0657FD6D-A4AB-43C4-84E
 start=$((f + sectors)),size=$((l - f - sectors + 1)),type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
 EOF
 
-read -r U < <(awk '
-/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
-' <<< "$(sfdisk "$dvc" -d)" | paste -s)
+#read -r U < <(awk '
+#/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
+#' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 
-        after=$(lsblk -nrpo NAME "$dvc")
+#        after=$(lsblk -nrpo NAME "$dvc")
 
-        read -r S L < <(comm -1 -3 <(echo "$before" | sort) <(echo "$after" | sort) | paste -s)
+#        read -r S L < <(comm -1 -3 <(echo "$before" | sort) <(echo "$after" | sort) | paste -s)
         ;;
 esac
+
+read -r U S L < <(awk '
+/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
+/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
+/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
+' <<< "$(sfdisk "$dvc" -d)" | paste -s)
 
 partprobe "$dvc"
 udevadm settle
@@ -200,7 +206,6 @@ case $3 in
         ;;
 esac
 
-mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
 
 mount -m "$L" /mnt
