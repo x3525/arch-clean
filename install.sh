@@ -91,7 +91,7 @@ linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-
 # Zap (destroy) the GPT and MBR data structures
 sgdisk "$disk" -Z
 
-# Manipulate a disk partition table
+# Manipulate disk partition table
 sfdisk "$disk" -w always -W always << EOF
 label: gpt
 unit: sectors
