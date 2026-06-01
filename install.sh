@@ -139,6 +139,11 @@ case "$(lspci -d ::03xx)" in
         ;;
 esac
 
+if systemd-detect-virt -q
+then
+    packages+=(mesa)
+fi
+
 case "$(grep vendor_id /proc/cpuinfo)" in
     *[aA][mM][dD]*)
         packages+=(amd-ucode)
