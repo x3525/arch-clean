@@ -91,6 +91,7 @@ linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-
 # Zap (destroy) the GPT and MBR data structures
 sgdisk "$disk" -Z
 
+# Manipulate a disk partition table
 sfdisk "$disk" -w always -W always << EOF
 label: gpt
 unit: sectors
@@ -176,19 +177,19 @@ done
 
 cp -r -- */ /mnt
 
-# Generate fstab file
+# Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
 # Create a new user
 useradd -R /mnt -s /usr/bin/zsh -m -G wheel "$name"
 
-# Change password (user)
+# Change user password (user)
 echo "$user1" | passwd -s -R /mnt "$name"
 
-# Change password (root)
+# Change user password (root)
 echo "$root1" | passwd -s -R /mnt
 
-# Generate the locales
+# Generate localization files from templates
 arch-chroot /mnt locale-gen
 
 # Set the Hardware Clock from the System Clock
