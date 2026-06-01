@@ -88,13 +88,15 @@ done
 
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
+sgdisk "$disk" -Z
+
 sfdisk "$disk" -w always -W always << EOF
 label: gpt
 unit: sectors
 
-start=,size=01GiB,type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
-start=,size=16GiB,type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
-start=,size=     ,type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
+type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B,start=,size=01GiB
+type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F,start=,size=16GiB
+type=0FC63DAF-8483-4772-8E79-3D69D8477DE4,start=,size=
 EOF
 
 # Inform the operating system kernel of partition table changes
