@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 function online() {
-    ping ping.archlinux.org -c 1 -w 1 > /dev/null 2>&1 || echo "No internet connection!"
+    ping ping.archlinux.org -c 1 -w 1 > /dev/null
 }
 
 function linger() {
@@ -44,7 +44,7 @@ fi
 
 if [ $# -ne 1 ]
 then
-    printf "Usage: %s \e[4m%s\e[0m\n" "$0" "NAME"
+    printf "Usage: %s $(tput smul)%s$(tput sgr0)\n" "$0" "NAME"
     exit 1
 fi
 
