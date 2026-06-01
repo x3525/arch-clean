@@ -90,7 +90,7 @@ linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-
 
 sgdisk "$disk" -Z
 
-sfdisk "$disk" << EOF
+sfdisk "$disk" -w always -W always << EOF
 label: gpt
 unit: sectors
 
