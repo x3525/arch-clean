@@ -68,6 +68,7 @@ reflector
 rlwrap
 rofi
 shellcheck
+sudo
 thunar
 thunar-archive-plugin
 tk
