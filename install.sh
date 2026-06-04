@@ -205,7 +205,7 @@ arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt systemctl enable systemd-timesyncd.service
 
 # Install GRUB to a device
-arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
 
 # Generate a GRUB configuration file
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
