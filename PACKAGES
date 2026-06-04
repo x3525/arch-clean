@@ -61,8 +61,6 @@ pipewire-pulse
 polkit
 pv
 pyenv
-python
-python-pip
 qt5ct
 qt6ct
 qt6-multimedia
@@ -70,8 +68,6 @@ qt6-multimedia-ffmpeg
 reflector
 rlwrap
 rofi
-ruby
-rubygems
 shellcheck
 thunar
 thunar-archive-plugin
