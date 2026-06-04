@@ -96,8 +96,8 @@ sfdisk "$disk" -w always -W always << EOF
 label: gpt
 unit: sectors
 
-type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B,start=,size=01GiB
-type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F,start=,size=16GiB
+type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B,start=,size=1GiB
+type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F,start=,size=8GiB
 type=0FC63DAF-8483-4772-8E79-3D69D8477DE4,start=,size=
 EOF
 
@@ -209,3 +209,6 @@ arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
 
 # Generate a GRUB configuration file
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+# Recursively unmount each specified directory
+umount -R /mnt
