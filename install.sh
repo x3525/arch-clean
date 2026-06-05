@@ -58,14 +58,12 @@ else
     name=$1
 fi
 
-user1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
-user2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
-root1=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
-root2=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 
-if [ -z "$user1" ] || [ -z "$user2" ] || [ "$user1" != "$user2" ] || [ -z "$root1" ] || [ -z "$root2" ] || [ "$root1" != "$root2" ]
+if [ -z "$user" ] || [ -z "$root" ]
 then
-    echo "Passwords do not match!"
+    echo "Empty passwords are not allowed!"
     exit 1
 fi
 
@@ -184,10 +182,10 @@ genfstab -U /mnt > /mnt/etc/fstab
 useradd -R /mnt -s /usr/bin/zsh -m -G wheel "$name"
 
 # Change user password (user)
-echo "$user1" | passwd -s -R /mnt "$name"
+echo "$user" | passwd -s -R /mnt "$name"
 
 # Change user password (root)
-echo "$root1" | passwd -s -R /mnt
+echo "$root" | passwd -s -R /mnt
 
 # Generate localization files from templates
 arch-chroot /mnt locale-gen
