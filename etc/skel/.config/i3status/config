@@ -1,0 +1,60 @@
+general {
+    colors="false"
+    interval="1"
+    markup="pango"
+    output_format="i3bar"
+}
+
+order+="tztime weekday"
+order+="volume default"
+order+="cpu_usage"
+order+="memory"
+order+="battery 0"
+order+="tztime date"
+order+="time"
+
+battery 0 {
+    format="%percentage<span foreground='#1f1f1f'>BAT</span>"
+    format_down=""
+    format_percentage="%03.0f%s"
+    last_full_capacity="true"
+    path="/sys/class/power_supply/BAT%d/uevent"
+}
+
+cpu_usage {
+    align="right"
+    format="%usage<span foreground='#1f1f1f'>CPU</span>"
+    format_above_degraded_threshold="%usage<span foreground='#1f1f1f'>CPU</span>"
+    format_above_threshold="<span foreground='#880808'>%usage</span><span foreground='#1f1f1f'>CPU</span>"
+    max_threshold="90"
+    min_width="*******"
+}
+
+memory {
+    align="right"
+    format="%percentage_used<span foreground='#1f1f1f'>MEM</span>"
+    format_degraded="<span foreground='#880808'>%percentage_used</span><span foreground='#1f1f1f'>MEM</span>"
+    memory_used_method="memavailable"
+    min_width="*********"
+    threshold_critical="10%"
+}
+
+time {
+    format="%H:%M:%S"
+}
+
+tztime date {
+    format="<u>%d</u>.%m.%y"
+}
+
+tztime weekday {
+    format="<u>%A</u>"
+    locale="tr_TR.UTF-8"
+}
+
+volume default {
+    align="right"
+    format="%volume<span foreground='#1f1f1f'>VOL</span>"
+    format_muted="%volume<span foreground='#1f1f1f'>MUT</span>"
+    min_width="*******"
+}

@@ -1,0 +1,37 @@
+program_options:
+    tray: auto
+    menu: flat
+    automount: false
+    notify: true
+    password_cache: false
+    file_manager: xdg-open
+    terminal: alacritty --working-directory
+
+notifications:
+    device_mounted: -1
+    device_unmounted: -1
+    device_added: false
+    device_removed: -1
+    device_unlocked: -1
+    device_locked: -1
+    job_failed: -1
+
+quickmenu_actions: all
+
+notification_actions:
+    device_mounted: []
+    device_added: []
+    job_failed: []
+
+icon_names:
+    media: [drive-removable-media]
+    browse: [folder-open]
+    terminal: [terminal]
+    mount: [udiskie-mount]
+    unmount: [udiskie-unmount]
+    unlock: [udiskie-unlock]
+    lock: [udiskie-lock]
+    eject: [udiskie-eject]
+    detach: [udiskie-detach]
+    delete: [udiskie-eject]
+    quit: [application-exit]

@@ -1,0 +1,35 @@
+[colors.cursor]
+text   = "CellBackground"
+cursor = "CellForeground"
+
+[colors.vi_mode_cursor]
+text   = "CellBackground"
+cursor = "CellForeground"
+
+[colors.search.matches]
+foreground = "#181818"
+background = "#ac4242"
+
+[colors.search.focused_match]
+foreground = "#181818"
+background = "#f4bf75"
+
+[colors.hints.start]
+foreground = "#181818"
+background = "#f4bf75"
+
+[colors.hints.end]
+foreground = "#181818"
+background = "#ac4242"
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+[colors.footer_bar]
+foreground = "#181818"
+background = "#d8d8d8"
+
+[colors.selection]
+text       = "CellBackground"
+background = "CellForeground"

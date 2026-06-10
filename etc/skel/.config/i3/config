@@ -1,0 +1,15 @@
+include configs/*.conf
+
+focus_follows_mouse no
+
+popup_during_fullscreen smart
+
+focus_on_window_activation urgent
+
+tiling_drag off
+
+# Screen locker
+exec --no-startup-id xss-lock --transfer-sleep-lock -- C2 lock
+
+# Executing applications
+exec_always --no-startup-id C2 execute ~/.config/autostart/entries

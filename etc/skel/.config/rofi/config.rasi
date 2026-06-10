@@ -1,0 +1,25 @@
+@import "drun.rasi"
+@import "entry.rasi"
+@import "keyboard.rasi"
+@import "mouse.rasi"
+
+configuration {
+    auto-select: false;
+    case-sensitive: false;
+    click-to-exit: true;
+    disable-history: false;
+    dpi: 0;
+    drun-display-format: "{name}";
+    drun-match-fields: "name#exec";
+    font: "JetBrains Mono NL 12";
+    hover-select: false;
+    icon-theme: "Papirus-Dark";
+    matching: "normal";
+    max-history-size: 5;
+    monitor: -1;
+    normalize-match: false;
+    scroll-method: 0;
+    sidebar-mode: false;
+    window-format: "{t}";
+    window-match-fields: "all";
+}

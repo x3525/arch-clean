@@ -1,0 +1,9 @@
+[Unit]
+Description=Battery notification
+
+[Service]
+Type=exec
+ExecStart=-/usr/bin/sh -c 'POWER_SUPPLY=$(systemctl --user show -P Description %p.timer) && POWER_SUPPLY_STATUS=$(cut -c 1 /sys/class/power_supply/"$POWER_SUPPLY"/status) && export POWER_SUPPLY_STATUS && ! systemctl --user show-environment | grep -q -- POWER_SUPPLY_STATUS="$POWER_SUPPLY_STATUS" && systemctl --user import-environment POWER_SUPPLY_STATUS && POWER_SUPPLY_CAPACITY=$(cat /sys/class/power_supply/"$POWER_SUPPLY"/capacity) && C2 notify battery "$POWER_SUPPLY_STATUS" "$POWER_SUPPLY_CAPACITY"'
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=BAT0
+ConditionPathExists=/sys/class/power_supply/BAT0
+
+[Timer]
+AccuracySec=1s
+OnStartupSec=10s
+OnUnitActiveSec=5s
+
+[Install]
+WantedBy=timers.target
