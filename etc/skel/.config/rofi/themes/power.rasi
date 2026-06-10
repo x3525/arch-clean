@@ -28,4 +28,5 @@ mainbox {
 
 window {
     border-color: transparent;
+    location: south;
 }
