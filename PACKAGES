@@ -32,6 +32,7 @@ htop
 i3-wm
 i3lock
 i3status
+iptables
 jq
 kolourpaint
 libnotify
@@ -40,6 +41,7 @@ man-db
 man-pages
 mate-calc
 mate-polkit
+mkinitcpio
 networkmanager
 noto-fonts
 noto-fonts-cjk
