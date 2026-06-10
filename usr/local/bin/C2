@@ -1,9 +1,5 @@
 #!/bin/bash
 
-function brightness() {
-    brightnessctl set "$2"%"$1"
-}
-
 function lock() {
     dunstctl set-paused true
 
