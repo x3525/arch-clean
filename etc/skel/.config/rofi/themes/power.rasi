@@ -3,16 +3,20 @@
 element {
     orientation: vertical;
 }
+
 element-icon {
     horizontal-align: 0.5;
 }
+
 element-text {
     highlight: none;
     horizontal-align: 0.5;
 }
+
 listview {
     lines: 1;
 }
+
 window {
     width: 20%;
 }
