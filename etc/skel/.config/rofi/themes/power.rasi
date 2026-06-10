@@ -1,11 +1,17 @@
 @theme "drun.rasi"
 
 element {
+    children: [ element-icon ];
     orientation: vertical;
+}
+
+element selected {
+    background-color: transparent;
 }
 
 element-icon {
     horizontal-align: 0.5;
+    size: 96px;
 }
 
 element-text {
@@ -17,6 +23,10 @@ listview {
     lines: 1;
 }
 
+mainbox {
+    background-color: transparent;
+}
+
 window {
-    width: 20%;
+    border-color: transparent;
 }
