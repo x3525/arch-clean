@@ -16,7 +16,6 @@ element-icon {
 
 element-text {
     highlight: none;
-    horizontal-align: 0.5;
 }
 
 listview {
