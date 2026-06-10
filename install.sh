@@ -28,7 +28,7 @@ function linger() {
     done
 }
 
-if [ ! -e /sys/firmware/efi/fw_platform_size ]
+if [ ! -e /sys/firmware/efi/ ]
 then
     echo "System is not booted in UEFI mode!"
     exit 1
@@ -44,13 +44,13 @@ fi
 
 if [ $# -ne 1 ]
 then
-    printf "Usage: %s $(tput smul)%s$(tput sgr0)\n" "$0" "NAME"
+    echo "Usage: $0 NAME"
     exit 1
 fi
 
 LC_CTYPE=C
 
-if [[ ! $1 =~ ^[a-z][a-z0-9_][a-z0-9_]{,30}$ ]]
+if [[ ! $1 =~ ^[a-z][a-z0-9][a-z0-9]{,30}$ ]]
 then
     echo "Login entry is invalid!"
     exit 1
@@ -115,8 +115,8 @@ BEGIN {IGNORECASE=1}
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
 
-mount -m "$L" /mnt
-mount -m "$U" /mnt/efi
+mount -m "$L" /mnt/
+mount -m "$U" /mnt/efi/
 
 mkswap "$S"
 swapon "$S"
@@ -160,7 +160,7 @@ then
     packages+=(sof-firmware)
 fi
 
-while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}"
+while ! pacstrap -K /mnt/ base linux linux-firmware linux-headers "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Try agai[n]? "
 
@@ -173,40 +173,40 @@ do
     esac
 done
 
-cp -r -- */ /mnt
+cp -r -- */ /mnt/
 
 # Generate an fstab file
-genfstab -U /mnt > /mnt/etc/fstab
+genfstab -U /mnt/ > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt -s /usr/bin/zsh -m -G wheel "$name"
+useradd -R /mnt/ -s /usr/bin/zsh -m -G wheel "$name"
 
 # Change user password (user)
-echo "$user" | passwd -s -R /mnt "$name"
+echo "$user" | passwd -s -R /mnt/ "$name"
 
 # Change user password (root)
-echo "$root" | passwd -s -R /mnt
+echo "$root" | passwd -s -R /mnt/
 
 # Generate localization files from templates
-arch-chroot /mnt locale-gen
+arch-chroot /mnt/ locale-gen
 
 # Set the Hardware Clock from the System Clock
-arch-chroot /mnt hwclock -w
+arch-chroot /mnt/ hwclock -w
 
 # Enable timers
-arch-chroot /mnt systemctl enable fstrim.timer
-arch-chroot /mnt systemctl enable reflector.timer
+arch-chroot /mnt/ systemctl enable fstrim.timer
+arch-chroot /mnt/ systemctl enable reflector.timer
 
 # Enable services
-arch-chroot /mnt systemctl enable getty@tty1.service
-arch-chroot /mnt systemctl enable NetworkManager.service
-arch-chroot /mnt systemctl enable systemd-timesyncd.service
+arch-chroot /mnt/ systemctl enable getty@tty1.service
+arch-chroot /mnt/ systemctl enable NetworkManager.service
+arch-chroot /mnt/ systemctl enable systemd-timesyncd.service
 
 # Install GRUB to a device
-arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
+arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
 
 # Generate a GRUB configuration file
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Recursively unmount each specified directory
-umount -R /mnt
+umount -R /mnt/
