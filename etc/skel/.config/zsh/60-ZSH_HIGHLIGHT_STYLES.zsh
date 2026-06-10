@@ -10,7 +10,7 @@ ZSH_HIGHLIGHT_STYLES=(
     # global aliases
     [global-alias]=fg=cyan
     # shell builtin commands
-    [builtin]=fg=yellow
+    [builtin]=fg=green
     # function names
     [function]=fg=green
     # command names
