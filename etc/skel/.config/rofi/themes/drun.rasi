@@ -8,33 +8,41 @@
     text-color: Beige;
     vertical-align: 0.5;
 }
+
 element {
     children: [ element-icon, element-text ];
     orientation: horizontal;
     padding: 20px;
     spacing: 20px;
 }
+
 element selected {
     background-color: DarkSlateGray;
 }
+
 element-icon {
     size: 48px;
 }
+
 element-text {
     highlight: Red;
 }
+
 entry {
     blink: false;
     cursor-width: 5px;
     hide-cursor-on-empty: false;
 }
+
 error-message {
     background-color: Black;
     padding: 20px;
 }
+
 inputbar {
     enabled: false;
 }
+
 listview {
     columns: 1;
     cycle: true;
@@ -45,12 +53,15 @@ listview {
     require-input: false;
     reverse: false;
 }
+
 mainbox {
     background-color: Black;
 }
+
 prompt {
     enabled: true;
 }
+
 window {
     border-color: DarkSlateGray;
     border: 5px;
