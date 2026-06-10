@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -xe
 
 function online() {
     ping ping.archlinux.org -c 1 -w 1 > /dev/null
