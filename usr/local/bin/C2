@@ -14,6 +14,10 @@ function lock() {
     dunstctl set-paused false
 }
 
+function menu() {
+    rofi -no-lazy-grab -show "$1" -modes "$1" -theme "$1"
+}
+
 function notify() {
     case $1 in
         volume)
