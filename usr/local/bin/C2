@@ -40,7 +40,7 @@ function execute() {
 
         for pid in $(pgrep -f -- "$p")
         do
-            if [ "$DISPLAY" = "$(ps eww -p "$pid" | grep -oP '(?<=DISPLAY=):\d+')" ]
+            if ps eww -p "$pid" | grep -q DISPLAY="$DISPLAY"
             then
                 kill "$pid"
 
