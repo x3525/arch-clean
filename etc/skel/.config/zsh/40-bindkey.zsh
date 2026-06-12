@@ -1,3 +1,4 @@
+# Select keymap 'emacs' for any operations by the current command.
 bindkey -e
 
 # Move to the previous event in the history list.
