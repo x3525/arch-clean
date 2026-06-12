@@ -40,7 +40,7 @@ function execute() {
 
         for pid in $(pgrep -f -- "$p")
         do
-            if ps eww -p "$pid" | grep -q DISPLAY="$DISPLAY"
+            if ps eww -p "$pid" | grep DISPLAY="$DISPLAY" | grep -q _="$(which dex)"
             then
                 kill "$pid"
 
