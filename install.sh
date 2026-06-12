@@ -1,4 +1,8 @@
-#!/bin/bash -xe
+#!/bin/bash -e
+
+exec 3> /tmp/xtrace.log
+BASH_XTRACEFD=3
+set -x
 
 function online() {
     ping ping.archlinux.org -c 1 -w 1 > /dev/null
@@ -210,3 +214,7 @@ arch-chroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
 
 # Recursively unmount each specified directory
 umount -R /mnt/
+
+set +x
+unset BASH_XTRACEFD
+exec 3>&-
