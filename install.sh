@@ -183,7 +183,7 @@ cp -r -- */ /mnt/
 genfstab -U /mnt/ > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt/ -s /usr/bin/zsh -m -k /etc/skel -G wheel "$name"
+useradd -R /mnt/ -s /usr/bin/zsh -m -k /etc/skel/ -G wheel "$name"
 
 rm -r /mnt/etc/skel/
 
