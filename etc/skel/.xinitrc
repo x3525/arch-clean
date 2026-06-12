@@ -35,6 +35,4 @@ then
     done
 fi
 
-numlockx on
-
 exec dbus-run-session i3
