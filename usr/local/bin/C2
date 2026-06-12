@@ -34,11 +34,7 @@ function notify() {
 function execute() {
     for d in "$1"/*
     do
-        f=$(basename -- "$d")
-
-        p=${f%.*}
-
-        for pid in $(pgrep -f -- "$p")
+        for pid in $(pgrep -f -- "$(dex -p Name "$d")")
         do
             if ps eww -p "$pid" | grep DISPLAY="$DISPLAY" | grep -q _="$(command -v dex)"
             then
