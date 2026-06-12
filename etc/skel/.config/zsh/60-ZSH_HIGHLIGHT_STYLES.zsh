@@ -1,3 +1,5 @@
+typeset -gA ZSH_HIGHLIGHT_STYLES
+
 ZSH_HIGHLIGHT_STYLES=(
     # unknown tokens / errors
     [unknown-token]=fg=red
