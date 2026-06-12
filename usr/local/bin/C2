@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function brightness() {
+    brightnessctl set "$2"%"$1"
+}
+
 function lock() {
     dunstctl set-paused true
 
@@ -16,16 +20,6 @@ function menu() {
 
 function notify() {
     case $1 in
-        brightness)
-            if [ "$2" = "-" ]
-            then
-                ICON=notification-display-brightness-low
-            else
-                ICON=notification-display-brightness-full
-            fi
-
-            notify-send -h string:x-dunst-stack-tag:"$1" -u low -i "$ICON" "" -h int:value:"$(brightnessctl -m set "$3"%"$2" | cut -d , -f 4)"
-            ;;
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
 
