@@ -1,7 +1,7 @@
 @theme "drun.rasi"
 
 element {
-    children: [element-icon];
+    children: [ element-icon ];
     orientation: vertical;
 }
 
