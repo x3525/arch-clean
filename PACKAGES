@@ -94,4 +94,5 @@ xss-lock
 zip
 zsh
 zsh-autosuggestions
+zsh-completions
 zsh-syntax-highlighting
