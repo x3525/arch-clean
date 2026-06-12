@@ -1,3 +1,5 @@
+bindkey -e
+
 # Move to the previous event in the history list.
 bindkey '^[[5~' up-line-or-history
 # Move to the next event in the history list.
