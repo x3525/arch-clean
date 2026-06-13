@@ -54,7 +54,7 @@ ZSH_HIGHLIGHT_STYLES=(
     # process substitution delimiters
     [process-substitution-delimiter]=fg=magenta
     # arithmetic expansion
-    [arithmetic-expansion]=none
+    [arithmetic-expansion]=fg=magenta
     # single-hyphen options
     [single-hyphen-option]=none
     # double-hyphen options
