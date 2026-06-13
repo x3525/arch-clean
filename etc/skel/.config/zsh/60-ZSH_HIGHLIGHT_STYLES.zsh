@@ -8,9 +8,9 @@ ZSH_HIGHLIGHT_STYLES=(
     # aliases
     [alias]=fg=green
     # suffix aliases
-    [suffix-alias]=fg=cyan
+    [suffix-alias]=fg=green
     # global aliases
-    [global-alias]=fg=cyan
+    [global-alias]=fg=green
     # shell builtin commands
     [builtin]=fg=green
     # function names
@@ -44,15 +44,15 @@ ZSH_HIGHLIGHT_STYLES=(
     # a quoted command substitution
     [command-substitution-quoted]=none
     # command substitution delimiters
-    [command-substitution-delimiter]=none
+    [command-substitution-delimiter]=fg=magenta
     # an unquoted command substitution delimiters
-    [command-substitution-delimiter-unquoted]=none
+    [command-substitution-delimiter-unquoted]=fg=magenta
     # a quoted command substitution delimiters
-    [command-substitution-delimiter-quoted]=none
+    [command-substitution-delimiter-quoted]=fg=magenta
     # process substitutions
     [process-substitution]=none
     # process substitution delimiters
-    [process-substitution-delimiter]=none
+    [process-substitution-delimiter]=fg=magenta
     # arithmetic expansion
     [arithmetic-expansion]=none
     # single-hyphen options
@@ -64,27 +64,27 @@ ZSH_HIGHLIGHT_STYLES=(
     # unclosed backtick command substitution
     [back-quoted-argument-unclosed]=none
     # backtick command substitution delimiters
-    [back-quoted-argument-delimiter]=none
+    [back-quoted-argument-delimiter]=fg=magenta
     # single-quoted arguments
-    [single-quoted-argument]=none
+    [single-quoted-argument]=fg=yellow
     # unclosed single-quoted arguments
-    [single-quoted-argument-unclosed]=none
+    [single-quoted-argument-unclosed]=fg=yellow
     # double-quoted arguments
-    [double-quoted-argument]=none
+    [double-quoted-argument]=fg=yellow
     # unclosed double-quoted arguments
-    [double-quoted-argument-unclosed]=none
+    [double-quoted-argument-unclosed]=fg=yellow
     # dollar-quoted arguments
-    [dollar-quoted-argument]=none
+    [dollar-quoted-argument]=fg=yellow
     # unclosed dollar-quoted arguments
-    [dollar-quoted-argument-unclosed]=none
+    [dollar-quoted-argument-unclosed]=fg=yellow
     # two single quotes inside single quotes when the RC_QUOTES option is set
     [rc-quote]=none
     # parameter expansion inside double quotes
-    [dollar-double-quoted-argument]=fg=magenta
+    [dollar-double-quoted-argument]=fg=cyan
     # backslash escape sequences inside double-quoted arguments
-    [back-double-quoted-argument]=fg=magenta
+    [back-double-quoted-argument]=fg=cyan
     # backslash escape sequences inside dollar-quoted arguments
-    [back-dollar-quoted-argument]=fg=magenta
+    [back-dollar-quoted-argument]=fg=cyan
     # parameter assignments
     [assign]=none
     # redirection operators
