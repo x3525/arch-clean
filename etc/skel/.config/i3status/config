@@ -9,11 +9,11 @@ order+="tztime weekday"
 order+="volume default"
 order+="cpu_usage"
 order+="memory"
-order+="battery 0"
+order+="battery all"
 order+="tztime date"
 order+="time"
 
-battery 0 {
+battery all {
     format="%percentage<span foreground='#1f1f1f'>BAT</span>"
     format_down=""
     format_percentage="%03.0f%s"
