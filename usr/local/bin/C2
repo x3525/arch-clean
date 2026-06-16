@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function brightness() {
+brightness() {
     brightnessctl set "$2"%"$1"
 }
 
-function lock() {
+lock() {
     dunstctl set-paused true
 
     i3lock -n -c 000000 -p default -e -f -k &
@@ -14,11 +14,11 @@ function lock() {
     dunstctl set-paused false
 }
 
-function menu() {
+menu() {
     rofi -no-lazy-grab -show "$1" -modes "$1" -theme "$1"
 }
 
-function notify() {
+notify() {
     case $1 in
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
@@ -35,7 +35,7 @@ function notify() {
     esac
 }
 
-function execute() {
+execute() {
     for d in "$1"/*
     do
         for pid in $(pgrep -f -- "$(dex -p Name "$d")")
