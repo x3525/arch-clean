@@ -1,4 +1,4 @@
-function history() {
+history() {
     if [ "$1" = "clear" ]
     then
         print -n -u 2 "Clear the histor[y] list? "
