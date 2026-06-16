@@ -8,7 +8,7 @@ ZSH_HIGHLIGHT_STYLES=(
     # aliases
     [alias]=fg=green
     # suffix aliases
-    [suffix-alias]=fg=green,standout
+    [suffix-alias]=none
     # global aliases
     [global-alias]=none
     # shell builtin commands
