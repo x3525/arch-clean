@@ -1,8 +1,6 @@
 function history() {
-    if [ $# -eq 0 ]
+    if [ "$1" = "clear" ]
     then
-        fc -i -l 1
-    else
         print -n -u 2 "Clear the histor[y] list? "
 
         read -r
@@ -13,5 +11,7 @@ function history() {
                 fc -p "$HISTFILE"
                 ;;
         esac
+    else
+        fc -i -l 1
     fi
 }
