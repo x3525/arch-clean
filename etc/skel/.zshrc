@@ -1,5 +1,9 @@
-export EDITOR='vim'
-export VISUAL='vim'
+export LESS="-iR"
+export MANPAGER="less"
+export PAGER="less"
+
+export EDITOR="vim"
+export VISUAL="vim"
 
 # The primary prompt string, printed before a command is read.
 PROMPT='%(1j.%F{white}%0~%f.%F{blue}%0~%f)%(0?.%F{cyan}%(!.#.$)%f.%F{red}%(!.#.$)%f) '
@@ -13,7 +17,7 @@ do
 done; unset f
 
 # Note that zsh-syntax-highlighting must be the last plugin sourced.
-for p in /usr/share/zsh/plugins/*/*.plugin.zsh
+for f in /usr/share/zsh/plugins/*/*.plugin.zsh
 do
-    . "$p"
-done; unset p
+    . "$f"
+done; unset f
