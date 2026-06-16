@@ -1,8 +1,7 @@
+export EDITOR="vim"
 export LESS="-iR"
 export MANPAGER="less"
 export PAGER="less"
-
-export EDITOR="vim"
 export VISUAL="vim"
 
 # The primary prompt string, printed before a command is read.
