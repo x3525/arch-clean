@@ -71,21 +71,14 @@ then
     exit 1
 fi
 
-devices=$(lsblk --nodeps --noheadings --paths --output=NAME)
-
-if [ "$(wc -l <<< "$devices")" -eq 1 ]
-then
-    device=$devices
-else
-    select device in $devices
-    do
-        if [ ! -b "$device" ]
-        then
-            continue
-        fi
-        break
-    done
-fi
+select device in $(lsblk --nodeps --noheadings --paths --output=NAME)
+do
+    if [ ! -b "$device" ]
+    then
+        continue
+    fi
+    break
+done
 
 echo "Starting sanity checks..."
 
