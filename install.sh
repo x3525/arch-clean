@@ -71,14 +71,21 @@ then
     exit 1
 fi
 
-select disk in $(lsblk --nodeps --noheadings --paths --output=NAME)
-do
-    if [ ! -b "$disk" ]
-    then
-        continue
-    fi
-    break
-done
+devices=$(lsblk --nodeps --noheadings --paths --output=NAME)
+
+if [ "$(wc -l <<< "$devices")" -eq 1 ]
+then
+    device=$devices
+else
+    select device in $devices
+    do
+        if [ ! -b "$device" ]
+        then
+            continue
+        fi
+        break
+    done
+fi
 
 echo "Starting sanity checks..."
 
@@ -91,10 +98,10 @@ done
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 # Zap (destroy) the GPT and MBR data structures
-sgdisk "$disk" --zap-all
+sgdisk "$device" --zap-all
 
 # Manipulate disk partition table
-sfdisk "$disk" --wipe always --wipe-partitions always << EOF
+sfdisk "$device" --wipe always --wipe-partitions always << EOF
 label: gpt
 unit: sectors
 
@@ -104,7 +111,7 @@ type=0FC63DAF-8483-4772-8E79-3D69D8477DE4,start=,size=
 EOF
 
 # Inform the operating system kernel of partition table changes
-partprobe "$disk"
+partprobe "$device"
 
 # Wait for pending udev events
 udevadm settle
@@ -114,7 +121,7 @@ BEGIN {IGNORECASE=1}
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$disk" --dump)" | paste -s)
+' <<< "$(sfdisk "$device" --dump)" | paste -s)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
