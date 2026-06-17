@@ -71,7 +71,7 @@ then
     exit 1
 fi
 
-select disk in $(lsblk -dnp -o NAME)
+select disk in $(lsblk --nodeps --noheadings --paths --output=NAME)
 do
     if [ ! -b "$disk" ]
     then
@@ -91,10 +91,10 @@ done
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 # Zap (destroy) the GPT and MBR data structures
-sgdisk "$disk" -Z
+sgdisk "$disk" --zap-all
 
 # Manipulate disk partition table
-sfdisk "$disk" -w always -W always << EOF
+sfdisk "$disk" --wipe always --wipe-partitions always << EOF
 label: gpt
 unit: sectors
 
@@ -114,7 +114,7 @@ BEGIN {IGNORECASE=1}
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
 /0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
 /0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk "$disk" -d)" | paste -s)
+' <<< "$(sfdisk "$disk" --dump)" | paste -s)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
@@ -145,7 +145,7 @@ case "$(lspci -d ::03xx)" in
         ;;
 esac
 
-if systemd-detect-virt -q
+if systemd-detect-virt --quiet
 then
     packages+=(mesa)
 fi
@@ -159,7 +159,7 @@ case "$(grep vendor_id /proc/cpuinfo)" in
         ;;
 esac
 
-if grep -q snd_sof /proc/modules
+if grep snd_sof /proc/modules
 then
     packages+=(sof-firmware)
 fi
@@ -180,18 +180,18 @@ done
 cp -r -- */ /mnt/
 
 # Generate an fstab file
-genfstab -U /mnt/ > /mnt/etc/fstab
+genfstab -t UUID /mnt/ > /mnt/etc/fstab
 
 # Create a new user
-useradd -R /mnt/ -m -k /etc/skel/ -s /usr/bin/zsh -G wheel "$name"
+useradd --root=/mnt/ --create-home --skel=/etc/skel/ --shell=/usr/bin/zsh --groups=wheel "$name"
 
 rm -r /mnt/etc/skel/
 
 # Change user password (user)
-echo "$user" | passwd -s -R /mnt/ "$name"
+echo "$user" | passwd --root=/mnt/ --stdin "$name"
 
 # Change user password (root)
-echo "$root" | passwd -s -R /mnt/
+echo "$root" | passwd --root=/mnt/ --stdin
 
 # Enable timers
 systemctl --root=/mnt/ enable fstrim.timer
@@ -206,13 +206,13 @@ systemctl --root=/mnt/ enable systemd-timesyncd.service
 arch-chroot /mnt/ locale-gen
 
 # Set the Hardware Clock from the System Clock
-arch-chroot /mnt/ hwclock -w
+arch-chroot /mnt/ hwclock --systohc
 
 # Install GRUB to a device
 arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
 
 # Generate a GRUB configuration file
-arch-chroot /mnt/ grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot /mnt/ grub-mkconfig --output=/boot/grub/grub.cfg
 
 # Recursively unmount each specified directory
 umount -R /mnt/
