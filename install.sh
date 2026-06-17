@@ -193,20 +193,20 @@ echo "$user" | passwd -s -R /mnt/ "$name"
 # Change user password (root)
 echo "$root" | passwd -s -R /mnt/
 
+# Enable timers
+systemctl --root=/mnt/ enable fstrim.timer
+systemctl --root=/mnt/ enable reflector.timer
+
+# Enable services
+systemctl --root=/mnt/ enable getty@tty1.service
+systemctl --root=/mnt/ enable NetworkManager.service
+systemctl --root=/mnt/ enable systemd-timesyncd.service
+
 # Generate localization files from templates
 arch-chroot /mnt/ locale-gen
 
 # Set the Hardware Clock from the System Clock
 arch-chroot /mnt/ hwclock -w
-
-# Enable timers
-arch-chroot /mnt/ systemctl enable fstrim.timer
-arch-chroot /mnt/ systemctl enable reflector.timer
-
-# Enable services
-arch-chroot /mnt/ systemctl enable getty@tty1.service
-arch-chroot /mnt/ systemctl enable NetworkManager.service
-arch-chroot /mnt/ systemctl enable systemd-timesyncd.service
 
 # Install GRUB to a device
 arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
