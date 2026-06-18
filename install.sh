@@ -80,6 +80,15 @@ do
     break
 done
 
+case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
+    0)
+        unit_file_command=enable
+        ;;
+    1)
+        unit_file_command=disable
+        ;;
+esac
+
 echo "Starting sanity checks..."
 
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
@@ -193,11 +202,11 @@ echo "$user" | passwd --root=/mnt/ --stdin "$name"
 # Change user password (root)
 echo "$root" | passwd --root=/mnt/ --stdin
 
-# Enable timers
-systemctl --root=/mnt/ enable fstrim.timer
+# Timer units
+systemctl --root=/mnt/ "$unit_file_command" fstrim.timer
 systemctl --root=/mnt/ enable reflector.timer
 
-# Enable services
+# Service units
 systemctl --root=/mnt/ enable getty@tty1.service
 systemctl --root=/mnt/ enable NetworkManager.service
 systemctl --root=/mnt/ enable systemd-timesyncd.service
