@@ -16,6 +16,9 @@ export XDG_CONFIG_DIRS="/etc/xdg"
 # There is a single base directory relative to which user-specific non-essential (cached) data should be written.
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# A colon-separated list of names that the current desktop is known as.
+export XDG_CURRENT_DESKTOP="i3"
+
 # The directory to search for shell startup files.
 export ZDOTDIR="$HOME"
 
@@ -32,19 +35,16 @@ export SAVEHIST=100000
 export WORDCHARS=
 
 # The name of the editor.
-export EDITOR="vim"
+export EDITOR=vim
 
 # The name of the editor.
-export VISUAL="vim"
+export VISUAL=vim
 
 # The name of the program used to display the manual page.
-export MANPAGER="less"
+export MANPAGER=less
 
 # The name of the program used to display the manual page.
-export PAGER="less"
+export PAGER=less
 
 # Options which are passed to less automatically.
-export LESS="-iR"
-
-# A colon-separated list of names that the current desktop is known as.
-export XDG_CURRENT_DESKTOP="i3"
+export LESS=-iR
