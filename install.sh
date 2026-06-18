@@ -85,7 +85,7 @@ case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
         # SSD
         unit_file_command=enable
         ;;
-    1)
+    *)
         unit_file_command=disable
         ;;
 esac
