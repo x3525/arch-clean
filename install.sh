@@ -82,6 +82,7 @@ done
 
 case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
     0)
+        # SSD
         unit_file_command=enable
         ;;
     1)
