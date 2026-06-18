@@ -177,9 +177,7 @@ fi
 while ! pacstrap -K /mnt/ base linux linux-firmware linux-headers "${packages[@]}"
 do
     echo -n "Alas, Pacman failed. Try agai[n]? "
-
     read -r
-
     case $REPLY in
         n|N)
             exit 1
