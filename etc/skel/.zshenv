@@ -30,3 +30,21 @@ export SAVEHIST=100000
 
 # A list of non-alphanumeric characters considered part of a word by the line editor.
 export WORDCHARS=
+
+# The name of the editor.
+export EDITOR="vim"
+
+# The name of the editor.
+export VISUAL="vim"
+
+# The name of the program used to display the manual page.
+export MANPAGER="less"
+
+# The name of the program used to display the manual page.
+export PAGER="less"
+
+# Options which are passed to less automatically.
+export LESS="-iR"
+
+# A colon-separated list of names that the current desktop is known as.
+export XDG_CURRENT_DESKTOP="i3"
