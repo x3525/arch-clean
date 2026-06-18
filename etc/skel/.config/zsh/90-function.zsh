@@ -2,9 +2,7 @@ history() {
     if [ "$1" = "clear" ]
     then
         print -n -u 2 "Clear the histor[y] list? "
-
         read -r
-
         case $REPLY in
             y|Y)
                 print -n -u 2 >| "$HISTFILE"
