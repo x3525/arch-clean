@@ -30,6 +30,8 @@ case $TERM in
         bindkey '^[[1;5D' backward-word
         # Move to the beginning of the next word.
         bindkey '^[[1;5C' forward-word
+        # Kill the word behind the cursor.
+        bindkey '^H' backward-kill-word
         # Kill the current word.
         bindkey '^[[3;5~' kill-word
         ;;
