@@ -35,16 +35,16 @@ export SAVEHIST=100000
 export WORDCHARS=
 
 # The name of the editor.
-export EDITOR=vim
+export EDITOR="vim"
 
 # The name of the editor.
-export VISUAL=vim
+export VISUAL="vim"
 
 # The name of the program used to display the manual page.
-export MANPAGER=less
+export MANPAGER="less"
 
 # The name of the program used to display the manual page.
-export PAGER=less
+export PAGER="less"
 
 # Options which are passed to less automatically.
-export LESS=-iR
+export LESS="-iR"
