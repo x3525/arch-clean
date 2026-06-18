@@ -1,9 +1,3 @@
-export EDITOR="vim"
-export LESS="-iR"
-export MANPAGER="less"
-export PAGER="less"
-export VISUAL="vim"
-
 # The primary prompt string, printed before a command is read.
 PROMPT='%(1j.%F{white}%0~%f.%F{blue}%0~%f)%(0?.%F{cyan}%(!.#.$)%f.%F{red}%(!.#.$)%f) '
 
