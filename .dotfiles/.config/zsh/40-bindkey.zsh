@@ -3,12 +3,10 @@ bindkey -e
 
 autoload -Uz up-line-or-beginning-search
 zle -N up-line-or-beginning-search
-# Move up within the buffer.
 bindkey '^[[A' up-line-or-beginning-search
 
 autoload -Uz down-line-or-beginning-search
 zle -N down-line-or-beginning-search
-# Move down within the buffer.
 bindkey '^[[B' down-line-or-beginning-search
 
 # Move to the previous event in the history list.
