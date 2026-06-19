@@ -101,7 +101,7 @@ done
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 # Zap (destroy) the GPT and MBR data structures
-sgdisk "$device" --zap-all
+sgdisk "$device" -Z
 
 # Manipulate disk partition table
 sfdisk "$device" --wipe always --wipe-partitions always << EOF
@@ -155,7 +155,7 @@ case "$(lspci -d ::03xx)" in
         ;;
 esac
 
-if systemd-detect-virt --quiet
+if systemd-detect-virt -q
 then
     packages+=(mesa)
 fi
@@ -188,10 +188,10 @@ done
 cp -r -- */ /mnt/
 
 # Generate an fstab file
-genfstab -t UUID /mnt/ > /mnt/etc/fstab
+genfstab -U /mnt/ > /mnt/etc/fstab
 
 # Create a new user
-useradd --root=/mnt/ --create-home --groups=wheel "$name"
+useradd --root=/mnt/ -m -G wheel "$name"
 
 rm -r /mnt/etc/skel/
 
@@ -214,7 +214,7 @@ systemctl --root=/mnt/ enable systemd-timesyncd.service
 arch-chroot /mnt/ locale-gen
 
 # Set the Hardware Clock from the System Clock
-arch-chroot /mnt/ hwclock --systohc
+arch-chroot /mnt/ hwclock -w
 
 # Install GRUB to a device
 arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
