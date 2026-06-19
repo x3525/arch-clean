@@ -1,5 +1,5 @@
 unalias run-help
-autoload -Uz run-help
+unalias which-command
 
 alias cat='bat --style=plain --paging=never --theme="Solarized (dark)"'
 alias diff='diff --color=auto'
