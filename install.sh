@@ -189,6 +189,7 @@ done
 genfstab -U /mnt/ > /mnt/etc/fstab
 
 cp -r -- */ /mnt/
+
 mount --bind -m .dotfiles/ /mnt/etc/skel/
 
 # Create a new user
