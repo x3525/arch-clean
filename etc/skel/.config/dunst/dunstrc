@@ -30,10 +30,10 @@
     height=(0, 500)
 
     # Position the notification in the top right corner
-    origin=top-right
+    origin=bottom-right
 
     # Offset from the origin
-    offset=(10, 110)
+    offset=(5, 5)
 
     # Scale factor. It is auto-detected if value is 0.
     scale=0
@@ -178,7 +178,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  literal %
     # Markup is allowed
-    format="<b>%s%p</b>\n%b"
+    format="<b>%s</b>\n%b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -324,25 +324,25 @@
     mouse_right_click=close_current
 
 [urgency_low]
+    timeout=3
+    fullscreen=show
     background="#000000"
     foreground="#ffffff"
     highlight="#097969"
     frame_color="#097969"
-    fullscreen=show
-    timeout=3
 
 [urgency_normal]
+    timeout=0
+    fullscreen=show
     background="#000000"
     foreground="#ffffff"
     highlight="#008080"
     frame_color="#008080"
-    fullscreen=show
-    timeout=0
 
 [urgency_critical]
+    timeout=0
+    fullscreen=show
     background="#000000"
     foreground="#ffffff"
     highlight="#880808"
     frame_color="#880808"
-    fullscreen=show
-    timeout=0
