@@ -36,9 +36,9 @@ notify() {
 }
 
 execute() {
-    for d in "$1"/*
+    for desktop in "$1"/*
     do
-        for pid in $(pgrep -f -- "$(dex -p Name "$d")")
+        for pid in $(pgrep -f -- "$(dex -p Name "$desktop")")
         do
             if ps eww -p "$pid" | grep DISPLAY="$DISPLAY" | grep -q _="$(command -v dex)"
             then
