@@ -191,7 +191,7 @@ cp -r -- */ /mnt/
 genfstab -t UUID /mnt/ > /mnt/etc/fstab
 
 # Create a new user
-useradd --root=/mnt/ --create-home --skel=/etc/skel/ --shell=/usr/bin/zsh --groups=wheel "$name"
+useradd --root=/mnt/ --create-home --groups=wheel "$name"
 
 rm -r /mnt/etc/skel/
 
