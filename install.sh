@@ -189,7 +189,7 @@ done
 genfstab -U /mnt/ > /mnt/etc/fstab
 
 cp -r -- */ /mnt/
-mount --bind .dotfiles/ /mnt/etc/skel/
+mount --bind -m .dotfiles/ /mnt/etc/skel/
 
 # Create a new user
 useradd --root=/mnt/ -m -G wheel "$name"
