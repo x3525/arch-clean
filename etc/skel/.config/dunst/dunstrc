@@ -210,6 +210,10 @@
     show_indicators=yes
 
     # When set to true (recommended), you can use POSIX regular expressions for filtering rules.
+    # If this is set to false (not recommended), dunst will use fnmatch(3) for matching strings.
+    # Dunst doesn't pass any flags to fnmatch, so you cannot make use of extended patterns.
+    #
+    # Note that this will eventually be true by default.
     enable_posix_regex=true
 
     ### Icons ###
