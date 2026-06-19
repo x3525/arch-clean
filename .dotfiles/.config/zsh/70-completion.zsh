@@ -1,3 +1,4 @@
+autoload -Uz compinit
 compinit
 
 zstyle ':completion:*' completer _extensions _complete
