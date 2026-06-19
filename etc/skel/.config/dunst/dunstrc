@@ -23,7 +23,7 @@
 
     # The width of the window, excluding the frame.
     # dynamic width from 0 to 300
-    width=400
+    width=(0, 500)
 
     # The height of a single notification, excluding the frame.
     # dynamic height from 0 to 300
