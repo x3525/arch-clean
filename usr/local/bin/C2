@@ -23,16 +23,20 @@ notify() {
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
 
+            summary=$(pamixer --get-volume)
+
+            urgency=low
+
             if pamixer --get-mute | grep -q true
             then
-                ICON=volume-level-none
+                icon=volume-level-none
             else
-                ICON=volume-level-high
+                icon=volume-level-high
             fi
-
-            notify-send -h string:x-dunst-stack-tag:"$1" -u low -i "$ICON" "" -h int:value:"$(pamixer --get-volume)"
             ;;
     esac
+
+    notify-send "$summary" --urgency="$urgency" --icon="$icon" --hint=string:x-dunst-stack-tag:"$1"
 }
 
 execute() {
