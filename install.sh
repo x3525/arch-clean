@@ -83,10 +83,10 @@ done
 case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
     0)
         # SSD
-        unit_file_command=enable
+        fstrim_unit_file_command=enable
         ;;
     *)
-        unit_file_command=disable
+        fstrim_unit_file_command=disable
         ;;
 esac
 
@@ -202,7 +202,7 @@ echo "$user" | passwd --root=/mnt/ --stdin "$name"
 echo "$root" | passwd --root=/mnt/ --stdin
 
 # Timer units
-systemctl --root=/mnt/ "$unit_file_command" fstrim.timer
+systemctl --root=/mnt/ "$fstrim_unit_file_command" fstrim.timer
 systemctl --root=/mnt/ enable reflector.timer
 
 # Service units
