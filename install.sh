@@ -185,15 +185,14 @@ do
     esac
 done
 
-cp -r -- */ /mnt/
-
 # Generate an fstab file
 genfstab -U /mnt/ > /mnt/etc/fstab
 
+cp -r -- */ /mnt/
+mount --bind .dotfiles/ /mnt/etc/skel/
+
 # Create a new user
 useradd --root=/mnt/ -m -G wheel "$name"
-
-rm -r /mnt/etc/skel/
 
 # Change user password (user)
 echo "$user" | passwd --root=/mnt/ --stdin "$name"
