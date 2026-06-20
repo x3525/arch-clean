@@ -67,5 +67,5 @@ window {
     border: 5px;
     fullscreen: false;
     location: center;
-    width: 40%;
+    width: 30%;
 }
