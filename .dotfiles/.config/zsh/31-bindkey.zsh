@@ -1,24 +1,18 @@
 # Select keymap 'emacs' for any operations by the current command.
 bindkey -e
 
-autoload -Uz up-line-or-beginning-search
-zle -N up-line-or-beginning-search
-# Use the whole line prefix up to the cursor position for searching backwards.
-bindkey '^[[A' up-line-or-beginning-search
-
-autoload -Uz down-line-or-beginning-search
-zle -N down-line-or-beginning-search
-# Use the whole line prefix up to the cursor position for searching forwards.
-bindkey '^[[B' down-line-or-beginning-search
-
-# Move to the previous event in the history list.
-bindkey '^[[5~' up-line-or-history
-# Move to the next event in the history list.
-bindkey '^[[6~' down-line-or-history
 # Delete the character under the cursor.
 bindkey '^[[3~' delete-char
 # Move to the previous completion rather than the next.
 bindkey '^[[Z' reverse-menu-complete
+# Move to the previous event in the history list.
+bindkey '^[[5~' up-line-or-history
+# Move to the neixt event in the history list.
+bindkey '^[[6~' down-line-or-history
+# Move up within the buffer, otherwise search for a history line matching the start of the current line.
+bindkey '^[[A' up-line-or-beginning-search
+# Move down within the buffer, otherwise search for a history line matching the start of the current line.
+bindkey '^[[B' down-line-or-beginning-search
 
 case $TERM in
     linux)
