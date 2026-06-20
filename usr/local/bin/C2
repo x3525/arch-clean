@@ -1,10 +1,10 @@
 #!/bin/bash
 
-brightness() {
+brightness () {
     brightnessctl set "$2"%"$1"
 }
 
-lock() {
+lock () {
     dunstctl set-paused true
 
     i3lock -n -c 000000 -p default -e -f -k &
@@ -14,11 +14,11 @@ lock() {
     dunstctl set-paused false
 }
 
-menu() {
+menu () {
     rofi -no-lazy-grab -show "$1" -modes "$1" -theme "$1"
 }
 
-notify() {
+notify () {
     case $1 in
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
@@ -39,7 +39,7 @@ notify() {
     notify-send "$summary" --urgency="$urgency" --icon="$icon" --hint=string:x-dunst-stack-tag:"$1"
 }
 
-execute() {
+execute () {
     for desktop in "$1"/*
     do
         for pid in $(pgrep -f -- "$(dex -p Name "$desktop")")
