@@ -4,11 +4,11 @@ exec 3> /tmp/xtrace.log
 BASH_XTRACEFD=3
 set -x
 
-online() {
+online () {
     ping ping.archlinux.org -c 1 -w 1 > /dev/null
 }
 
-linger() {
+linger () {
     for unit
     do
         echo "Currently waiting for $unit to complete..."
