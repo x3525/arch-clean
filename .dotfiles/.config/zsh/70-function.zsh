@@ -1,5 +1,5 @@
 history() {
-    if [ "$1" = "Clear" ]
+    if [ "$1" = "clear" ]
     then
         : >| "$HISTFILE"
         fc -p "$HISTFILE"
