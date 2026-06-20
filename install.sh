@@ -214,7 +214,7 @@ systemctl --root=/mnt/ enable systemd-timesyncd.service
 arch-chroot /mnt/ locale-gen
 
 # Set the Hardware Clock from the System Clock
-arch-chroot /mnt/ hwclock -w
+arch-chroot /mnt/ hwclock --systohc
 
 # Install GRUB to a device
 arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
