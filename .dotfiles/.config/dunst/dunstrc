@@ -332,8 +332,8 @@
     fullscreen=show
     background="#000000"
     foreground="#ffffff"
-    highlight="#097969"
-    frame_color="#097969"
+    highlight="#008080"
+    frame_color="#008080"
 
 [urgency_normal]
     timeout=0
