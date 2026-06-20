@@ -7,10 +7,8 @@ PROMPT_EOL_MARK='%K{yellow} %k'
 for f in "$XDG_CONFIG_HOME"/zsh/*.zsh(n)
 do
     . "$f"
-done; unset f
+done
 
 # Note that zsh-syntax-highlighting must be the last plugin sourced.
-for f in /usr/share/zsh/plugins/*/*.plugin.zsh
-do
-    . "$f"
-done; unset f
+. /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
