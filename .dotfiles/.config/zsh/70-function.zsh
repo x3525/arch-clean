@@ -1,15 +1,9 @@
 history() {
-    if [ "$1" = "clear" ]
+    if [ "$1" = "Clear" ]
     then
-        print -n -u 2 "Clear the histor[y] list? "
-        read -r
-        case $REPLY in
-            y|Y)
-                print -n -u 2 >| "$HISTFILE"
-                fc -p "$HISTFILE"
-                ;;
-        esac
+        : >| "$HISTFILE"
+        fc -p "$HISTFILE"
     else
-        fc -i -l 1
+        fc -E -l 1
     fi
 }
