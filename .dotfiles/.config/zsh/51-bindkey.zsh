@@ -7,7 +7,7 @@ bindkey '^[[3~' delete-char
 bindkey '^[[Z' reverse-menu-complete
 # Move to the previous event in the history list.
 bindkey '^[[5~' up-line-or-history
-# Move to the neixt event in the history list.
+# Move to the next event in the history list.
 bindkey '^[[6~' down-line-or-history
 # Move up within the buffer, otherwise search for a history line matching the start of the current line.
 bindkey '^[[A' up-line-or-beginning-search
