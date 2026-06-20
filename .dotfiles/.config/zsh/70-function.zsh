@@ -1,4 +1,4 @@
-history() {
+history () {
     if [ "$1" = "clear" ]
     then
         : >| "$HISTFILE"
