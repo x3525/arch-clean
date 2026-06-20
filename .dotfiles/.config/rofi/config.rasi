@@ -9,7 +9,7 @@ configuration {
     click-to-exit: true;
     disable-history: false;
     dpi: 0;
-    drun-display-format: "{name}";
+    drun-display-format: "{name}\n[<small>{exec}</small>]";
     drun-match-fields: "name#exec";
     font: "JetBrains Mono NL 12";
     hover-select: false;
