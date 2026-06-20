@@ -1,13 +1,13 @@
 # Color to use when highlighting suggestion
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=#4c4c4c
+typeset -g ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=#4c4c4c
 
 # Strategies to use to fetch a suggestion
-ZSH_AUTOSUGGEST_STRATEGY=(
+typeset -ga ZSH_AUTOSUGGEST_STRATEGY=(
     history
 )
 
 # Widgets that clear the suggestion
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
+typeset -ga ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
     history-search-forward
     history-search-backward
     history-beginning-search-forward
@@ -25,7 +25,7 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
 )
 
 # Widgets that accept the entire suggestion
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
+typeset -ga ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
     forward-char
     end-of-line
     vi-forward-char
@@ -34,11 +34,11 @@ ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
 )
 
 # Widgets that accept the entire suggestion and execute it
-ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(
+typeset -ga ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(
 )
 
 # Widgets that accept the suggestion as far as the cursor moves
-ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
+typeset -ga ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
     forward-word
     emacs-forward-word
     vi-forward-word
@@ -50,7 +50,7 @@ ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
 )
 
 # Widgets that should be ignored (globbing supported but must be escaped)
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
+typeset -ga ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
     orig-\*
     beep
     run-help
