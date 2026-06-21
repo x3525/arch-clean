@@ -25,6 +25,8 @@ notify () {
 
             summary=$(pamixer --get-volume)
 
+            body=
+
             urgency=low
 
             if pamixer --get-mute | grep -q true
@@ -33,10 +35,14 @@ notify () {
             else
                 icon=volume-level-high
             fi
+
+            hint=(--hint=int:value:"$summary")
             ;;
     esac
 
-    notify-send "$summary" --urgency="$urgency" --icon="$icon" --hint=string:x-dunst-stack-tag:"$1"
+    hint+=(--hint=string:x-dunst-stack-tag:"$1")
+
+    notify-send "$summary" "$body" --urgency="$urgency" --icon="$icon" "${hint[@]}"
 }
 
 execute () {
