@@ -12,8 +12,6 @@
 element {
     children: [ element-icon, element-text ];
     orientation: horizontal;
-    padding: 20px;
-    spacing: 20px;
 }
 
 element selected {
@@ -21,6 +19,7 @@ element selected {
 }
 
 element-icon {
+    padding: 20px;
     size: 48px;
 }
 
