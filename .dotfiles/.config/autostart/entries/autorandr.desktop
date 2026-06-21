@@ -1,6 +1,6 @@
 [Desktop Entry]
-Exec=autorandr --change
+Type=Application
 Name=autorandr
+Exec=autorandr --change
 NoDisplay=true
 Terminal=false
-Type=Application
