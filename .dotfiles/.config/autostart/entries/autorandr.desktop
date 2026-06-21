@@ -2,5 +2,4 @@
 Type=Application
 Name=autorandr
 Exec=autorandr --change
-NoDisplay=true
 Terminal=false
