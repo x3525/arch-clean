@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=dunst
+Name=dunst
+NoDisplay=true
+Terminal=false
+Type=Application
