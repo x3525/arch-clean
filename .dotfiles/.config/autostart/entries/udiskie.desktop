@@ -1,5 +1,6 @@
 [Desktop Entry]
 Exec=udiskie
 Name=udiskie
+NoDisplay=true
 Terminal=false
 Type=Application
