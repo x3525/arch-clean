@@ -1,6 +1,5 @@
 [Desktop Entry]
-Exec=picom
 Name=picom
-NoDisplay=true
-Terminal=false
+Exec=picom
 Type=Application
+Terminal=false
