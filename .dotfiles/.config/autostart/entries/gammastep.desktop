@@ -1,5 +1,6 @@
 [Desktop Entry]
 Exec=gammastep -P
 Name=gammastep
+NoDisplay=true
 Terminal=false
 Type=Application
