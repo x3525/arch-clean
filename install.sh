@@ -48,7 +48,7 @@ fi
 
 if [ $# -ne 1 ]
 then
-    echo "Usage: $0 NAME"
+    echo "Usage: $0 USERNAME"
     exit 1
 fi
 
@@ -59,7 +59,7 @@ then
     echo "Login entry is invalid!"
     exit 1
 else
-    name=$1
+    username=$1
 fi
 
 user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
@@ -193,10 +193,10 @@ cp -r -- */ /mnt/
 mount -m --bind .dotfiles/ /mnt/etc/skel/
 
 # Create a new user
-useradd --root=/mnt/ -m -G wheel "$name"
+useradd --root=/mnt/ -m -G wheel "$username"
 
 # Change user password (user)
-echo "$user" | passwd --root=/mnt/ --stdin "$name"
+echo "$user" | passwd --root=/mnt/ --stdin "$username"
 
 # Change user password (root)
 echo "$root" | passwd --root=/mnt/ --stdin
