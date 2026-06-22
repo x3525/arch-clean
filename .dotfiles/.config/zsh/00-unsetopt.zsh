@@ -1,3 +1,5 @@
+# If a command is issued that can't be executed as a normal command, and the command is the name of a directory, perform the cd command to that directory.
+unsetopt AUTO_CD
 # When the last character resulting from a completion is a slash and the next character typed is a slash, remove the slash.
 unsetopt AUTO_REMOVE_SLASH
 # Perform textual history expansion, csh-style, treating the character ! specially.
