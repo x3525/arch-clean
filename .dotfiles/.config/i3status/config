@@ -25,7 +25,7 @@ cpu_usage {
     format="%usage<span foreground='#1f1f1f'>CPU</span>"
     format_above_degraded_threshold="%usage<span foreground='#1f1f1f'>CPU</span>"
     format_above_threshold="<span foreground='#880808'>%usage</span><span foreground='#1f1f1f'>CPU</span>"
-    max_threshold="90"
+    max_threshold="85"
     min_width="*******"
 }
 
@@ -35,7 +35,7 @@ memory {
     format_degraded="<span foreground='#880808'>%percentage_used</span><span foreground='#1f1f1f'>MEM</span>"
     memory_used_method="memavailable"
     min_width="*********"
-    threshold_critical="10%"
+    threshold_critical="15%"
 }
 
 time {
