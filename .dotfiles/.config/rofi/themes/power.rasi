@@ -14,10 +14,6 @@ element-icon {
     size: 96px;
 }
 
-element-text {
-    highlight: none;
-}
-
 listview {
     lines: 1;
 }
