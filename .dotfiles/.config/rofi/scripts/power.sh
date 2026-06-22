@@ -3,7 +3,7 @@
 if [ -n "$1" ]
 then
     coproc { systemctl "$1" &> /dev/null; }
-    exit 0
+    exit
 fi
 
 echo -e "poweroff\0icon\x1fsystem-shut-down\x1fpermanent\x1ftrue"
