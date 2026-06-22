@@ -19,7 +19,7 @@ bindkey '^[[B' down-line-or-beginning-search
 bindkey '^[[C' forward-char
 # Move backward one character.
 bindkey '^[[D' backward-char
-# Perform menu completion, if a menu completion is already in progress, move to the previous completion.
+# Move to the previous completion rather than the next.
 bindkey '^[[Z' reverse-menu-complete
 # Attempt shell expansion on the current word.
 bindkey '^I' expand-or-complete
