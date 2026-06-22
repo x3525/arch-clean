@@ -23,11 +23,11 @@
 
     # The width of the window, excluding the frame.
     # dynamic width from 0 to 300
-    width=(500, 500)
+    width=(450, 450)
 
     # The height of a single notification, excluding the frame.
     # dynamic height from 0 to 300
-    height=(0, 500)
+    height=(0, 450)
 
     # Position the notification in the top right corner
     origin=bottom-right
@@ -55,10 +55,10 @@
     progress_bar_frame_width=0
 
     # Set the minimum width for the progress bar
-    progress_bar_min_width=500
+    progress_bar_min_width=450
 
     # Set the maximum width for the progress bar
-    progress_bar_max_width=500
+    progress_bar_max_width=450
 
     # Corner radius for the progress bar. 0 disables rounded corners.
     progress_bar_corner_radius=0
