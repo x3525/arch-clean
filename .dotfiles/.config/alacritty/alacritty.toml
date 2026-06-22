@@ -45,9 +45,6 @@ unfocused_hollow=true
 [terminal]
 osc52="Disabled"
 
-[mouse]
-hide_when_typing=true
-
 [[hints.enabled]]
 command="xdg-open"
 regex=""
