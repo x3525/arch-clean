@@ -22,7 +22,6 @@ notify () {
     case $1 in
         gammastep)
             summary=$2
-            urgency=low
 
             case $2 in
                 daytime)
@@ -37,7 +36,6 @@ notify () {
             pamixer -"$2" "$3" --allow-boost --set-limit=150
 
             summary=$(pamixer --get-volume)
-            urgency=low
 
             if pamixer --get-mute | grep -q true
             then
@@ -52,7 +50,7 @@ notify () {
 
     hint+=(--hint=string:x-dunst-stack-tag:"$1")
 
-    notify-send "$summary" "${body:-}" --urgency="$urgency" --icon="$icon" "${hint[@]}"
+    notify-send "$summary" "${body:-}" --urgency="${urgency:-low}" --icon="$icon" "${hint[@]}"
 }
 
 execute () {
