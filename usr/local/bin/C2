@@ -23,7 +23,15 @@ notify () {
         gammastep)
             summary=$2
             urgency=low
-            icon=gammastep
+
+            case $2 in
+                daytime)
+                    icon=daytime-sunrise-symbolic
+                    ;;
+                night)
+                    icon=daytime-sunset-symbolic
+                    ;;
+            esac
             ;;
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
