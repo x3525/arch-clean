@@ -44,7 +44,7 @@ notify () {
 
     hint+=(--hint=string:x-dunst-stack-tag:"$1")
 
-    notify-send "$summary" "$body" --urgency="$urgency" --icon="$icon" "${hint[@]}"
+    notify-send "$summary" "${body:-}" --urgency="$urgency" --icon="$icon" "${hint[@]}"
 }
 
 execute () {
