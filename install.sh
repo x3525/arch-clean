@@ -5,7 +5,7 @@ BASH_XTRACEFD=3
 set -x
 
 online () {
-    ping ping.archlinux.org -c 1 -w 1 > /dev/null
+    ping ping.archlinux.org -c 1 -w 1 >& /dev/null
 }
 
 linger () {
@@ -23,7 +23,6 @@ linger () {
             *.service)
                 while [ "$(systemctl is-active "$unit")" != "inactive" ]
                 do
-                    online
                     sleep 1
                 done
                 ;;
@@ -89,11 +88,16 @@ case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
         ;;
 esac
 
+if ! online
+then
+    echo "There is no internet connection!"
+    exit 1
+fi
+
 echo "Starting sanity checks..."
 
 while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
 do
-    online
     sleep 1
 done
 
