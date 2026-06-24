@@ -83,7 +83,8 @@ case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
         # SSD
         fstrim_unit_file_command=enable
         ;;
-    *)
+    1)
+        # HDD
         fstrim_unit_file_command=disable
         ;;
 esac
