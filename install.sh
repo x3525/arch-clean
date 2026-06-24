@@ -5,7 +5,7 @@ BASH_XTRACEFD=3
 set -x
 
 online () {
-    ping ping.archlinux.org -c 1 -w 1 >& /dev/null
+    ping ping.archlinux.org -c 1 -w 1
 }
 
 linger () {
@@ -88,7 +88,7 @@ case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
         ;;
 esac
 
-if ! online
+if ! online >& /dev/null
 then
     echo "There is no internet connection!"
     exit 1
