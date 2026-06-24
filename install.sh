@@ -5,7 +5,7 @@ BASH_XTRACEFD=3
 set -x
 
 online () {
-    ping ping.archlinux.org -c 1 -w 1 > /dev/null
+    ping ping.archlinux.org -c 1 -w 1 &> /dev/null || echo "No internet connection!"
 }
 
 linger () {
