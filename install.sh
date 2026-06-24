@@ -17,7 +17,6 @@ linger () {
             *.timer)
                 while [ -z "$(systemctl show -P ActiveEnterTimestamp "$unit")" ]
                 do
-                    online
                     sleep 1
                 done
                 ;;
