@@ -1,5 +1,5 @@
 # Color to use when highlighting suggestion
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=#4c4c4c
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=8
 
 # Strategies to use to fetch a suggestion
 ZSH_AUTOSUGGEST_STRATEGY=(
