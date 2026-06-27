@@ -12,4 +12,4 @@ tiling_drag off
 exec --no-startup-id xss-lock --transfer-sleep-lock -- C2 lock
 
 # Executing applications
-exec_always --no-startup-id C2 execute "$XDG_CONFIG_HOME"/autostart/entries
+exec_always --no-startup-id C2 execute "$XDG_CONFIG_HOME"/autostart/entries/
