@@ -8,7 +8,7 @@ focus_on_window_activation urgent
 
 tiling_drag off
 
-# Screen locker
+# External locker as X screen saver
 exec --no-startup-id xss-lock --transfer-sleep-lock -- C2 lock
 
 # Executing applications
