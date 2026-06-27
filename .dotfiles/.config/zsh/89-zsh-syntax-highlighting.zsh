@@ -1,22 +1,22 @@
 typeset -gA ZSH_HIGHLIGHT_STYLES=(
     # unknown tokens / errors
-    [unknown-token]=fg=#dc322f
+    [unknown-token]=fg=red
     # shell reserved words
-    [reserved-word]=fg=#b58900
+    [reserved-word]=fg=yellow
     # aliases
-    [alias]=fg=#859900
+    [alias]=fg=green
     # suffix aliases
     [suffix-alias]=none
     # global aliases
     [global-alias]=none
     # shell builtin commands
-    [builtin]=fg=#859900
+    [builtin]=fg=green
     # function names
-    [function]=fg=#859900
+    [function]=fg=green
     # command names
-    [command]=fg=#859900
+    [command]=fg=green
     # precommand modifiers
-    [precommand]=fg=#859900
+    [precommand]=fg=green
     # command separation tokens
     [commandseparator]=none
     # hashed commands
@@ -32,9 +32,9 @@ typeset -gA ZSH_HIGHLIGHT_STYLES=(
     # path separators in prefixes of existing filenames
     [path_prefix_pathseparator]=underline
     # globbing expressions
-    [globbing]=fg=#268bd2
+    [globbing]=fg=blue
     # history expansion expressions
-    [history-expansion]=fg=#268bd2
+    [history-expansion]=fg=blue
     # command substitutions
     [command-substitution]=none
     # an unquoted command substitution
@@ -42,17 +42,17 @@ typeset -gA ZSH_HIGHLIGHT_STYLES=(
     # a quoted command substitution
     [command-substitution-quoted]=none
     # command substitution delimiters
-    [command-substitution-delimiter]=fg=#d33682
+    [command-substitution-delimiter]=fg=magenta
     # an unquoted command substitution delimiters
-    [command-substitution-delimiter-unquoted]=fg=#d33682
+    [command-substitution-delimiter-unquoted]=fg=magenta
     # a quoted command substitution delimiters
-    [command-substitution-delimiter-quoted]=fg=#d33682
+    [command-substitution-delimiter-quoted]=fg=magenta
     # process substitutions
     [process-substitution]=none
     # process substitution delimiters
-    [process-substitution-delimiter]=fg=#d33682
+    [process-substitution-delimiter]=fg=magenta
     # arithmetic expansion
-    [arithmetic-expansion]=fg=#d33682
+    [arithmetic-expansion]=fg=magenta
     # single-hyphen options
     [single-hyphen-option]=none
     # double-hyphen options
@@ -62,31 +62,31 @@ typeset -gA ZSH_HIGHLIGHT_STYLES=(
     # unclosed backtick command substitution
     [back-quoted-argument-unclosed]=none
     # backtick command substitution delimiters
-    [back-quoted-argument-delimiter]=fg=#d33682
+    [back-quoted-argument-delimiter]=fg=magenta
     # single-quoted arguments
-    [single-quoted-argument]=fg=#b58900
+    [single-quoted-argument]=fg=yellow
     # unclosed single-quoted arguments
-    [single-quoted-argument-unclosed]=fg=#b58900
+    [single-quoted-argument-unclosed]=fg=yellow
     # double-quoted arguments
-    [double-quoted-argument]=fg=#b58900
+    [double-quoted-argument]=fg=yellow
     # unclosed double-quoted arguments
-    [double-quoted-argument-unclosed]=fg=#b58900
+    [double-quoted-argument-unclosed]=fg=yellow
     # dollar-quoted arguments
-    [dollar-quoted-argument]=fg=#b58900
+    [dollar-quoted-argument]=fg=yellow
     # unclosed dollar-quoted arguments
-    [dollar-quoted-argument-unclosed]=fg=#b58900
+    [dollar-quoted-argument-unclosed]=fg=yellow
     # two single quotes inside single quotes when the RC_QUOTES option is set
     [rc-quote]=none
     # parameter expansion inside double quotes
-    [dollar-double-quoted-argument]=fg=#2aa198
+    [dollar-double-quoted-argument]=fg=cyan
     # backslash escape sequences inside double-quoted arguments
-    [back-double-quoted-argument]=fg=#2aa198
+    [back-double-quoted-argument]=fg=cyan
     # backslash escape sequences inside dollar-quoted arguments
-    [back-dollar-quoted-argument]=fg=#2aa198
+    [back-dollar-quoted-argument]=fg=cyan
     # parameter assignments
     [assign]=none
     # redirection operators
-    [redirection]=fg=#b58900
+    [redirection]=fg=yellow
     # elided parameters in command position
     [comment]=none
     # named file descriptor
@@ -94,7 +94,7 @@ typeset -gA ZSH_HIGHLIGHT_STYLES=(
     # numeric file descriptor
     [numeric-fd]=none
     # a command word other than one of those enumerated above
-    [arg0]=fg=#859900
+    [arg0]=fg=green
     # everything else
     [default]=none
 )
