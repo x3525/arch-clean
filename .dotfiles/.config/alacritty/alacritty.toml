@@ -5,8 +5,8 @@ import=[
 ]
 
 [window.padding]
-x=5
-y=5
+x=0
+y=0
 
 [scrolling]
 history=100000
