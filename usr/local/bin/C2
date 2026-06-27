@@ -7,7 +7,7 @@ brightness () {
 lock () {
     dunstctl set-paused true
 
-    i3lock --nofork --color=000000 --pointer=default --ignore-empty-password --show-failed-attempts --show-keyboard-layout
+    i3lock --nofork -c 000000 -p default -e -f -k
 
     dunstctl set-paused false
 }
