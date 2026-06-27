@@ -37,4 +37,4 @@ fi
 
 numlockx on
 
-exec dbus-run-session i3
+exec i3
