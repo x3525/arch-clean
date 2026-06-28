@@ -44,12 +44,6 @@ else
     mapfile -t packages < PACKAGES
 fi
 
-if ! online >& /dev/null
-then
-    echo "There is no internet connection!"
-    exit 1
-fi
-
 if [ $# -ne 1 ]
 then
     echo "Usage: $0 USERNAME"
@@ -94,6 +88,12 @@ case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
         fstrim_unit_file_command=disable
         ;;
 esac
+
+if ! online >& /dev/null
+then
+    echo "There is no internet connection!"
+    exit 1
+fi
 
 echo "Starting sanity checks..."
 
