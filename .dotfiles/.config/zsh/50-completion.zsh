@@ -1,5 +1,7 @@
+# The initialization script redefines all the widgets which perform completion.
 compinit
 
+# The strings given as the value of this style provide the names of the completer functions to use.
 zstyle ':completion:*' completer _extensions _complete
 
 # This is used by the completer for cd, chdir and pushd.
