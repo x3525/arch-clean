@@ -78,6 +78,13 @@ do
     break
 done
 
+# EOF
+if [ ! -b "$device" ]
+then
+    echo "Device is not a block special!"
+    exit 1
+fi
+
 case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
     0)
         # SSD
