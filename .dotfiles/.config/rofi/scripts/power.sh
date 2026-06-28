@@ -2,7 +2,9 @@
 
 if [ -n "$1" ]
 then
-    coproc { systemctl "$1" >& /dev/null; }
+    coproc {
+        systemctl "$1" >& /dev/null
+    }
     exit
 fi
 
