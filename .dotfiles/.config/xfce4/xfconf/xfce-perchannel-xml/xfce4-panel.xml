@@ -15,7 +15,7 @@
       </property>
       <property name="settings" type="empty">
         <property name="enable-actions" type="bool" value="false"/>
-        <property name="max-images-in-history" type="uint" value="1"/>
+        <property name="max-images-in-history" type="uint" value="0"/>
         <property name="history-ignore-primary-clipboard" type="bool" value="true"/>
         <property name="max-texts-in-history" type="uint" value="1000"/>
         <property name="persistent-primary-clipboard" type="bool" value="false"/>
