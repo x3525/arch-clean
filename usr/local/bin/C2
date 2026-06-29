@@ -18,18 +18,6 @@ menu () {
 
 notify () {
     case $1 in
-        gammastep)
-            summary=$2
-
-            case $2 in
-                daytime)
-                    icon=daytime-sunrise-symbolic
-                    ;;
-                night)
-                    icon=daytime-sunset-symbolic
-                    ;;
-            esac
-            ;;
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
 
