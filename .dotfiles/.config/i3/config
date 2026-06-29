@@ -1,4 +1,4 @@
-include configs/*.conf
+include *.conf
 
 focus_follows_mouse no
 
