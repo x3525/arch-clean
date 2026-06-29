@@ -16,7 +16,7 @@ configuration {
     icon-theme: "Papirus-Dark";
     matching: "normal";
     max-history-size: 5;
-    monitor: -1;
+    monitor: -5;
     normalize-match: false;
     scroll-method: 0;
     sidebar-mode: false;
