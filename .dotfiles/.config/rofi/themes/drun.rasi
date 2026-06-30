@@ -1,11 +1,37 @@
 * {
-    background-color: transparent;
     text-color: Beige;
 }
 
+window {
+    background-color: Black;
+    border: 5px;
+    border-color: DarkSlateGray;
+    location: center;
+    width: 30%;
+}
+
+mainbox {
+    background-color: inherit;
+    spacing: 0px;
+    width: 30%;
+}
+
+inputbar {
+    enabled: false;
+    spacing: inherit;
+}
+
+listview {
+    background-color: inherit;
+    lines: 5;
+    spacing: inherit;
+}
+
 element {
+    background-color: inherit;
     children: [ element-icon, element-text ];
     orientation: horizontal;
+    spacing: inherit;
 }
 
 element selected {
@@ -13,47 +39,22 @@ element selected {
 }
 
 element-icon {
+    background-color: inherit;
     padding: 20px;
     size: 48px;
 }
 
 element-text {
+    background-color: inherit;
     highlight: Red;
     horizontal-align: 0.0;
     vertical-align: 0.5;
 }
 
-entry {
-    blink: false;
-    cursor: text;
-    cursor-width: 5px;
-    hide-cursor-on-empty: false;
+error-message {
+    background-color: inherit;
 }
 
-inputbar {
-    enabled: false;
-}
-
-listview {
-    columns: 1;
-    cycle: true;
-    flow: vertical;
-    layout: vertical;
-    lines: 5;
-    require-input: false;
-    reverse: false;
-    spacing: 0px;
-}
-
-prompt {
-    enabled: false;
-}
-
-window {
-    background-color: Black;
-    border: 5px;
-    border-color: DarkSlateGray;
-    fullscreen: false;
-    location: center;
-    width: 30%;
+textbox {
+    background-color: inherit;
 }
