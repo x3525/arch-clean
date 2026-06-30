@@ -1,12 +1,6 @@
 * {
     background-color: transparent;
-    border: 0px;
-    horizontal-align: 0.0;
-    margin: 0px;
-    padding: 0px;
-    spacing: 0px;
     text-color: Beige;
-    vertical-align: 0.5;
 }
 
 element {
@@ -25,6 +19,8 @@ element-icon {
 
 element-text {
     highlight: Red;
+    horizontal-align: 0.0;
+    vertical-align: 0.5;
 }
 
 entry {
