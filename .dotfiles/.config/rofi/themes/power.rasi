@@ -10,7 +10,6 @@ element selected {
 }
 
 element-icon {
-    horizontal-align: 0.5;
     size: 96px;
 }
 
@@ -18,11 +17,8 @@ listview {
     lines: 1;
 }
 
-mainbox {
-    background-color: transparent;
-}
-
 window {
+    background-color: transparent;
     border-color: transparent;
     location: south;
 }
