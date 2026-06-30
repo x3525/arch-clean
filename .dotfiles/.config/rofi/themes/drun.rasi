@@ -25,12 +25,9 @@ element-text {
 
 entry {
     blink: false;
+    cursor: text;
     cursor-width: 5px;
     hide-cursor-on-empty: false;
-}
-
-error-message {
-    padding: 20px;
 }
 
 inputbar {
@@ -45,6 +42,7 @@ listview {
     lines: 5;
     require-input: false;
     reverse: false;
+    spacing: 0px;
 }
 
 prompt {
@@ -53,8 +51,8 @@ prompt {
 
 window {
     background-color: Black;
-    border-color: DarkSlateGray;
     border: 5px;
+    border-color: DarkSlateGray;
     fullscreen: false;
     location: center;
     width: 30%;
