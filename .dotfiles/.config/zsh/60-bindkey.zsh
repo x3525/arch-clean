@@ -61,3 +61,13 @@ case $TERM in
         bindkey '^[[H' beginning-of-line
         ;;
 esac
+
+() {
+    autoload -Uz up-line-or-beginning-search
+    zle -N up-line-or-beginning-search
+}
+
+() {
+    autoload -Uz down-line-or-beginning-search
+    zle -N down-line-or-beginning-search
+}
