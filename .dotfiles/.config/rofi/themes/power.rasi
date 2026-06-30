@@ -1,24 +1,24 @@
 @theme "drun.rasi"
 
-element {
-    children: [ element-icon ];
-    orientation: vertical;
-}
-
-element selected {
+window {
     background-color: transparent;
-}
-
-element-icon {
-    size: 96px;
+    border: 0px;
+    location: south;
 }
 
 listview {
     lines: 1;
 }
 
-window {
-    background-color: transparent;
-    border-color: transparent;
-    location: south;
+element {
+    children: [ element-icon ];
+    orientation: vertical;
+}
+
+element selected {
+    background-color: inherit;
+}
+
+element-icon {
+    size: 96px;
 }
