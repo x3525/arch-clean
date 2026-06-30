@@ -214,14 +214,17 @@ echo "$user" | passwd --root=/mnt/ --stdin "$username"
 # Change user password (root)
 echo "$root" | passwd --root=/mnt/ --stdin
 
-# Timer units
-systemctl --root=/mnt/ "$fstrim_unit_file_command" fstrim.timer
-systemctl --root=/mnt/ enable reflector.timer
-
 # Service units
 systemctl --root=/mnt/ enable getty@tty1.service
 systemctl --root=/mnt/ enable NetworkManager.service
 systemctl --root=/mnt/ enable systemd-timesyncd.service
+
+# Target units
+systemctl --root=/mnt/ mask ctrl-alt-del.target
+
+# Timer units
+systemctl --root=/mnt/ "$fstrim_unit_file_command" fstrim.timer
+systemctl --root=/mnt/ enable reflector.timer
 
 # Generate localization files from templates
 arch-chroot /mnt/ locale-gen
