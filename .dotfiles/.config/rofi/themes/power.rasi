@@ -2,7 +2,7 @@
 
 window {
     background-color: transparent;
-    border: 0px;
+    border-color: transparent;
     location: south;
 }
 
