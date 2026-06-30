@@ -1,3 +1,7 @@
+() {
+    autoload -Uz compinit
+}
+
 compinit
 
 zstyle ':completion:*' completer \
