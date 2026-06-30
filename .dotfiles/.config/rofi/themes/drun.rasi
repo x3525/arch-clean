@@ -34,7 +34,6 @@ entry {
 }
 
 error-message {
-    background-color: Black;
     padding: 20px;
 }
 
@@ -53,15 +52,12 @@ listview {
     reverse: false;
 }
 
-mainbox {
-    background-color: Black;
-}
-
 prompt {
-    enabled: true;
+    enabled: false;
 }
 
 window {
+    background-color: Black;
     border-color: DarkSlateGray;
     border: 5px;
     fullscreen: false;
