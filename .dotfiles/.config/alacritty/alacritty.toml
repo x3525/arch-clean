@@ -4,6 +4,9 @@ import=[
 "themes/solarized_osaka.toml",
 ]
 
+[env]
+WINIT_X11_SCALE_FACTOR="1.0"
+
 [window.padding]
 x=0
 y=0
