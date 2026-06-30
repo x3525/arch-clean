@@ -1,4 +1,4 @@
-typeset -gA ZSH_HIGHLIGHT_STYLES=(
+typeset -g -A ZSH_HIGHLIGHT_STYLES=(
     # unknown tokens / errors
     [unknown-token]=fg=red
     # shell reserved words
