@@ -13,7 +13,6 @@ window {
 mainbox {
     background-color: inherit;
     spacing: 0px;
-    width: 30%;
 }
 
 inputbar {
