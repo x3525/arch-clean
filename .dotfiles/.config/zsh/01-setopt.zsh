@@ -16,13 +16,13 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 # Print job notifications in the long format by default.
 setopt LONG_LIST_JOBS
-# If set, % is treated specially in prompt expansion.
+# If set, "%" is treated specially in prompt expansion.
 setopt PROMPT_PERCENT
 # If set, parameter expansion, command substitution and arithmetic expansion are performed in prompts.
 setopt PROMPT_SUBST
 # Don't push multiple copies of the same directory onto the directory stack.
 setopt PUSHD_IGNORE_DUPS
-# Exchanges the meanings of + and - when used with a number to specify a directory in the stack.
+# Exchanges the meanings of "+" and "-" when used with a number to specify a directory in the stack.
 setopt PUSHD_MINUS
 # This option both imports new commands from the history file, and also causes your typed commands to be appended to the history file.
 setopt SHARE_HISTORY
