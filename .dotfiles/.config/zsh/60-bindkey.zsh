@@ -41,7 +41,7 @@ bindkey -R ' -~' self-insert
 # Insert a character into the buffer at the cursor position.
 bindkey -R '\M-^@-\M-^?' self-insert
 
-case $TERM in
+case "$TERM" in
     linux)
         # Move to the beginning of the line.
         bindkey '^[[1~' beginning-of-line
