@@ -1,3 +1,7 @@
+batt () {
+    command cat /sys/class/power_supply/"${1:-BAT0}"/uevent
+}
+
 history () {
     if [ "$1" = "clear" ]
     then
