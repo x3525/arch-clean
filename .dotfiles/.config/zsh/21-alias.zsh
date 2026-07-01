@@ -1,3 +1,4 @@
+alias cal='cal --color=auto --monday'
 alias cat='bat --style=plain --paging=never --theme="Solarized (dark)"'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto --exclude-dir={.git,.venv,venv}'
