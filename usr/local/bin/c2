@@ -56,7 +56,7 @@ notify () {
 
     hint+=(--hint=string:x-dunst-stack-tag:"${tag-$1}")
 
-    notify-send "${summary:-}" "${body:-}" --urgency="${urgency:-low}" --icon="${icon:-application-default-icon}" "${hint[@]}"
+    notify-send "${summary:-}" "${body:-}" --urgency="${urgency:-low}" --icon="${icon:-}" "${hint[@]}"
 }
 
 $1 "${@:2}"
