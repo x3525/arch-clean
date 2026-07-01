@@ -11,19 +11,30 @@ online () {
 linger () {
     for unit
     do
-        echo "Currently waiting for $unit to complete..."
+        echo "Waiting for $unit to complete..."
 
         case $unit in
             *.timer)
-                while [ -z "$(systemctl show -P ActiveEnterTimestamp "$unit")" ]
+                while [ -z "$(systemctl show --no-pager --value --property=ActiveEnterTimestamp "$unit")" ]
                 do
                     sleep 1
                 done
                 ;;
             *.service)
-                while [ "$(systemctl is-active "$unit")" != "inactive" ]
+                while true
                 do
-                    sleep 1
+                    case "$(systemctl show --no-pager --value --property=SubState "$unit")" in
+                        dead|exited)
+                            break
+                            ;;
+                        failed)
+                            echo "$unit failed"
+                            exit 1
+                            ;;
+                        *)
+                            sleep 1
+                            ;;
+                    esac
                 done
                 ;;
         esac
@@ -32,13 +43,13 @@ linger () {
 
 if [ ! -e /sys/firmware/efi/ ]
 then
-    echo "System is not booted in UEFI mode!"
+    echo "System is not booted in UEFI mode"
     exit 1
 fi
 
 if [ ! -f PACKAGES ]
 then
-    echo "PACKAGES file not found!"
+    echo "PACKAGES file not found"
     exit 1
 else
     mapfile -t packages < PACKAGES
@@ -54,7 +65,7 @@ LC_CTYPE=C
 
 if [[ ! $1 =~ ^[a-z][a-z0-9][a-z0-9]{,30}$ ]]
 then
-    echo "Login entry is invalid!"
+    echo "Login entry is invalid"
     exit 1
 else
     username=$1
@@ -65,7 +76,7 @@ root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password 
 
 if [ -z "$user" ] || [ -z "$root" ]
 then
-    echo "Empty passwords are not allowed!"
+    echo "Empty passwords are not allowed"
     exit 1
 fi
 
@@ -81,7 +92,7 @@ done
 # EOF
 if [ ! -b "$device" ]
 then
-    echo "Device is not a block special!"
+    echo "Device is not a block special"
     exit 1
 fi
 
@@ -98,13 +109,13 @@ esac
 
 if ! online >& /dev/null
 then
-    echo "There is no internet connection!"
+    echo "There is no internet connection"
     exit 1
 fi
 
 echo "Starting sanity checks..."
 
-while [ "$(timedatectl show -P NTPSynchronized)" != "yes" ]
+while [ "$(timedatectl show --no-pager --value --property=NTPSynchronized)" != "yes" ]
 do
     sleep 1
 done
