@@ -4,6 +4,26 @@ brightness () {
     brightnessctl set "$2"%"$1"
 }
 
+execute () {
+    for desktop in "$1"/*
+    do
+        for pid in $(pgrep -f -- "$(dex -p Name "$desktop")")
+        do
+            if ps eww -p "$pid" | grep DISPLAY="$DISPLAY" | grep -q _="$(command -v dex)"
+            then
+                kill "$pid"
+
+                while pgrep -p "$pid"
+                do
+                    sleep 1
+                done
+            fi
+        done
+    done
+
+    dex -a -s "$1"
+}
+
 lock () {
     dunstctl set-paused true
 
@@ -37,26 +57,6 @@ notify () {
     hint+=(--hint=string:x-dunst-stack-tag:"${tag-$1}")
 
     notify-send "${summary:-}" "${body:-}" --urgency="${urgency:-low}" --icon="${icon:-application-default-icon}" "${hint[@]}"
-}
-
-execute () {
-    for desktop in "$1"/*
-    do
-        for pid in $(pgrep -f -- "$(dex -p Name "$desktop")")
-        do
-            if ps eww -p "$pid" | grep DISPLAY="$DISPLAY" | grep -q _="$(command -v dex)"
-            then
-                kill "$pid"
-
-                while pgrep -p "$pid"
-                do
-                    sleep 1
-                done
-            fi
-        done
-    done
-
-    dex -a -s "$1"
 }
 
 $1 "${@:2}"
