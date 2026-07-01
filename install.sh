@@ -80,7 +80,7 @@ then
     exit 1
 fi
 
-select device in $(lsblk --nodeps --noheadings --paths --output=NAME)
+select device in $(lsblk --nodeps --noheadings --paths --output=NAME,RO,TYPE | awk '$2==0 && $3=="disk" {print $1}')
 do
     if [ ! -b "$device" ]
     then
@@ -92,7 +92,6 @@ done
 # EOF
 if [ ! -b "$device" ]
 then
-    echo "Device is not a block special"
     exit 1
 fi
 
@@ -109,7 +108,7 @@ esac
 
 if ! online >& /dev/null
 then
-    echo "There is no internet connection"
+    echo "No internet connection"
     exit 1
 fi
 
