@@ -13,7 +13,7 @@ linger () {
     do
         echo "Waiting for $unit to complete..."
 
-        case $unit in
+        case "$unit" in
             *.timer)
                 while [ -z "$(systemctl show --no-pager --value --property=ActiveEnterTimestamp "$unit")" ]
                 do
@@ -200,7 +200,7 @@ do
     echo -n "Alas, Pacman failed. Try agai[n]? "
     read -r
 
-    case $REPLY in
+    case "$REPLY" in
         n|N)
             echo "Leaving the installer :("
             exit 1
