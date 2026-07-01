@@ -37,7 +37,7 @@ menu () {
 }
 
 notify () {
-    case $1 in
+    case "$1" in
         volume)
             pamixer -"$2" "$3" --allow-boost --set-limit=150
 
