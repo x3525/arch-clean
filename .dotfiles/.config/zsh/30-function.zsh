@@ -1,4 +1,4 @@
-batt () {
+battery () {
     command cat /sys/class/power_supply/"${1:-BAT0}"/uevent
 }
 
