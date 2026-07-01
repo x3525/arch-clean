@@ -1,4 +1,4 @@
-alias cal='LC_TIME=tr_TR.UTF-8 cal --monday'
+alias cal='LC_TIME=tr_TR.UTF-8 cal'
 alias cat='bat --style=plain --paging=never --theme="Solarized (dark)"'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto --exclude-dir={.git,.venv,venv}'
