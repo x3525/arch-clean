@@ -15,7 +15,7 @@ configuration {
     drun-show-actions: false;
     eh: 1;
     fixed-num-lines: true;
-    font: "JetBrains Mono NL 12";
+    font: "JetBrainsMonoNL Nerd Font Mono 12";
     hover-select: false;
     icon-theme: "Papirus-Dark";
     matching: "normal";
