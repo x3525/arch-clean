@@ -330,23 +330,23 @@
 [urgency_low]
     timeout=3
     fullscreen=show
-    background="#000000"
     foreground="#ffffff"
+    background="#000000"
     highlight="#008080"
     frame_color="#008080"
 
 [urgency_normal]
     timeout=0
     fullscreen=show
-    background="#000000"
     foreground="#ffffff"
+    background="#000000"
     highlight="#008080"
     frame_color="#008080"
 
 [urgency_critical]
     timeout=0
     fullscreen=show
-    background="#000000"
     foreground="#ffffff"
+    background="#000000"
     highlight="#880808"
     frame_color="#880808"
