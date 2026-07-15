@@ -1,0 +1,7 @@
+if [ "$1" = "clear" ]
+then
+    : >| "$HISTFILE"
+    fc -p "$HISTFILE"
+else
+    fc -l -E 1
+fi

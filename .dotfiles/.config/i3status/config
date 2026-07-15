@@ -1,0 +1,12 @@
+general {
+    colors="false"
+    interval="1"
+    markup="pango"
+    output_format="i3bar"
+}
+
+order+="time"
+
+time {
+    format="%H:%M:%S"
+}

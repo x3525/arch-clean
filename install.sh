@@ -1,0 +1,253 @@
+#!/bin/bash -e
+
+#
+# A pre-configured Arch Linux installer
+#
+
+exec 3> /tmp/xtrace.log
+BASH_XTRACEFD=3
+set -x
+
+linger () {
+    for unit
+    do
+        echo "Waiting for $unit to complete..."
+
+        case "$unit" in
+            *.timer)
+                while [ -z "$(systemctl --no-pager -P ActiveEnterTimestamp show "$unit")" ]
+                do
+                    sleep 1
+                done
+                ;;
+            *.service)
+                while true
+                do
+                    case "$(systemctl --no-pager -P SubState show "$unit")" in
+                        dead)
+                            break
+                            ;;
+                        exited)
+                            break
+                            ;;
+                        failed)
+                            echo "$unit failed"
+                            exit 1
+                            ;;
+                        *)
+                            sleep 1
+                            ;;
+                    esac
+                done
+                ;;
+        esac
+    done
+}
+
+if [ ! -d /sys/firmware/efi/ ]
+then
+    echo "System is not booted in UEFI mode"
+    exit 1
+fi
+
+if [ ! -f PACKAGES ]
+then
+    echo "PACKAGES file not found"
+    exit 1
+else
+    mapfile -t packages < PACKAGES
+fi
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0 USERNAME"
+    exit 1
+fi
+
+LC_CTYPE=C
+
+if [[ ! $1 =~ ^[a-z][a-z0-9][a-z0-9]{,30}$ ]]
+then
+    echo "Login entry is invalid"
+    exit 1
+else
+    username=$1
+fi
+
+user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
+root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+
+if [ -z "$user" ] || [ -z "$root" ]
+then
+    echo "Empty passwords are not allowed"
+    exit 1
+fi
+
+select device in $(lsblk --nodeps --noheadings --paths --output=NAME,RO,TYPE | awk '$2==0 && $3=="disk" {print $1}')
+do
+    if [ ! -b "$device" ]
+    then
+        continue
+    fi
+    break
+done
+
+# EOF
+if [ ! -b "$device" ]
+then
+    exit 1
+fi
+
+case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
+    0)
+        # SSD
+        fstrim_unit_file_command=enable
+        ;;
+    1)
+        # HDD
+        fstrim_unit_file_command=disable
+        ;;
+esac
+
+echo "Starting sanity checks..."
+
+while [ "$(timedatectl --no-pager -P NTPSynchronized show)" != "yes" ]
+do
+    sleep 1
+done
+
+linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+
+# Zap (destroy) the GPT and MBR data structures
+sgdisk --zap-all "$device"
+
+# Manipulate disk partition table
+sfdisk --wipe=always --wipe-partitions=always "$device" << EOF
+label: gpt
+unit: sectors
+
+type=U,start=,size=1GiB
+type=S,start=,size=8GiB
+type=L,start=,size=
+EOF
+
+# Inform the operating system kernel of partition table changes
+partprobe "$device"
+
+# Wait for pending udev events
+udevadm settle
+
+read -r U S L < <(awk '
+BEGIN {IGNORECASE=1}
+/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
+/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
+/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
+' <<< "$(sfdisk --dump "$device")" | paste --serial)
+
+mkfs.vfat "$U" -F 32
+mkfs.ext4 "$L" -F
+
+mount -m "$L" /mnt/
+mount -m "$U" /mnt/efi/
+
+mkswap "$S"
+swapon "$S"
+
+case "$(lspci -d ::03xx)" in
+    *[aA][mM][dD]*)
+        packages+=(mesa)
+        packages+=(vulkan-radeon)
+        packages+=(xf86-video-ati)
+        packages+=(xf86-video-amdgpu)
+        ;;&
+    *[iI][nN][tT][eE][lL]*)
+        packages+=(mesa)
+        packages+=(vulkan-intel)
+        packages+=(intel-media-driver)
+        packages+=(libva-intel-driver)
+        ;;&
+    *[nN][vV][iI][dD][iI][aA]*)
+        packages+=(dkms)
+        packages+=(nvidia-open-dkms)
+        packages+=(libva-nvidia-driver)
+        ;;
+esac
+
+if systemd-detect-virt -q
+then
+    packages+=(mesa)
+fi
+
+case "$(grep vendor_id /proc/cpuinfo)" in
+    *[aA][mM][dD]*)
+        packages+=(amd-ucode)
+        ;;
+    *[iI][nN][tT][eE][lL]*)
+        packages+=(intel-ucode)
+        ;;
+esac
+
+if grep snd_sof /proc/modules
+then
+    packages+=(sof-firmware)
+fi
+
+while ! pacstrap -K /mnt/ base linux linux-firmware linux-headers "${packages[@]}"
+do
+    echo "Alas, Pacman failed. Try agai[n]?"
+    read -r
+
+    case "$REPLY" in
+        n|N)
+            echo "Leaving the installer :("
+            exit 1
+            ;;
+    esac
+done
+
+# Generate an fstab file
+genfstab -U /mnt/ > /mnt/etc/fstab
+
+cp -r -- */ /mnt/
+
+mount -m --bind .dotfiles/ /mnt/etc/skel/
+
+# Create a new user
+useradd --root=/mnt/ --create-home --groups=wheel "$username"
+
+# Change user password (user)
+echo "$user" | passwd --root=/mnt/ --stdin "$username"
+
+# Change user password (root)
+echo "$root" | passwd --root=/mnt/ --stdin
+
+# Timer units
+systemctl --root=/mnt/ "$fstrim_unit_file_command" fstrim.timer
+systemctl --root=/mnt/ enable reflector.timer
+
+# Service units
+systemctl --root=/mnt/ enable getty@tty1.service
+systemctl --root=/mnt/ enable NetworkManager.service
+systemctl --root=/mnt/ enable systemd-timesyncd.service
+
+# Target units
+systemctl --root=/mnt/ mask ctrl-alt-del.target
+
+# Generate localization files from templates
+arch-chroot /mnt/ locale-gen
+
+# Set the Hardware Clock from the System Clock
+arch-chroot /mnt/ hwclock --systohc
+
+# Install GRUB to a device
+arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
+
+# Generate a GRUB configuration file
+arch-chroot /mnt/ grub-mkconfig --output=/boot/grub/grub.cfg
+
+# Recursively unmount each specified directory
+umount -R /mnt/
+
+set +x
+unset BASH_XTRACEFD
+exec 3<&-

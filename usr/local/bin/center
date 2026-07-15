@@ -1,0 +1,86 @@
+#!/bin/bash
+
+execute () {
+    dex=$(command -v dex)
+
+    for desktop in "$1"/*.desktop
+    do
+        for pid in $(pgrep -f -- "$($dex --property=Name "$desktop")")
+        do
+            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q _="$dex"
+            then
+                kill "$pid"
+
+                while pgrep -p "$pid"
+                do
+                    sleep 1
+                done
+            fi
+        done
+    done
+
+    $dex --autostart --search-paths="$1"
+}
+
+lock () {
+    dunstctl set-paused true
+
+    i3lock --nofork --color=000000 --ignore-empty-password --show-keyboard-layout
+
+    dunstctl set-paused false
+}
+
+menu () {
+    rofi -no-lazy-grab -show "$1" -theme "$1"
+}
+
+notify () {
+    case "$1" in
+        volume)
+            case "$2" in
+                inc|dec)
+                    pamixer --"$2"rease="$3" --allow-boost --set-limit=150
+                    ;;
+                tog)
+                    pamixer --toggle-mute
+                    ;;
+            esac
+
+            summary=$(printf %03d "$(pamixer --get-volume)")
+
+            if pamixer --get-mute | grep -q true
+            then
+                icon=audio-volume-muted
+            else
+                case "$summary" in
+                    00[0-9])
+                        icon=audio-volume-low
+                        ;;
+                    0[1-3][0-9])
+                        icon=audio-volume-low
+                        ;;
+                    0[4-6][0-9])
+                        icon=audio-volume-medium
+                        ;;
+                    0[7-9][0-9])
+                        icon=audio-volume-high
+                        ;;
+                    1[0-2][0-9])
+                        icon=audio-volume-high-warning
+                        ;;
+                    *)
+                        icon=audio-volume-high-danger
+                        ;;
+                esac
+            fi
+
+            hint=(--hint=int:value:"$summary")
+            ;;
+    esac
+
+    hint+=(--hint=string:x-dunst-stack-tag:"${tag:-$1}")
+
+    notify-send --urgency="${urgency:-low}" --icon="${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
+}
+
+$1 "${@:2}"

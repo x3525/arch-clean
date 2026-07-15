@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=udiskie
+Exec=udiskie
+Type=Application
+Terminal=false

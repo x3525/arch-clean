@@ -1,0 +1,28 @@
+@theme "drun.rasi"
+
+configuration {
+    modes: "power";
+}
+
+window {
+    background-color: transparent;
+    border-color: transparent;
+    location: south;
+}
+
+listview {
+    lines: 1;
+}
+
+element {
+    children: [ element-icon ];
+    orientation: vertical;
+}
+
+element selected {
+    background-color: inherit;
+}
+
+element-icon {
+    size: 96px;
+}
