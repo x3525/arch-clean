@@ -1,7 +1,7 @@
 [general]
 import=[
-"colors.toml",
-"themes/solarized_osaka.toml",
+    "colors.toml",
+    "themes/solarized_osaka.toml",
 ]
 
 [env]
