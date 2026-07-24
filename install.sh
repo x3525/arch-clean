@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eE
 
 #
 # A pre-configured Arch Linux installer
@@ -8,12 +8,20 @@ exec 3> /tmp/xtrace.log
 BASH_XTRACEFD=3
 set -x
 
+aterr () {
+    # Disable all known swap devices and files for paging and swapping
+    swapoff -a
+    # Recursively unmount each specified directory
+    umount -qR /mnt
+}
+
 atexit () {
     set +x
     unset BASH_XTRACEFD
     exec 3<&-
 }
 
+trap aterr ERR
 trap atexit EXIT
 
 linger () {
@@ -208,7 +216,7 @@ do
     case "$REPLY" in
         n|N)
             echo "Leaving the installer :("
-            exit 1
+            false
             ;;
     esac
 done
