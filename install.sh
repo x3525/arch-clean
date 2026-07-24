@@ -210,12 +210,9 @@ fi
 
 while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}"
 do
-    read -r -p "Alas, Pacman failed. Tr[Y] agai[n]? "
+    read -r -p "Alas, Pacman failed. Try agai[n]? "
 
     case "$REPLY" in
-        y|Y)
-            continue
-            ;;
         n|N)
             false
             ;;
