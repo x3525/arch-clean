@@ -138,12 +138,10 @@ partprobe "$device"
 udevadm settle
 
 # Dump the partitions of a device
-read -r U S L < <(awk '
-BEGIN {IGNORECASE=1}
-/C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
-/0657FD6D-A4AB-43C4-84E5-0933C84B4F4F/ {print $1}
-/0FC63DAF-8483-4772-8E79-3D69D8477DE4/ {print $1}
-' <<< "$(sfdisk --dump "$device")" | paste --serial)
+read -r U S L < <(sfdisk --json "$device" | jq --raw-output '.partitiontable.partitions[] | select(.type |IN(
+    "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+    "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F",
+    "0FC63DAF-8483-4772-8E79-3D69D8477DE4")) | .node' | paste --serial)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
