@@ -44,7 +44,7 @@ linger () {
     done
 }
 
-if [ ! -d /sys/firmware/efi/ ]
+if [ ! -d /sys/firmware/efi ]
 then
     echo "System is not booted in UEFI mode"
     exit 1
@@ -147,8 +147,8 @@ BEGIN {IGNORECASE=1}
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
 
-mount -m "$L" /mnt/
-mount -m "$U" /mnt/efi/
+mount -m "$L" /mnt
+mount -m "$U" /mnt/efi
 
 mkswap "$S"
 swapon "$S"
@@ -192,7 +192,7 @@ then
     packages+=(sof-firmware)
 fi
 
-while ! pacstrap -K /mnt/ base linux linux-firmware linux-headers "${packages[@]}"
+while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}"
 do
     echo "Alas, Pacman failed. Try agai[n]?"
     read -r
@@ -206,47 +206,47 @@ do
 done
 
 # Generate an fstab file
-genfstab -U /mnt/ > /mnt/etc/fstab
+genfstab -U /mnt > /mnt/etc/fstab
 
-cp -r -- */ /mnt/
+cp -r -- */ /mnt
 
-mount -m --bind .dotfiles/ /mnt/etc/skel/
+mount -m --bind .dotfiles /mnt/etc/skel
 
 # Create a new user
-useradd --root=/mnt/ --create-home --groups=wheel "$username"
+useradd --root=/mnt --create-home --groups=wheel "$username"
 
 # Change user password (user)
-echo "$user" | passwd --root=/mnt/ --stdin "$username"
+echo "$user" | passwd --root=/mnt --stdin "$username"
 
 # Change user password (root)
-echo "$root" | passwd --root=/mnt/ --stdin
+echo "$root" | passwd --root=/mnt --stdin
 
 # Timer units
-systemctl --root=/mnt/ "$fstrim_unit_file_command" fstrim.timer
-systemctl --root=/mnt/ enable reflector.timer
+systemctl --root=/mnt "$fstrim_unit_file_command" fstrim.timer
+systemctl --root=/mnt enable reflector.timer
 
 # Service units
-systemctl --root=/mnt/ enable getty@tty1.service
-systemctl --root=/mnt/ enable NetworkManager.service
-systemctl --root=/mnt/ enable systemd-timesyncd.service
+systemctl --root=/mnt enable getty@tty1.service
+systemctl --root=/mnt enable NetworkManager.service
+systemctl --root=/mnt enable systemd-timesyncd.service
 
 # Target units
-systemctl --root=/mnt/ mask ctrl-alt-del.target
+systemctl --root=/mnt mask ctrl-alt-del.target
 
 # Generate localization files from templates
-arch-chroot /mnt/ locale-gen
+arch-chroot /mnt locale-gen
 
 # Set the Hardware Clock from the System Clock
-arch-chroot /mnt/ hwclock --systohc
+arch-chroot /mnt hwclock --systohc
 
 # Install GRUB to a device
-arch-chroot /mnt/ grub-install --efi-directory=/efi/ --target=x86_64-efi
+arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
 
 # Generate a GRUB configuration file
-arch-chroot /mnt/ grub-mkconfig --output=/boot/grub/grub.cfg
+arch-chroot /mnt grub-mkconfig --output=/boot/grub/grub.cfg
 
 # Recursively unmount each specified directory
-umount -R /mnt/
+umount -R /mnt
 
 set +x
 unset BASH_XTRACEFD
