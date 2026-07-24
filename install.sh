@@ -215,7 +215,6 @@ do
 
     case "$REPLY" in
         n|N)
-            echo "Leaving the installer :("
             false
             ;;
     esac
