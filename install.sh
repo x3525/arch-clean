@@ -141,7 +141,8 @@ udevadm settle
 read -r U S L < <(sfdisk --json "$device" | jq --raw-output '.partitiontable.partitions[] | select(.type | IN(
     "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
     "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F",
-    "0FC63DAF-8483-4772-8E79-3D69D8477DE4")) | .node' | paste --serial)
+    "0FC63DAF-8483-4772-8E79-3D69D8477DE4")) | .node' | paste --serial
+)
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
