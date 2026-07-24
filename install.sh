@@ -137,6 +137,7 @@ partprobe "$device"
 # Wait for pending udev events
 udevadm settle
 
+# Dump the partitions of a device
 read -r U S L < <(awk '
 BEGIN {IGNORECASE=1}
 /C12A7328-F81F-11D2-BA4B-00A0C93EC93B/ {print $1}
