@@ -8,6 +8,14 @@ exec 3> /tmp/xtrace.log
 BASH_XTRACEFD=3
 set -x
 
+atexit () {
+    set +x
+    unset BASH_XTRACEFD
+    exec 3<&-
+}
+
+trap atexit EXIT
+
 linger () {
     for unit
     do
@@ -247,7 +255,3 @@ arch-chroot /mnt grub-mkconfig --output=/boot/grub/grub.cfg
 
 # Recursively unmount each specified directory
 umount -R /mnt
-
-set +x
-unset BASH_XTRACEFD
-exec 3<&-
