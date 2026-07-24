@@ -6,7 +6,7 @@
 
 exec 3> /tmp/xtrace.log
 BASH_XTRACEFD=3
-set -x
+set -x -o pipefail
 
 aterr () {
     # Disable all known swap devices and files for paging and swapping
