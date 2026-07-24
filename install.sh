@@ -252,6 +252,3 @@ arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
 
 # Generate a GRUB configuration file
 arch-chroot /mnt grub-mkconfig --output=/boot/grub/grub.cfg
-
-# Recursively unmount each specified directory
-umount -R /mnt
