@@ -230,7 +230,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 cp -r -- */ /mnt
 
-mount -m --bind .dotfiles /mnt/etc/skel
+mount -m --bind ./.dotfiles /mnt/etc/skel
 
 # Create a new user
 useradd --root=/mnt --create-home --groups=wheel "$username"
