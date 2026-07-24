@@ -210,12 +210,17 @@ fi
 
 while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}"
 do
-    echo "Alas, Pacman failed. Try agai[n]?"
-    read -r
+    read -r -p "Alas, Pacman failed. Tr[Y] agai[n]? "
 
     case "$REPLY" in
+        y|Y)
+            continue
+            ;;
         n|N)
             false
+            ;;
+        *)
+            echo
             ;;
     esac
 done
