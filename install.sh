@@ -83,7 +83,7 @@ then
     exit 1
 fi
 
-select device in $(lsblk --nodeps --noheadings --paths --output=NAME,RO,TYPE | awk '$2==0 && $3=="disk" {print $1}')
+select device in $(lsblk --nodeps --noheadings --paths --output=NAME --filter='RO == 0 && TYPE == "disk"')
 do
     if [ ! -b "$device" ]
     then
