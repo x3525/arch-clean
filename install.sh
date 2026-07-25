@@ -91,7 +91,7 @@ then
     exit 1
 fi
 
-select device in $(lsblk --nodeps --noheadings --output=PATH --filter='RO == 0 && TYPE == "disk"')
+select device in $(lsblk --nodeps --noheadings --paths --output=NAME --filter='RO == 0 && TYPE == "disk"')
 do
     if [ ! -b "$device" ]
     then
