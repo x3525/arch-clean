@@ -3,9 +3,13 @@
 execute () {
     dex=$(command -v dex)
 
+    virtualization=$(systemd-detect-virt)
+
     for desktop in "$1"/*.desktop
     do
-        for pid in $(pgrep -f -- "$($dex --property=Name "$desktop")")
+        name=$($dex --property=Name "$desktop")
+
+        for pid in $(pgrep -f -- "$name")
         do
             if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q _="$dex"
             then
@@ -17,9 +21,20 @@ execute () {
                 done
             fi
         done
-    done
 
-    $dex --autostart --search-paths="$1"
+        case "$virtualization" in
+            none)
+                ;;
+            *)
+                if [ -f "$desktop".virt ]
+                then
+                    desktop=$desktop.virt
+                fi
+                ;;
+        esac
+
+        $dex "$desktop"
+    done
 }
 
 lock () {
