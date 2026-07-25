@@ -1,5 +1,1 @@
-[Desktop Entry]
-Name=dunst
-Exec=dunst
-Type=Application
-Terminal=false
+../dunst.desktop

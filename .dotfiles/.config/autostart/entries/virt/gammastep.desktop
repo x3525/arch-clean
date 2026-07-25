@@ -1,5 +1,1 @@
-[Desktop Entry]
-Name=gammastep
-Exec=gammastep -P
-Type=Application
-Terminal=false
+../gammastep.desktop

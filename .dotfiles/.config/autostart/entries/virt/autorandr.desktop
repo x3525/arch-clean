@@ -1,5 +1,1 @@
-[Desktop Entry]
-Name=autorandr
-Exec=autorandr --change
-Type=Application
-Terminal=false
+../autorandr.desktop
