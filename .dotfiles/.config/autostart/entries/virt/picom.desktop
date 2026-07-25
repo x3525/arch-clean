@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=picom
+Exec=picom --backend=xrender
+Type=Application
+Terminal=false
