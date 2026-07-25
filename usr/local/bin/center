@@ -8,7 +8,7 @@ execute () {
             path=$1
             ;;
         *)
-            path=$1/vm
+            path=$1/virt
             ;;
     esac
 
