@@ -1,4 +1,4 @@
-#!/bin/bash -eE
+#!/bin/bash
 
 #
 # A pre-configured Arch Linux installer
@@ -6,22 +6,14 @@
 
 exec 3> /tmp/xtrace.log
 BASH_XTRACEFD=3
-set -x -o pipefail
-
-aterr () {
-    # Disable all known swap devices and files for paging and swapping
-    swapoff -a
-    # Recursively unmount each specified directory
-    umount -qR /mnt
-}
+set -o xtrace -o errexit -o pipefail
 
 atexit () {
-    set +x
+    set +o xtrace
     unset BASH_XTRACEFD
     exec 3<&-
 }
 
-trap aterr ERR
 trap atexit EXIT
 
 linger () {
@@ -214,7 +206,7 @@ do
 
     case "$REPLY" in
         n|N)
-            false
+            exit 1
             ;;
         *)
             echo
