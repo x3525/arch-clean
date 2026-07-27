@@ -78,6 +78,8 @@ vlc
 vlc-plugin-ffmpeg
 wget
 xarchiver
+xdg-desktop-portal
+xdg-desktop-portal-gtk
 xdg-utils
 xfce4-clipman-plugin
 xorg-server
