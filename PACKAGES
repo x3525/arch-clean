@@ -10,17 +10,13 @@ bat
 breeze-gtk
 brightnessctl
 dex
-dosfstools
 dunst
 efibootmgr
 exfat-utils
 feh
 ffmpeg
-ffmpegthumbnailer
 firefox
 flameshot
-fuse2
-fuse3
 gammastep
 git
 github-cli
@@ -47,7 +43,6 @@ noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
-ntfs-3g
 numlockx
 openssh
 openvpn
@@ -73,7 +68,6 @@ trash-cli
 tree
 ttf-jetbrains-mono
 ttf-meslo-nerd
-tumbler
 udiskie
 unrar
 unzip
