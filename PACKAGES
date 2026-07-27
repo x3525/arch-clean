@@ -10,6 +10,7 @@ bat
 breeze-gtk
 brightnessctl
 dex
+dosfstools
 dunst
 efibootmgr
 exfat-utils
