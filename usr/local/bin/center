@@ -33,7 +33,7 @@ lock () {
 }
 
 menu () {
-    rofi -no-lazy-grab -show "$1" -theme "$1"
+    rofi -no-lazy-grab -show combi -modes combi -theme "$1"
 }
 
 notify () {
