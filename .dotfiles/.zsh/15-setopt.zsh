@@ -16,8 +16,12 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 # Print job notifications in the long format by default.
 setopt LONG_LIST_JOBS
+# Print a carriage return just before printing a prompt in the line editor.
+setopt PROMPT_CR
 # If set, "%" is treated specially in prompt expansion.
 setopt PROMPT_PERCENT
+# Attempt to preserve a partial line that would otherwise be covered up by the command prompt due to the PROMPT_CR option.
+setopt PROMPT_SP
 # If set, parameter expansion, command substitution and arithmetic expansion are performed in prompts.
 setopt PROMPT_SUBST
 # Don't push multiple copies of the same directory onto the directory stack.
