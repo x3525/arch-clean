@@ -1,7 +1,7 @@
 @theme "drun.rasi"
 
 configuration {
-    modes: "power";
+    combi-modes: "system";
 }
 
 window {
