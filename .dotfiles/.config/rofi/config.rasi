@@ -9,6 +9,7 @@ configuration {
     case-sensitive: false;
     case-smart: true;
     click-to-exit: true;
+    combi-display-format: "{text}";
     cycle: true;
     disable-history: false;
     dpi: 0;
@@ -24,6 +25,7 @@ configuration {
     matching: "normal";
     max-history-size: 5;
     normalize-match: false;
+    run-command: "{cmd}";
     scroll-method: 0;
     sidebar-mode: false;
     sort: false;
