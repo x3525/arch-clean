@@ -11,7 +11,7 @@ export XDG_CONFIG_DIRS="/etc/xdg"
 # There is a single base directory relative to which user-specific non-essential (cached) data should be written.
 export XDG_CACHE_HOME="$HOME/.cache"
 # A colon-separated list of names that the current desktop is known as.
-export XDG_CURRENT_DESKTOP="GNOME"
+export XDG_CURRENT_DESKTOP="XFCE"
 # The directory to search for shell startup files.
 export ZDOTDIR="$HOME"
 # The file to save the history in when an interactive shell exits.
