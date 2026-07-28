@@ -7,7 +7,7 @@ PROMPT='%F{blue}%0~%f%F{cyan}%(!.#.$)%f '
 # This prompt is displayed on the right-hand side of the screen when the primary prompt is being displayed on the left.
 RPROMPT='%(0?..%F{red}%?%f)'
 
-# This parameter undergoes prompt expansion, with the PROMPT_PERCENT option set.
+# When the PROMPT_CR and PROMPT_SP options are set, the PROMPT_EOL_MARK parameter can be used to customize how the end of partial lines are shown.
 PROMPT_EOL_MARK='%K{yellow} %k'
 
 for f in "${fpath[1]}"/*(.:t)
