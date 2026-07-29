@@ -3,7 +3,16 @@
 execute () {
     dex=$(command -v dex)
 
-    for desktop in "$1"/*.desktop
+    case "$(systemd-detect-virt)" in
+        none)
+            path=$1
+            ;;
+        *)
+            path=$2
+            ;;
+    esac
+
+    for desktop in "$path"/*.desktop
     do
         name=$($dex --property=Name "$desktop")
 
@@ -21,7 +30,7 @@ execute () {
         done
     done
 
-    $dex --autostart --search-paths="$1"
+    $dex --autostart --search-paths="$path"
 }
 
 lock () {
