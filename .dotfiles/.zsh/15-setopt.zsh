@@ -18,8 +18,6 @@ setopt HIST_VERIFY
 setopt LONG_LIST_JOBS
 # Print a carriage return just before printing a prompt in the line editor.
 setopt PROMPT_CR
-# If set, "%" is treated specially in prompt expansion.
-setopt PROMPT_PERCENT
 # Attempt to preserve a partial line that would otherwise be covered up by the command prompt due to the PROMPT_CR option.
 setopt PROMPT_SP
 # If set, parameter expansion, command substitution and arithmetic expansion are performed in prompts.
