@@ -165,14 +165,12 @@ case "$(lspci -d ::03xx)" in
     *[aA][mM][dD]*)
         packages+=(mesa)
         packages+=(vulkan-radeon)
-        packages+=(xf86-video-ati)
         packages+=(xf86-video-amdgpu)
         ;;&
     *[iI][nN][tT][eE][lL]*)
         packages+=(mesa)
         packages+=(vulkan-intel)
         packages+=(intel-media-driver)
-        packages+=(libva-intel-driver)
         ;;&
     *[nN][vV][iI][dD][iI][aA]*)
         packages+=(dkms)
