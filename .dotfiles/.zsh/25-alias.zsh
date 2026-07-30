@@ -8,3 +8,4 @@ alias ls='ls --color=auto --indicator-style=classify --quoting-style=escape --ti
 alias rm='trash-put --verbose'
 alias test-speaker='speaker-test --channels=2 --test=wav --nloops=1'
 alias vim='vim -X'
+alias which='whence -ca'
