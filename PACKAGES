@@ -57,6 +57,7 @@ pipewire
 pipewire-alsa
 pipewire-jack
 pipewire-pulse
+plocate
 polkit
 pyenv
 reflector
