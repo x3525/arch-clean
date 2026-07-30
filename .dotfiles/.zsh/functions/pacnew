@@ -1,0 +1,1 @@
+grep "\.pacnew\|\.pacsave" /var/log/pacman.log
