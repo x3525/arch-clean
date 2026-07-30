@@ -64,7 +64,6 @@ rlwrap
 rofi
 shellcheck
 sudo
-terminus-font
 thunar
 thunar-archive-plugin
 tk
