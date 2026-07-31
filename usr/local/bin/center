@@ -7,7 +7,7 @@ execute () {
     do
         for pid in $(pgrep -f -- "$name")
         do
-            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q "$environ"
+            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep "$environ"
             then
                 kill "$pid"
 
