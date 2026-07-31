@@ -14,7 +14,9 @@ execute () {
 
     for desktop in "$path"/*.desktop
     do
-        for pid in $(pgrep -f -- "$($dex --property=Name "$desktop")")
+        name=$($dex --property=Name "$desktop")
+
+        for pid in $(pgrep -f -- "$name")
         do
             if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q _="$dex"
             then
