@@ -1,15 +1,15 @@
 #!/bin/bash
 
 execute () {
-    dex=$(command -v dex)
+    environ=KILL=ME
 
     for desktop in "$1"/*.desktop
     do
-        name=$($dex --property=Name "$desktop")
+        name=$(dex --property=Name "$desktop")
 
         for pid in $(pgrep -f -- "$name")
         do
-            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q _="$dex"
+            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q "$environ"
             then
                 kill "$pid"
 
@@ -21,7 +21,7 @@ execute () {
         done
     done
 
-    $dex --autostart --search-paths="$1"
+    env "$environ" dex --autostart --search-paths="$1"
 }
 
 iii () {
