@@ -30,6 +30,7 @@ gvfs
 i3-wm
 i3lock
 i3status
+iptables
 jq
 kolourpaint
 libnotify
@@ -38,6 +39,7 @@ man-db
 man-pages
 mate-calc
 mate-polkit
+mkinitcpio
 networkmanager
 noto-fonts
 noto-fonts-cjk
@@ -57,6 +59,8 @@ pipewire-jack
 pipewire-pulse
 polkit
 pyenv
+qt6-multimedia
+qt6-multimedia-ffmpeg
 reflector
 rlwrap
 rofi
