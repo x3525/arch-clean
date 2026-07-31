@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# A pre-configured Arch Linux installer
+# A pre-configured Arch Linux installer.
 #
 
 exec 3> /tmp/xtrace.log
