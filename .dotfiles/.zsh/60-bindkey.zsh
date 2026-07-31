@@ -23,8 +23,8 @@ bindkey '^[[C' forward-char
 bindkey '^[[D' backward-char
 # Move to the previous completion rather than the next.
 bindkey '^[[Z' reverse-menu-complete
-# Attempt shell expansion on the current word.
-bindkey '^I' expand-or-complete
+# Attempt completion on the current word.
+bindkey '^I' complete-word
 # Finish editing the buffer.
 bindkey '^J' accept-line
 # Clear the screen and redraw the prompt.
