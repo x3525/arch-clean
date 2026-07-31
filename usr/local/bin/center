@@ -3,10 +3,8 @@
 execute () {
     environ=KILL=ME
 
-    for desktop in "$1"/*.desktop
+    for name in $(dex --property=Name "$1"/*.desktop)
     do
-        name=$(dex --property=Name "$desktop")
-
         for pid in $(pgrep -f -- "$name")
         do
             if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep -q "$environ"
