@@ -5,10 +5,10 @@ execute () {
 
     case "$(systemd-detect-virt)" in
         none)
-            path=$XDG_CONFIG_HOME/autostart/$1
+            path=$1
             ;;
         *)
-            path=$XDG_CONFIG_HOME/autostart/$2
+            path=$2
             ;;
     esac
 
