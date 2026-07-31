@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=picom
-Exec=/usr/bin/sh -c 'if systemd-detect-virt; then picom --backend=xrender; else picom --backend=glx; fi'
+Exec=picom --backend=glx
 Type=Application
 Terminal=false
