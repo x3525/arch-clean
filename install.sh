@@ -23,7 +23,7 @@ linger () {
 
         case "$unit" in
             *.timer)
-                while [ -z "$(systemctl --no-pager --value --property=ActiveEnterTimestamp show "$unit")" ]
+                while [ -z "$(systemctl -P ActiveEnterTimestamp show "$unit")" ]
                 do
                     sleep 1
                 done
@@ -31,7 +31,7 @@ linger () {
             *.service)
                 while true
                 do
-                    case "$(systemctl --no-pager --value --property=SubState show "$unit")" in
+                    case "$(systemctl -P SubState show "$unit")" in
                         dead)
                             break
                             ;;
@@ -91,7 +91,7 @@ then
     exit 1
 fi
 
-select device in $(lsblk --nodeps --noheadings --paths --output=NAME --filter='RO == 0 && TYPE == "disk"')
+select device in $(lsblk -dnp -o NAME -Q 'RO == 0 && TYPE == "disk"')
 do
     if [ ! -b "$device" ]
     then
@@ -119,7 +119,7 @@ esac
 
 echo "Starting sanity checks..."
 
-while [ "$(timedatectl --no-pager --value --property=NTPSynchronized show)" != "yes" ]
+while [ "$(timedatectl -P NTPSynchronized show)" != "yes" ]
 do
     sleep 1
 done
@@ -127,10 +127,10 @@ done
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 # Zap (destroy) the GPT and MBR data structures
-sgdisk --zap-all "$device"
+sgdisk -Z "$device"
 
 # Manipulate disk partition table
-sfdisk --wipe=always --wipe-partitions=always "$device" << EOF
+sfdisk -w always -W always "$device" << EOF
 label: gpt
 unit: sectors
 
@@ -146,17 +146,17 @@ partprobe "$device"
 udevadm settle
 
 # Dump the partitions of a device
-read -r U S L < <(sfdisk --json "$device" | jq --raw-output '.partitiontable.partitions[]|select(.type|IN(
+read -r U S L < <(sfdisk -J "$device" | jq -r '.partitiontable.partitions[]|select(.type|IN(
     "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
     "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F",
-    "0FC63DAF-8483-4772-8E79-3D69D8477DE4"))|.node' | paste --serial
+    "0FC63DAF-8483-4772-8E79-3D69D8477DE4"))|.node' | paste -s -
 )
 
 mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
 
-mount --mkdir "$L" /mnt
-mount --mkdir "$U" /mnt/efi
+mount -m --source="$L" --target=/mnt
+mount -m --source="$U" --target=/mnt/efi
 
 mkswap "$S"
 swapon "$S"
@@ -217,16 +217,16 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 cp -r -- */ /mnt
 
-mount --mkdir --bind ./.dotfiles /mnt/etc/skel
+mount -m -o bind --source=./.dotfiles --target=/mnt/etc/skel
 
 # Create a new user
-useradd --root=/mnt --create-home --groups=wheel "$username"
+useradd -R /mnt -m -G wheel "$username"
 
 # Change user password (user)
-echo "$user" | passwd --root=/mnt --stdin "$username"
+echo "$user" | passwd -R /mnt -s "$username"
 
 # Change user password (root)
-echo "$root" | passwd --root=/mnt --stdin
+echo "$root" | passwd -R /mnt -s
 
 # Timer units
 systemctl --root=/mnt "$fstrim_unit_file_command" fstrim.timer
@@ -244,10 +244,10 @@ systemctl --root=/mnt mask ctrl-alt-del.target
 arch-chroot /mnt locale-gen
 
 # Set the Hardware Clock from the System Clock
-arch-chroot /mnt hwclock --systohc
+arch-chroot /mnt hwclock -w
 
 # Install GRUB to a device
 arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
 
 # Generate a GRUB configuration file
-arch-chroot /mnt grub-mkconfig --output=/boot/grub/grub.cfg
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
