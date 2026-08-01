@@ -14,7 +14,7 @@ focus_on_window_activation urgent
 tiling_drag off
 
 # External locker as X screen saver.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- center lock
+exec --no-startup-id xss-lock -l -- center lock
 
 # Executing applications.
 exec_always --no-startup-id center execute "$XDG_CONFIG_HOME"/autostart/entries
