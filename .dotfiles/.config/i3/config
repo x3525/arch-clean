@@ -1,4 +1,3 @@
-include variables.config
 include *.conf
 
 # Control focus only by using your keyboard.
