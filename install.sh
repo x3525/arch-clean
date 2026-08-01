@@ -152,11 +152,11 @@ read -r U S L < <(sfdisk -J "$device" | jq -r '.partitiontable.partitions[]|sele
     "0FC63DAF-8483-4772-8E79-3D69D8477DE4"))|.node' | paste -s -
 )
 
-mkfs.vfat "$U" -F 32
 mkfs.ext4 "$L" -F
+mkfs.vfat "$U" -F 32
 
-mount -m --source="$L" --target=/mnt
-mount -m --source="$U" --target=/mnt/efi
+mount -m -t ext4 "$L" /mnt
+mount -m -t vfat "$U" /mnt/efi
 
 mkswap "$S"
 swapon "$S"
@@ -217,7 +217,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 cp -r -- */ /mnt
 
-mount -m -o bind --source=./.dotfiles --target=/mnt/etc/skel
+mount -m -o bind ./.dotfiles /mnt/etc/skel
 
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"
