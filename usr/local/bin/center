@@ -3,9 +3,9 @@
 execute () {
     environ=KILL=ME
 
-    for name in $(dex --property=Name "$1"/*.desktop)
+    for name in $(dex -p Name "$1"/*.desktop)
     do
-        for pid in $(pgrep -f -- "$name")
+        for pid in $(pgrep -f -u $EUID -- "$name")
         do
             if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep "$environ"
             then
@@ -19,7 +19,7 @@ execute () {
         done
     done
 
-    env "$environ" dex --autostart --search-paths="$1"
+    env "$environ" dex -a -s "$1"
 }
 
 lock () {
