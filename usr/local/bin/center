@@ -22,21 +22,6 @@ execute () {
     env "$environ" dex --autostart --search-paths="$1"
 }
 
-iii () {
-    case "$1" in
-        border)
-            case "$(i3-msg -t get_tree | jq --raw-output 'recurse(.nodes[],.floating_nodes[])|select(.focused)|.floating')" in
-                auto_on|user_on)
-                    i3-msg border "$(xrdb -get i3.default_floating_border)"
-                    ;;
-                *)
-                    i3-msg border "$(xrdb -get i3.default_border)"
-                    ;;
-            esac
-            ;;
-    esac
-}
-
 lock () {
     dunstctl set-paused true
 
@@ -61,7 +46,12 @@ notify () {
                     ;;
             esac
 
-            summary=$(printf %03d "$(pamixer --get-volume)")
+            summary=$(pamixer --get-volume)
+
+            while (( ${#summary} < 3 ))
+            do
+                summary=0$summary
+            done
 
             if pamixer --get-mute | grep -q true
             then
