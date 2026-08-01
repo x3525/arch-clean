@@ -23,7 +23,7 @@ linger () {
 
         case "$unit" in
             *.timer)
-                while [ -z "$(systemctl --no-pager -P ActiveEnterTimestamp show "$unit")" ]
+                while [ -z "$(systemctl --no-pager --value --property=ActiveEnterTimestamp show "$unit")" ]
                 do
                     sleep 1
                 done
@@ -31,7 +31,7 @@ linger () {
             *.service)
                 while true
                 do
-                    case "$(systemctl --no-pager -P SubState show "$unit")" in
+                    case "$(systemctl --no-pager --value --property=SubState show "$unit")" in
                         dead)
                             break
                             ;;
@@ -119,7 +119,7 @@ esac
 
 echo "Starting sanity checks..."
 
-while [ "$(timedatectl --no-pager -P NTPSynchronized show)" != "yes" ]
+while [ "$(timedatectl --no-pager --value --property=NTPSynchronized show)" != "yes" ]
 do
     sleep 1
 done
