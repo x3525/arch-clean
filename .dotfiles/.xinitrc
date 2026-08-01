@@ -14,9 +14,9 @@ do
     then
         if [ -x /usr/bin/cpp ]
         then
-            xrdb "$f" -merge
+            xrdb -merge "$f"
         else
-            xrdb "$f" -merge -nocpp
+            xrdb -merge -nocpp "$f"
         fi
     fi
 done
