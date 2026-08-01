@@ -40,7 +40,7 @@ iii () {
 lock () {
     dunstctl set-paused true
 
-    i3lock --nofork --color=000000 --ignore-empty-password --show-keyboard-layout
+    i3lock -nek -c 000000
 
     dunstctl set-paused false
 }
@@ -89,13 +89,13 @@ notify () {
                 esac
             fi
 
-            hint=(--hint=int:value:"$summary")
+            hint=(-h int:value:"$summary")
             ;;
     esac
 
-    hint+=(--hint=string:x-dunst-stack-tag:"${tag:-$1}")
+    hint+=(-h string:x-dunst-stack-tag:"${tag:-$1}")
 
-    notify-send --urgency="${urgency:-low}" --icon="${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
+    notify-send -u "${urgency:-low}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
 }
 
 $1 "${@:2}"
