@@ -3,5 +3,5 @@ then
     : >| "$HISTFILE"
     fc -p "$HISTFILE"
 else
-    fc -l -E 1
+    fc -l -E 1 -1
 fi
