@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=autorandr
-Exec=autorandr -cf
+Exec=autorandr --change --force
 Type=Application
 Terminal=false
