@@ -11,7 +11,7 @@ set -o xtrace -o errexit -o pipefail
 atexit () {
     set +o xtrace
     unset BASH_XTRACEFD
-    exec 3<&-
+    exec 3>&-
 }
 
 trap atexit EXIT
