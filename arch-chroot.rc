@@ -1,0 +1,19 @@
+# Set the Hardware Clock from the System Clock
+hwclock -w
+
+# Generate localization files from templates
+locale-gen
+
+# Create an initial ramdisk environment
+mkinitcpio -P
+
+# Install GRUB to a device
+grub-install --efi-directory=/efi --target=x86_64-efi
+
+# Generate a configuration file for GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw enable
