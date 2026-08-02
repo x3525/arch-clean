@@ -233,6 +233,7 @@ systemctl --root=/mnt "$fstrim_unit_file_command" fstrim.timer
 systemctl --root=/mnt enable reflector.timer
 
 # Service units
+systemctl --root=/mnt enable ufw.service
 systemctl --root=/mnt enable apparmor.service
 systemctl --root=/mnt enable getty@tty1.service
 systemctl --root=/mnt enable NetworkManager.service
