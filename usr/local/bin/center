@@ -37,6 +37,11 @@ menu () {
 notify () {
     case "$1" in
         volume)
+            until pactl get-default-sink >& /dev/null && [ "$(pactl get-default-sink)" != "@DEFAULT_SINK@" ]
+            do
+                sleep 1
+            done
+
             case "$2" in
                 inc|dec)
                     pamixer --"$2"rease="$3" --allow-boost --set-limit=150
