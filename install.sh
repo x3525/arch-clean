@@ -235,21 +235,11 @@ systemctl --root=/mnt enable reflector.timer
 # Service units
 systemctl --root=/mnt enable ufw.service
 systemctl --root=/mnt enable apparmor.service
-systemctl --root=/mnt enable getty@tty1.service
 systemctl --root=/mnt enable NetworkManager.service
 systemctl --root=/mnt enable systemd-timesyncd.service
 
 # Target units
 systemctl --root=/mnt mask ctrl-alt-del.target
 
-# Generate localization files from templates
-arch-chroot /mnt locale-gen
-
-# Set the Hardware Clock from the System Clock
-arch-chroot /mnt hwclock -w
-
-# Install GRUB to a device
-arch-chroot /mnt grub-install --efi-directory=/efi --target=x86_64-efi
-
-# Generate a GRUB configuration file
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+# Directly interact with the new system's environment
+arch-chroot /mnt /usr/bin/bash < arch-chroot.rc
