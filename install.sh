@@ -241,5 +241,5 @@ systemctl --root=/mnt enable systemd-timesyncd.service
 # Target units
 systemctl --root=/mnt mask ctrl-alt-del.target
 
-# Directly interact with the new system's environment
-arch-chroot /mnt /usr/bin/bash < arch-chroot.rc
+# Directly interact with the new system's environment, tools, and configurations
+arch-chroot -S /mnt /usr/bin/bash < arch-chroot.rc
