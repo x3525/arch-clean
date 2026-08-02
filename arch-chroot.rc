@@ -10,7 +10,7 @@ mkinitcpio -P
 # Install GRUB to a device
 grub-install --efi-directory=/efi --target=x86_64-efi
 
-# Generate a configuration file for GRUB
+# Generate the main configuration file for GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # ufw
