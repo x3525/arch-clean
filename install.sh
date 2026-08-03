@@ -106,17 +106,6 @@ then
     exit 1
 fi
 
-case "$(cat /sys/block/"${device##*/}"/queue/rotational)" in
-    0)
-        # SSD
-        fstrim_unit_file_command=enable
-        ;;
-    1)
-        # HDD
-        fstrim_unit_file_command=disable
-        ;;
-esac
-
 echo "Starting sanity checks..."
 
 while [ "$(timedatectl -P NTPSynchronized show)" != "yes" ]
@@ -228,18 +217,11 @@ echo "$user" | passwd -R /mnt -s "$username"
 # Change user password (root)
 echo "$root" | passwd -R /mnt -s
 
-# Timer units
-systemctl --root=/mnt "$fstrim_unit_file_command" fstrim.timer
-systemctl --root=/mnt enable reflector.timer
+# Mask units
+systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
 
-# Service units
-systemctl --root=/mnt enable ufw.service
-systemctl --root=/mnt enable apparmor.service
-systemctl --root=/mnt enable NetworkManager.service
-systemctl --root=/mnt enable systemd-timesyncd.service
-
-# Target units
-systemctl --root=/mnt mask ctrl-alt-del.target
+# Enable units
+systemctl --root=/mnt enable apparmor.service fstrim.timer NetworkManager.service reflector.service systemd-timesyncd.service ufw.service
 
 # Directly interact with the new system's environment, tools, and configurations
 arch-chroot -S /mnt /usr/bin/bash < arch-chroot.rc
