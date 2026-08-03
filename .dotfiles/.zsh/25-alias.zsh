@@ -1,6 +1,6 @@
 alias 0='xsel -bi'
 alias 1='xsel -bo'
-alias cal='cal --color=auto'
+alias cal='cal --color=auto --monday'
 alias cat='bat --color=auto --style=plain --paging=never --theme=auto --theme-dark="Solarized (dark)" --theme-light="Solarized (light)"'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto --exclude-dir={.git,.venv,venv}'
