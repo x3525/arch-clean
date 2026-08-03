@@ -58,6 +58,12 @@ then
     exit 1
 fi
 
+if [ ! -f arch-chroot.rc ]
+then
+    echo "arch-chroot.rc file not found"
+    exit 1
+fi
+
 if [ ! -f PACKAGES ]
 then
     echo "PACKAGES file not found"
@@ -221,7 +227,7 @@ echo "$root" | passwd -R /mnt -s
 systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
 
 # Enable units
-systemctl --root=/mnt enable apparmor.service fstrim.timer NetworkManager.service reflector.service systemd-timesyncd.service ufw.service
+systemctl --root=/mnt enable apparmor.service fstrim.timer NetworkManager.service reflector.timer systemd-timesyncd.service ufw.service
 
 # Directly interact with the new system's environment, tools, and configurations
 arch-chroot -S /mnt /usr/bin/bash < arch-chroot.rc
