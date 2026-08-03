@@ -60,13 +60,13 @@ fi
 
 if [ ! -f arch-chroot.rc ]
 then
-    echo "arch-chroot.rc file not found"
+    echo "\`arch-chroot.rc' file not found"
     exit 1
 fi
 
 if [ ! -f PACKAGES ]
 then
-    echo "PACKAGES file not found"
+    echo "\`PACKAGES' file not found"
     exit 1
 else
     mapfile -t packages < PACKAGES
