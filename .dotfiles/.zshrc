@@ -10,7 +10,7 @@ RPROMPT='%(0?..%F{red}%?%f)'
 # When the PROMPT_CR and PROMPT_SP options are set, the PROMPT_EOL_MARK parameter can be used to customize how the end of partial lines are shown.
 PROMPT_EOL_MARK='%K{yellow} %k'
 
-# Output commands to set the LS_COLORS environment variable.
+# Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
 for f in "${fpath[1]}"/*(.:t)
