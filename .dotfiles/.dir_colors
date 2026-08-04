@@ -52,7 +52,6 @@ STICKY_OTHER_WRITABLE 38;5;220;100
 *.png 38;5;97
 *.py 38;5;41
 *.rar 38;5;40
-*.service 38;5;45
 *.sh 38;5;172
 *.svg 38;5;97
 *.tar 38;5;40
@@ -67,7 +66,6 @@ STICKY_OTHER_WRITABLE 38;5;220;100
 *.yml 38;5;178
 *.zip 38;5;40
 *.zsh 38;5;172
-*@.service 38;5;45
 *id_ecdsa 38;5;192
 *id_ed25519 38;5;192
 *id_rsa 38;5;192
