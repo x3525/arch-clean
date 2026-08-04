@@ -23,7 +23,7 @@ export SAVEHIST=100000
 # A list of non-alphanumeric characters considered part of a word by the line editor.
 export WORDCHARS=
 # Default editor to use.
-export EDITOR="vim -X"
+export EDITOR="vim"
 # The name of the program used to display the manual page.
 export PAGER="less"
 # Options which are passed to less automatically.
