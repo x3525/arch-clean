@@ -10,13 +10,13 @@ RPROMPT='%(0?..%F{red}%?%f)'
 # When the PROMPT_CR and PROMPT_SP options are set, the PROMPT_EOL_MARK parameter can be used to customize how the end of partial lines are shown.
 PROMPT_EOL_MARK='%K{yellow} %k'
 
+# Output commands to set the LS_COLORS environment variable.
+eval "$(dircolors -b "$HOME"/.dir_colors)"
+
 for f in "${fpath[1]}"/*(.:t)
 do
     autoload -Uz "$f"
 done; unset f
-
-# Output commands to set the LS_COLORS environment variable.
-eval "$(dircolors -b "$HOME"/.dir_colors)"
 
 for f in "$ZDOTDIR"/.zsh/*.zsh(.n)
 do
