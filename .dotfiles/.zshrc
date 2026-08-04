@@ -15,6 +15,9 @@ do
     autoload -Uz "$f"
 done; unset f
 
+# Output commands to set the LS_COLORS environment variable.
+eval "$(dircolors -b "$HOME"/.dir_colors)"
+
 for f in "$ZDOTDIR"/.zsh/*.zsh(.n)
 do
     . "$f"
