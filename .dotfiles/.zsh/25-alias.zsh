@@ -1,5 +1,6 @@
 alias 0='xsel -bi'
 alias 1='xsel -bo'
+alias c='qalc'
 alias cal='cal --color=auto --monday'
 alias cat='bat --color=auto --style=plain --paging=never --theme=auto --theme-dark="Solarized (dark)" --theme-light="Solarized (light)"'
 alias diff='diff --color=auto'
