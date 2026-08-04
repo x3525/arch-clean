@@ -1,8 +1,1 @@
-zle_highlight=(
-    default:none
-    isearch:standout
-    region:none
-    special:none
-    suffix:none
-    paste:none
-)
+zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
