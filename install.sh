@@ -64,12 +64,12 @@ then
     exit 1
 fi
 
-if [ ! -f PACKAGES ]
+if [ ! -f packages ]
 then
-    echo "PACKAGES file not found"
+    echo "packages file not found"
     exit 1
 else
-    mapfile -t packages < PACKAGES
+    mapfile -t packages < packages
 fi
 
 if [ $# -ne 1 ]
