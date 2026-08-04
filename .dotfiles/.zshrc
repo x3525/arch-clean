@@ -1,5 +1,5 @@
 # An array of directories specifying the search path for function definitions.
-fpath=(~/.zsh/functions "${fpath[@]}")
+fpath=("$ZDOTDIR"/.zsh/functions "${fpath[@]}")
 
 # The primary prompt string, printed before a command is read.
 PROMPT='%F{blue}%0~%f%F{cyan}%(!.#.$)%f '
@@ -15,7 +15,7 @@ do
     autoload -Uz "$f"
 done; unset f
 
-for f in ~/.zsh/*.zsh(.n)
+for f in "$ZDOTDIR"/.zsh/*.zsh(.n)
 do
     . "$f"
 done; unset f
