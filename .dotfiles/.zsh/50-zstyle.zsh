@@ -1,7 +1,13 @@
 () {
     autoload -Uz compinit
-    compinit
 }
+
+if (( $(date +%s) - $(date +%s -r "$ZDOTDIR"/.zcompdump 2> /dev/null || echo 0) > 86400 ))
+then
+    compinit
+else
+    compinit -C
+fi
 
 zstyle ':completion:*' completer \
     _extensions _complete
