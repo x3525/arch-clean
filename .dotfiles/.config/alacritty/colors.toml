@@ -8,19 +8,19 @@ cursor = "CellForeground"
 
 [colors.search.matches]
 foreground = "#181818"
-background = "#ac4242"
+background = "#AC4242"
 
 [colors.search.focused_match]
 foreground = "#181818"
-background = "#f4bf75"
+background = "#F4BF75"
 
 [colors.hints.start]
 foreground = "#181818"
-background = "#f4bf75"
+background = "#F4BF75"
 
 [colors.hints.end]
 foreground = "#181818"
-background = "#ac4242"
+background = "#AC4242"
 
 [colors.line_indicator]
 foreground = "None"
@@ -28,7 +28,7 @@ background = "None"
 
 [colors.footer_bar]
 foreground = "#181818"
-background = "#d8d8d8"
+background = "#D8D8D8"
 
 [colors.selection]
 text       = "CellBackground"
