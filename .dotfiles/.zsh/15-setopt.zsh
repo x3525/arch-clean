@@ -16,6 +16,8 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 # Whenever the user enters a line with history expansion, don't execute the line directly; instead, perform history expansion.
 setopt HIST_VERIFY
+# When listing files that are possible completions, show the type of each file with a trailing identifying mark.
+setopt LIST_TYPES
 # Print job notifications in the long format by default.
 setopt LONG_LIST_JOBS
 # Print a carriage return just before printing a prompt in the line editor.
