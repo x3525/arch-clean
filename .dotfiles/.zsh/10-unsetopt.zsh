@@ -2,6 +2,8 @@
 unsetopt AUTO_CD
 # Perform textual history expansion, csh-style, treating the character "!" specially.
 unsetopt BANG_HIST
+# Treat the "#", "~" and "^" characters as part of patterns for filename generation, etc.
+unsetopt EXTENDED_GLOB
 # If this option is unset, output flow control via start/stop characters (usually assigned to ^S/^Q) is disabled in the shell's editor.
 unsetopt FLOW_CONTROL
 # Allow comments even in interactive shells.
