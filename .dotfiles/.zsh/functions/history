@@ -3,9 +3,6 @@ case $1 in
         : >| "$HISTFILE"
         fc -p
         ;;
-    this)
-        fc -l -n -I 1
-        ;;
     *)
         fc -l -n 1
         ;;
