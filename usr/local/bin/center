@@ -35,7 +35,7 @@ menu () {
 }
 
 notify () {
-    case "$1" in
+    case $1 in
         volume)
             if ! pactl get-default-sink
             then
@@ -47,7 +47,7 @@ notify () {
                 sleep 0.5
             done
 
-            case "$2" in
+            case $2 in
                 inc|dec)
                     pamixer --"$2"rease="$3" --allow-boost --set-limit=150
                     ;;
@@ -67,7 +67,7 @@ notify () {
             then
                 icon=audio-volume-muted
             else
-                case "$summary" in
+                case $summary in
                     00[0-9])
                         icon=audio-volume-low
                         ;;
