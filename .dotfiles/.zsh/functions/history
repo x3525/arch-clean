@@ -1,7 +1,9 @@
-if [ "$1" = "clear" ]
-then
-    : >| "$HISTFILE"
-    fc -p "$HISTFILE"
-else
-    fc -l -E 1 -1
-fi
+case $1 in
+    clear)
+        : >| "$HISTFILE"
+        fc -p "$HISTFILE"
+        ;;
+    *)
+        fc -l -E 1 -1
+        ;;
+esac
