@@ -1,9 +1,12 @@
 case $1 in
     clear)
         : >| "$HISTFILE"
-        fc -p "$HISTFILE"
+        fc -p
+        ;;
+    this)
+        fc -l -n -I 1
         ;;
     *)
-        fc -l -E 1 -1
+        fc -l -n 1
         ;;
 esac
