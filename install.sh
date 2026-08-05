@@ -21,7 +21,7 @@ linger () {
     do
         echo "Waiting for $unit to complete..."
 
-        case "$unit" in
+        case $unit in
             *.timer)
                 while [ -z "$(systemctl -P ActiveEnterTimestamp show "$unit")" ]
                 do
@@ -31,7 +31,7 @@ linger () {
             *.service)
                 while true
                 do
-                    case "$(systemctl -P SubState show "$unit")" in
+                    case $(systemctl -P SubState show "$unit") in
                         dead)
                             break
                             ;;
@@ -156,7 +156,7 @@ mount -m -t vfat "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-case "$(lspci -d ::03xx)" in
+case $(lspci -d ::03xx) in
     *[aA][mM][dD]*)
         packages+=(mesa)
         packages+=(vulkan-radeon)
@@ -179,7 +179,7 @@ then
     packages+=(mesa)
 fi
 
-case "$(grep vendor_id /proc/cpuinfo)" in
+case $(grep vendor_id /proc/cpuinfo) in
     *[aA][mM][dD]*)
         packages+=(amd-ucode)
         ;;
@@ -197,7 +197,7 @@ while ! pacstrap -K /mnt base linux linux-headers linux-firmware "${packages[@]}
 do
     read -r -p "Alas, Pacman failed. Try agai[n]? "
 
-    case "$REPLY" in
+    case $REPLY in
         n|N)
             exit 1
             ;;
