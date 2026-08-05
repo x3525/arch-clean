@@ -1,7 +1,3 @@
-() {
-    autoload -Uz compinit
-}
-
 if (( $(date +%s) - $(date +%s -r "$ZDOTDIR"/.zcompdump 2> /dev/null || echo 0) > 86400 ))
 then
     compinit
