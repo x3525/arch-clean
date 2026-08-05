@@ -13,9 +13,14 @@ PROMPT_EOL_MARK='%K{yellow} %k'
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
-for f in "${fpath[1]}"/*(.:t)
+for f in "${fpath[1]}"/**/*(^/)
 do
-    autoload -Uz "$f"
+    autoload -Uz "${f:t}"
+
+    if [[ $f == */zle/* ]]
+    then
+        zle -N "${f:t}"
+    fi
 done; unset f
 
 for f in "$ZDOTDIR"/.zsh/*.zsh(.n)
