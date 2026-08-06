@@ -1,5 +1,7 @@
 # If a completion is performed with the cursor within a word, and a full completion is inserted, the cursor is moved to the end of the word.
 setopt ALWAYS_TO_END
+# If this option is not set, the shell will report an error when a append redirection is used on a file that does not already exists.
+setopt APPEND_CREATE
 # Make cd push the old directory onto the directory stack.
 setopt AUTO_PUSHD
 # When the last character resulting from a completion is a slash and the next character typed is a slash, remove the slash.
