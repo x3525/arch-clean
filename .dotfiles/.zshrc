@@ -23,7 +23,7 @@ do
     fi
 done; unset f
 
-for f in "$ZDOTDIR"/.zsh/*.zsh(.n)
+for f in "$ZDOTDIR"/.zsh/*.zsh(^/n)
 do
     . "$f"
 done; unset f
