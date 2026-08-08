@@ -1,6 +1,11 @@
+--binary=no-printing
 --color=auto
+--italic-text=never
+--nonprintable-notation=unicode
 --paging=never
+--strip-ansi=never
 --style=plain
 --theme=auto
 --theme-dark="Solarized (dark)"
 --theme-light="Solarized (light)"
+--wrap=never
