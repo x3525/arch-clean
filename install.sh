@@ -88,10 +88,10 @@ else
     username=$1
 fi
 
-user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user) [press tab for no echo]")
 root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root) [press tab for no echo]")
+user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user) [press tab for no echo]")
 
-if [ -z "$user" ] || [ -z "$root" ]
+if [ -z "$root" ] || [ -z "$user" ]
 then
     echo "Empty passwords are not allowed"
     exit 1
@@ -217,11 +217,11 @@ mount -m -o bind ./.dotfiles /mnt/etc/skel
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"
 
-# Change user password (user)
-echo "$user" | passwd -R /mnt -s "$username"
-
 # Change user password (root)
 echo "$root" | passwd -R /mnt -s
+
+# Change user password (user)
+echo "$user" | passwd -R /mnt -s "$username"
 
 # Mask units
 systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
