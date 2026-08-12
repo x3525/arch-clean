@@ -13,6 +13,9 @@ PROMPT_EOL_MARK='%K{yellow} %k'
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
+# Highlight characters or regions of the line that have a particular significance.
+zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
+
 for f in "${fpath[1]}"/**/*(^/)
 do
     autoload -Uz "${f:t}"
