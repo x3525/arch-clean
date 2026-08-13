@@ -14,9 +14,9 @@ bindkey '^[[5~' up-line-or-history
 # Move down a line in the buffer, or if already at the bottom line, move to the next event in the history list.
 bindkey '^[[6~' down-line-or-history
 # Move up within the buffer, otherwise search for a history line matching the start of the current line.
-bindkey '^[[A' zle-up-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
 # Move down within the buffer, otherwise search for a history line matching the start of the current line.
-bindkey '^[[B' zle-down-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
 # Move forward one character.
 bindkey '^[[C' forward-char
 # Move backward one character.
