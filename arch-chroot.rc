@@ -8,7 +8,7 @@ locale-gen
 mkinitcpio -P
 
 # Install GRUB to a device
-grub-install --efi-directory=/efi --target=x86_64-efi
+grub-install --target=x86_64-efi --efi-directory=/efi
 
 # Generate the main configuration file for GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
