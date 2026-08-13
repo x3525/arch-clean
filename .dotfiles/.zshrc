@@ -5,10 +5,7 @@ fpath=("$ZDOTDIR"/.zsh/functions "${fpath[@]}")
 PROMPT_EOL_MARK='%K{yellow} %k'
 
 # The primary prompt string, printed before a command is read.
-PS1='%F{blue}%0~%f%F{cyan}%(!.#.$)%f '
-
-# This prompt is displayed on the right-hand side of the screen when the primary prompt is being displayed on the left.
-RPS1='%(0?..%F{red}%?%f)'
+PS1='%F{blue}%0~%f%F{cyan}%#%f '
 
 # An array describing contexts in which ZLE should highlight the input text.
 zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
