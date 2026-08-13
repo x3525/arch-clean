@@ -1,23 +1,23 @@
 # An array of directories specifying the search path for function definitions.
 fpath=("$ZDOTDIR"/.zsh/functions "${fpath[@]}")
 
-# The primary prompt string, printed before a command is read.
-PROMPT='%F{blue}%0~%f%F{cyan}%(!.#.$)%f '
-
-# This prompt is displayed on the right-hand side of the screen when the primary prompt is being displayed on the left.
-RPROMPT='%(0?..%F{red}%?%f)'
-
 # When the PROMPT_CR and PROMPT_SP options are set, the PROMPT_EOL_MARK parameter can be used to customize how the end of partial lines are shown.
 PROMPT_EOL_MARK='%K{yellow} %k'
+
+# The primary prompt string, printed before a command is read.
+PS1='%F{blue}%0~%f%F{cyan}%(!.#.$)%f '
+
+# This prompt is displayed on the right-hand side of the screen when the primary prompt is being displayed on the left.
+RPS1='%(0?..%F{red}%?%f)'
+
+# An array describing contexts in which ZLE should highlight the input text.
+zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
 
 # Typically this will be used to set the value to 0 so that the prompt appears flush with the right hand side of the screen.
 ZLE_RPROMPT_INDENT=0
 
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
-
-# Highlight characters or regions of the line that have a particular significance.
-zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
 
 for f in "${fpath[1]}"/**/*(^/)
 do
