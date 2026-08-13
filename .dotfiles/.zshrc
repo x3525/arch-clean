@@ -19,7 +19,7 @@ ZLE_RPROMPT_INDENT=0
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
-for f in "${fpath[1]}"/*(^/:t)
+for f in "${fpath[1]}"/*(:t)
 do
     autoload -Uz "$f"
 
