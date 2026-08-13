@@ -19,13 +19,13 @@ ZLE_RPROMPT_INDENT=0
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
-for f in "${fpath[1]}"/**/*(^/)
+for f in "${fpath[1]}"/**/*(^/:t)
 do
-    autoload -Uz "${f:t}"
+    autoload -Uz "$f"
 
-    if [[ $f == */zle/* ]]
+    if [[ $f == zle-* ]]
     then
-        zle -N "${f:t}"
+        zle -N "$f"
     fi
 done; unset f
 
