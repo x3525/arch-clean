@@ -141,7 +141,7 @@ partprobe "$device"
 udevadm settle
 
 # Dump the partitions of a device
-partitions=$(sudo sfdisk -J "$device")
+partitions=$(sfdisk -J "$device")
 
 U=$(jq -r '.partitiontable.partitions[] | select(.type == "C12A7328-F81F-11D2-BA4B-00A0C93EC93B") | .node' <<< "$partitions")
 S=$(jq -r '.partitiontable.partitions[] | select(.type == "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F") | .node' <<< "$partitions")
