@@ -10,6 +10,9 @@ RPROMPT='%(0?..%F{red}%?%f)'
 # When the PROMPT_CR and PROMPT_SP options are set, the PROMPT_EOL_MARK parameter can be used to customize how the end of partial lines are shown.
 PROMPT_EOL_MARK='%K{yellow} %k'
 
+# Typically this will be used to set the value to 0 so that the prompt appears flush with the right hand side of the screen.
+ZLE_RPROMPT_INDENT=0
+
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
