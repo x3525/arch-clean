@@ -88,8 +88,8 @@ else
     username=$1
 fi
 
-root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root) [press tab for no echo]")
-user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user) [press tab for no echo]")
+root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
+user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
 
 if [ -z "$root" ] || [ -z "$user" ]
 then
