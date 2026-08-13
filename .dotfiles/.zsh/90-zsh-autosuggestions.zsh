@@ -5,8 +5,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(
 )
 
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
-    zle-up-line-or-beginning-search
-    zle-down-line-or-beginning-search
+    up-line-or-beginning-search
+    down-line-or-beginning-search
     up-line-or-history
     down-line-or-history
     accept-line
