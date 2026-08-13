@@ -25,7 +25,7 @@ do
 
     if [[ $f == zle-* ]]
     then
-        zle -N "$f"
+        zle -N "${f/zle-/}" "$f"
     fi
 done; unset f
 
