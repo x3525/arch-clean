@@ -13,7 +13,7 @@ grub-install --efi-directory=/efi --target=x86_64-efi
 # Generate the main configuration file for GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# Managing a netfilter firewall
+# ufw
 ufw default deny incoming
 ufw default allow outgoing
 ufw enable
