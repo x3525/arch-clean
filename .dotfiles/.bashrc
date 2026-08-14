@@ -7,4 +7,4 @@ fi
 export PS1='\w\$ '
 
 # The name of the file to which the command history is saved.
-export HISTFILE=
+unset HISTFILE
