@@ -16,6 +16,8 @@ atexit () {
 
 trap atexit EXIT
 
+export SYSTEMD_PAGER=
+
 linger () {
     for unit
     do
