@@ -176,7 +176,7 @@ case $(lspci -d ::03xx) in
         ;;
 esac
 
-if systemd-detect-virt -q
+if systemd-detect-virt
 then
     packages+=(mesa)
 fi
