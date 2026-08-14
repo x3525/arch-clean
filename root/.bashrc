@@ -7,4 +7,4 @@ fi
 unset HISTFILE
 
 # The primary prompt string.
-export PS1='\w\$ '
+PS1='\w\$ '
