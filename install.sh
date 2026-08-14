@@ -8,18 +8,15 @@ exec 3> /tmp/xtrace.log
 BASH_XTRACEFD=3
 set -o xtrace -o errexit -o pipefail
 
-
 atexit () {
     set +o xtrace
     unset BASH_XTRACEFD
     exec 3>&-
 }
 
-
 trap atexit EXIT
 
 export SYSTEMD_PAGER=
-
 
 linger () {
     for unit
@@ -56,7 +53,6 @@ linger () {
         esac
     done
 }
-
 
 if [ ! -d /sys/firmware/efi ]
 then
