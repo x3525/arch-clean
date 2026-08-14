@@ -1,0 +1,23 @@
+pkgname=XkbLayout
+pkgver=1.0.0
+pkgrel=1
+arch=(x86_64)
+license=(MIT)
+depends=(
+    libx11
+)
+options=(!debug)
+source=(
+    XkbLayout.c
+)
+sha256sums=(SKIP)
+
+
+build () {
+    gcc -lX11 -o "${pkgname}" "${srcdir}"/"${source[0]}"
+}
+
+
+package () {
+    install -D -m 755 "${pkgname}" "${pkgdir}"/usr/bin/"${pkgname}"
+}
