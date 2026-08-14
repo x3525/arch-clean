@@ -209,6 +209,18 @@ do
     esac
 done
 
+export PKGDEST=pkgs
+export PKGEXT=.x
+#export PKGEXT=.pkg.tar.gz
+
+for pkg in pkgbuild/*
+do
+    #PKGEXT=.pkg.tar.gz PKGDEST=pkgs BUILDDIR=/tmp makepkg -sc
+    makepkg -sc -D $pkg
+done
+
+pacman -U *$PKGEXT
+
 # Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
