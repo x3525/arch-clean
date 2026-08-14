@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 execute () {
     environ=KILL=ME
 
@@ -23,7 +22,6 @@ execute () {
     env "$environ" dex -a -s "$1"
 }
 
-
 lock () {
     dunstctl set-paused true
 
@@ -32,11 +30,9 @@ lock () {
     dunstctl set-paused false
 }
 
-
 menu () {
     rofi -no-lazy-grab -show combi -modes combi -theme "$1"
 }
-
 
 notify () {
     case $1 in
@@ -101,6 +97,5 @@ notify () {
 
     notify-send -u "${urgency:-low}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
 }
-
 
 $1 "${@:2}"
