@@ -18,7 +18,7 @@ atexit () {
 
 trap atexit EXIT
 
-export SYSTEMD_PAGER=cat
+export SYSTEMD_PAGER=
 
 
 linger () {
