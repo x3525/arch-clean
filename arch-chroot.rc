@@ -18,7 +18,7 @@ ufw default deny incoming
 ufw default allow outgoing
 ufw enable
 
-for f in /tmp/src/*
+for f in /usr/local/src/*.c
 do
-    gcc "$(head -n 1 $f | cut -c 4-)" $f
+    $(head -n 1 "$f" | cut -c 4-) "$f"
 done
