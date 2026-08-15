@@ -195,7 +195,7 @@ then
     packages+=(sof-firmware)
 fi
 
-while ! pacstrap -K /mnt base linux linux-firmware linux-headers "${packages[@]}"
+while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
 do
     read -r -p "Alas, Pacman failed. Try agai[n]? "
 
