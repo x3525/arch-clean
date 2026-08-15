@@ -91,6 +91,9 @@ notify () {
 
             hint=(-h int:value:"$summary")
             ;;
+        XkbLayout)
+            summary=$(XkbLayout)
+            ;;
     esac
 
     hint+=(-h string:x-dunst-stack-tag:"${tag:-$1}")
