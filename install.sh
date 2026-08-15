@@ -195,7 +195,11 @@ then
     packages+=(sof-firmware)
 fi
 
-mkdir /mnt/etc
+if [ ! -d /mnt/etc ]
+then
+    mkdir /mnt/etc
+fi
+
 cp etc/vconsole.conf /mnt/etc/vconsole.conf
 
 while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
