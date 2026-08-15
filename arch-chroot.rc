@@ -12,3 +12,11 @@ grub-install --target=x86_64-efi --efi-directory=/efi
 
 # Generate the main configuration file for GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
+
+# ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw enable
+
+# gcc
+gcc -lX11 -o /usr/local/bin/XkbLayout /usr/local/src/XkbLayout.c
