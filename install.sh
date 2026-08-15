@@ -195,8 +195,8 @@ then
     packages+=(sof-firmware)
 fi
 
-# Configure the key mapping table before creating the initramfs image
-install -D -m "$(stat -c %a etc/vconsole.conf)" etc/vconsole.conf /mnt/etc/vconsole.conf
+mkdir /mnt/etc
+cp etc/vconsole.conf /mnt/etc/vconsole.conf
 
 while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
 do
