@@ -8,6 +8,18 @@ int main(void) {
         return 1;
     }
 
+    XkbStateRec state;
+
+    if (XkbGetState(dpy, XkbUseCoreKbd, &state) != Success) {
+        XCloseDisplay(dpy);
+        return 1;
+    }
+
+    if (state.group > XkbMaxKbdGroup) {
+        XCloseDisplay(dpy);
+        return 1;
+    }
+
     XkbDescPtr xkb = XkbGetMap(dpy, 0, XkbUseCoreKbd);
 
     if (!xkb) {
@@ -16,20 +28,6 @@ int main(void) {
     }
 
     if (XkbGetNames(dpy, XkbGroupNamesMask, xkb) != Success) {
-        XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(dpy);
-        return 1;
-    }
-
-    XkbStateRec state;
-
-    if (XkbGetState(dpy, XkbUseCoreKbd, &state) != Success) {
-        XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(dpy);
-        return 1;
-    }
-
-    if (state.group > XkbMaxKbdGroup) {
         XkbFreeKeyboard(xkb, 0, True);
         XCloseDisplay(dpy);
         return 1;
