@@ -17,3 +17,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ufw default deny incoming
 ufw default allow outgoing
 ufw enable
+
+for f in /tmp/src/*
+do
+    gcc "$(head -n 1 $f | cut -c 4-)" $f
+done
