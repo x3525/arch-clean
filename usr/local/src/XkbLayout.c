@@ -1,5 +1,3 @@
-// gcc -lX11 -o /usr/local/bin/XkbLayout
-
 #include <stdio.h>
 #include <X11/XKBlib.h>
 
