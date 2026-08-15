@@ -1,0 +1,1 @@
+gcc -lX11 -o /usr/local/bin/XkbLayout /usr/local/src/XkbLayout.c
