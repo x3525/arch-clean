@@ -232,4 +232,4 @@ systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
 systemctl --root=/mnt enable apparmor.service fstrim.timer NetworkManager.service reflector.timer systemd-timesyncd.service ufw.service
 
 # Directly interact with the new system's environment, tools, and configurations
-arch-chroot -S /mnt /usr/bin/bash < <(printf "%s\0" *.rc | sort -Vz | xargs -0 cat --)
+arch-chroot -S /mnt /usr/bin/bash < arch-chroot.rc
