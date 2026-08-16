@@ -7,6 +7,9 @@ PROMPT_EOL_MARK='%K{yellow} %k'
 # The primary prompt string, printed before a command is read.
 PS1='%~%# '
 
+# These escape sequences are used to enable bracketed paste when ZLE is active and disable it at other times.
+zle_bracketed_paste=($'\C-[[?2004h' $'\C-[[?2004l')
+
 # An array describing contexts in which ZLE should highlight the input text.
 zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
 
