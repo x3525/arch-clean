@@ -52,7 +52,6 @@ int main(void) {
     printf("%s\n", name);
 
     XFree(name);
-
     XkbFreeKeyboard(xkb, 0, True);
     XCloseDisplay(display);
 }
