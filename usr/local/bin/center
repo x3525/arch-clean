@@ -1,9 +1,11 @@
 #!/bin/bash
 
-execute () {
+reborn () {
+    searchpaths=${searchpaths:-$XDG_CONFIG_HOME/autostart/entries}
+
     environ=KILL=ME
 
-    for name in $(dex -p Name "$1"/*.desktop)
+    for name in $(dex -p Name "$searchpaths"/*.desktop)
     do
         for pid in $(pgrep -f -u $EUID -- "$name")
         do
@@ -19,7 +21,7 @@ execute () {
         done
     done
 
-    env "$environ" dex -a -s "$1"
+    env "$environ" dex -a -s "$searchpaths"
 }
 
 lock () {
