@@ -16,4 +16,4 @@ tiling_drag off
 exec --no-startup-id xss-lock --transfer-sleep-lock -- center lock
 
 # Executing applications.
-exec --no-startup-id center execute
+exec --no-startup-id center reborn
