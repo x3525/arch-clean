@@ -1,29 +1,5 @@
 #!/bin/bash
 
-reborn () {
-    searchpaths=${searchpaths:-$XDG_CONFIG_HOME/autostart/entries}
-
-    environ=KILL=ME
-
-    for name in $(dex -p Name "$searchpaths"/*.desktop)
-    do
-        for pid in $(pgrep -f -u $EUID -- "$name")
-        do
-            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep "$environ"
-            then
-                kill "$pid"
-
-                while pgrep -p "$pid"
-                do
-                    sleep 0.5
-                done
-            fi
-        done
-    done
-
-    env "$environ" dex -a -s "$searchpaths"
-}
-
 lock () {
     dunstctl set-paused true
 
@@ -101,6 +77,30 @@ notify () {
     hint+=(-h string:x-dunst-stack-tag:"${tag:-$1}")
 
     notify-send -u "${urgency:-low}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
+}
+
+reborn () {
+    searchpaths=${searchpaths:-$XDG_CONFIG_HOME/autostart/entries}
+
+    environ=KILL=ME
+
+    for name in $(dex -p Name "$searchpaths"/*.desktop)
+    do
+        for pid in $(pgrep -f -u $EUID -- "$name")
+        do
+            if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep "$environ"
+            then
+                kill "$pid"
+
+                while pgrep -p "$pid"
+                do
+                    sleep 0.5
+                done
+            fi
+        done
+    done
+
+    env "$environ" dex -a -s "$searchpaths"
 }
 
 $1 "${@:2}"
