@@ -224,9 +224,7 @@ cp -r -- */ /mnt
 mount -m -o bind ./.dotfiles /mnt/etc/skel
 
 # chmod
-chmod +x \
-    /mnt/etc/skel/.config/rofi/scripts/* \
-    /mnt/usr/local/bin/*
+find /mnt -type f -name "x-*" -exec chmod -v a+x {} \;
 
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"

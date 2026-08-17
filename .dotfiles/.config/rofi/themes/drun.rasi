@@ -1,5 +1,5 @@
 configuration {
-    combi-modes: "drun,permanent";
+    combi-modes: "drun,x-permanent";
 }
 
 * {

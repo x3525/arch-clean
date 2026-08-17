@@ -13,7 +13,7 @@ focus_on_window_activation urgent
 tiling_drag off
 
 # External locker as X screen saver.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- center lock
+exec --no-startup-id xss-lock --transfer-sleep-lock -- x-center lock
 
 # Executing applications.
-exec --no-startup-id center reborn
+exec --no-startup-id x-center reborn
