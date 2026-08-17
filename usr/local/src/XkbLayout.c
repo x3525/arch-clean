@@ -15,7 +15,7 @@ int main(void) {
         return 1;
     }
 
-    if (state.group > XkbMaxKbdGroup) {
+    if (state.group >= XkbNumKbdGroups) {
         XCloseDisplay(display);
         return 1;
     }
@@ -33,6 +33,12 @@ int main(void) {
         return 1;
     }
 
+    if (!xkb->names) {
+        XkbFreeKeyboard(xkb, 0, True);
+        XCloseDisplay(display);
+        return 1;
+    }
+
     Atom atom = xkb->names->groups[state.group];
 
     if (!atom) {
@@ -41,17 +47,21 @@ int main(void) {
         return 1;
     }
 
+    int status = 0;
+
     char *name = XGetAtomName(display, atom);
 
-    if (!name) {
-        XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(display);
-        return 1;
+    if (name) {
+        if (printf("%s\n", name) < 0) {
+            status = 1;
+        }
+        XFree(name);
+    } else {
+        status = 1;
     }
 
-    printf("%s\n", name);
-
-    XFree(name);
     XkbFreeKeyboard(xkb, 0, True);
     XCloseDisplay(display);
+
+    return status;
 }
