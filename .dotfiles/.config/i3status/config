@@ -8,5 +8,5 @@ general {
 order+="time"
 
 time {
-    format="%a %b %d.%m.%y %H:%M:%S"
+    format="%d %B %Y %A %H:%M:%S"
 }
