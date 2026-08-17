@@ -86,7 +86,7 @@ reborn () {
 
     for name in $(dex -p Name "$searchpaths"/*.desktop)
     do
-        for pid in $(pgrep -f -u $EUID -- "$name")
+        for pid in $(pgrep -u $EUID -f -- "$name")
         do
             if ps -p "$pid" e -ww | grep DISPLAY="$DISPLAY" | grep "$environ"
             then
