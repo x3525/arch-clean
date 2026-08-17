@@ -27,7 +27,7 @@ notify () {
 
             case $2 in
                 inc|dec)
-                    pamixer --"$2"rease="$3" --allow-boost --set-limit=150
+                    pamixer --"$2"rease="${3:-10}" --allow-boost --set-limit=150
                     ;;
                 tog)
                     pamixer --toggle-mute
