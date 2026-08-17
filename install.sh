@@ -219,12 +219,12 @@ done
 # Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
+# chmod
+find . -maxdepth 2 -type f -name "x+*" -exec chmod -v a+x {} \;
+
 cp -r -- */ /mnt
 
 mount -m -o bind ./.dotfiles /mnt/etc/skel
-
-# chmod
-find /mnt -type f -name "x-*" -exec chmod -v a+x {} \;
 
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"
