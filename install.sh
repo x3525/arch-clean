@@ -219,12 +219,13 @@ done
 # Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
-# chmod
-find . -maxdepth 2 -type f -name "x+*" -exec chmod -v a+x {} \;
-
 cp -r -- */ /mnt
 
 mount -m -o bind ./.dotfiles /mnt/etc/skel
+
+chmod -v +x \
+    /mnt/etc/skel/.config/rofi/scripts/* \
+    /mnt/usr/local/bin/*
 
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"
