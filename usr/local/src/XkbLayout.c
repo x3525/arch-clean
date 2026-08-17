@@ -51,13 +51,13 @@ int main(void) {
 
     char *name = XGetAtomName(display, atom);
 
-    if (name) {
+    if (!name) {
+        status = 1;
+    } else {
         if (printf("%s\n", name) < 0) {
             status = 1;
         }
         XFree(name);
-    } else {
-        status = 1;
     }
 
     XkbFreeKeyboard(xkb, 0, True);
