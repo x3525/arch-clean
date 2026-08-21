@@ -39,6 +39,20 @@ int main(void) {
         return 1;
     }
 
+    unsigned int num_groups = 0;
+
+    for (unsigned int i = 0; i < XkbNumKbdGroups; i++) {
+        if (xkb->names->groups[i] != None) {
+            num_groups++;
+        }
+    }
+
+    if (num_groups == 1) {
+        XkbFreeKeyboard(xkb, 0, True);
+        XCloseDisplay(display);
+        return 0;
+    }
+
     Atom atom = xkb->names->groups[state.group];
 
     if (!atom) {
