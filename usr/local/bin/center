@@ -75,6 +75,13 @@ notify () {
             ;;
         XkbLayout)
             summary=$(XkbLayout)
+
+            if [ -z "$summary" ]
+            then
+                return
+            fi
+
+            icon=config-language
             ;;
     esac
 
