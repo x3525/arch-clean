@@ -1,7 +1,7 @@
 case $1 in
     clear)
         : >| "$HISTFILE"
-        fc -p
+        fc -p "$HISTFILE"
         ;;
     *)
         fc -l -n 1
