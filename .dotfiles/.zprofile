@@ -1,4 +1,8 @@
-if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]
+if [ -z "$DISPLAY" ]
 then
-    exec startx
+    case $(tty) in
+        /dev/tty1)
+            exec startx
+            ;;
+    esac
 fi
