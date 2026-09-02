@@ -24,6 +24,9 @@ zle_highlight=(default:none isearch:standout region:none special:none suffix:non
 # Typically this will be used to set the value to 0 so that the prompt appears flush with the right hand side of the screen.
 ZLE_RPROMPT_INDENT=0
 
+# Controls how the --color option highlights output.
+export GREP_COLORS='sl=:cx=:mt=31:ms=31:mc=31:fn=35:ln=32:bn=33:se=36:'
+
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
 
