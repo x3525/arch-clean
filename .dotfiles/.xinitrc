@@ -40,8 +40,11 @@ then
     done
 fi
 
+# Set environment variables for systemd user services as well as for traditional D-Bus session services.
 dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP
 
+# Turns NumLock on in X.
 numlockx on
 
+# Replace the shell with i3 without creating a new process.
 exec i3
