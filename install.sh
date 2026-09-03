@@ -195,20 +195,6 @@ then
     packages+=(sof-firmware)
 fi
 
-if [ ! -d /mnt/etc ]
-then
-    mkdir /mnt/etc
-fi
-
-cp etc/vconsole.conf /mnt/etc/vconsole.conf
-
-if [ ! -d /mnt/etc/modprobe.d ]
-then
-    mkdir /mnt/etc/modprobe.d
-fi
-
-cp etc/modprobe.d/* /mnt/etc/modprobe.d
-
 while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
 do
     read -r -p "Alas, Pacman failed. Try agai[n]? "
