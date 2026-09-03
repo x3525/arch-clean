@@ -43,6 +43,9 @@ fi
 # Set environment variables for systemd user services as well as for traditional D-Bus session services.
 dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP
 
+# Automatically select a display configuration based on connected devices.
+autorandr -c
+
 # Turns NumLock on in X.
 numlockx on
 
