@@ -235,7 +235,6 @@ systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
 # Enable units
 systemctl --root=/mnt enable apparmor.service fstrim.timer NetworkManager.service reflector.timer systemd-timesyncd.service ufw.service
 
-# Directly interact with the new system's environment, tools, and configurations
 arch-chroot -S /mnt /usr/bin/bash << 'EOF'
 # Set the Hardware Clock from the System Clock
 hwclock -w
