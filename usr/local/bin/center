@@ -45,7 +45,7 @@ notify () {
                 summary=0$summary
             done
 
-            if pamixer --get-mute | grep -q true
+            if [ "$(pamixer --get-mute)" != "false" ]
             then
                 icon=audio-volume-muted
             else
