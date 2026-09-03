@@ -8,10 +8,10 @@ then
     exit
 fi
 
-while read -r string icon permanent
+while read -r string icon
 do
-    echo -e "$string\0icon\x1f$icon\x1fpermanent\x1f$permanent"
+    echo -e "$string\0icon\x1f$icon\x1fpermanent\x1ftrue"
 done << EOF
-poweroff system-shut-down true
-reboot system-restart true
+poweroff system-shut-down
+reboot system-restart
 EOF
