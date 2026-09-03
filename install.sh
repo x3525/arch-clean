@@ -60,12 +60,6 @@ then
     exit 1
 fi
 
-if [ ! -f arch-chroot.rc ]
-then
-    echo "arch-chroot.rc file not found"
-    exit 1
-fi
-
 if [ ! -f packages ]
 then
     echo "packages file not found"
