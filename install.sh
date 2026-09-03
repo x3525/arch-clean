@@ -236,4 +236,21 @@ systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
 systemctl --root=/mnt enable apparmor.service fstrim.timer NetworkManager.service reflector.timer systemd-timesyncd.service ufw.service
 
 # Directly interact with the new system's environment, tools, and configurations
-arch-chroot -S /mnt /usr/bin/bash < arch-chroot.rc
+arch-chroot -S /mnt /usr/bin/bash < 'EOF'
+# Set the Hardware Clock from the System Clock
+hwclock -w
+# Generate localization files from templates
+locale-gen
+# Generate initramfs images based on all existing presets
+mkinitcpio -P
+# Install GRUB to a device
+grub-install --target=x86_64-efi --efi-directory=/efi
+# Generate the main configuration file for GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+# ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw enable
+# gcc
+gcc -lX11 -o /usr/local/bin/XkbLayout /usr/local/src/XkbLayout.c
+EOF
