@@ -4,6 +4,9 @@ hwclock -w
 # Generate localization files from templates
 locale-gen
 
+# Create an initial ramdisk environment
+mkinitcpio -P
+
 # Install GRUB to a device
 grub-install --target=x86_64-efi --efi-directory=/efi
 
