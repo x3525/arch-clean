@@ -212,7 +212,7 @@ mount -m -o bind ./.dotfiles /mnt/etc/skel
 
 # Change file mode bits
 chmod -v +x \
-    /mnt/etc/skel/.config/rofi/scripts/*
+    /mnt/etc/skel/.config/rofi/scripts/* \
     /mnt/usr/local/bin/*
 
 # Create a new user
