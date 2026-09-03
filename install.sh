@@ -60,12 +60,6 @@ then
     exit 1
 fi
 
-if [ ! -f chmod.list ]
-then
-    echo "chmod.list file not found"
-    exit 1
-fi
-
 if [ ! -f packages ]
 then
     echo "packages file not found"
