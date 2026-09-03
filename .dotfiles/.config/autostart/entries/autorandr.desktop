@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=autorandr
-Exec=autorandr -c
-Type=Application
-Terminal=false
