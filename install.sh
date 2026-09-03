@@ -60,6 +60,12 @@ then
     exit 1
 fi
 
+if [ ! -f chmod.list ]
+then
+    echo "chmod.list file not found"
+    exit 1
+fi
+
 if [ ! -f packages ]
 then
     echo "packages file not found"
@@ -211,9 +217,7 @@ cp -r -- */ /mnt
 mount -m -o bind ./.dotfiles /mnt/etc/skel
 
 # Change file mode bits
-chmod -v +x \
-    /mnt/etc/skel/.config/rofi/scripts/* \
-    /mnt/usr/local/bin/*
+xargs -I {} chmod -v +x /mnt/{} < chmod.list
 
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"
