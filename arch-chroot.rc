@@ -4,7 +4,7 @@ hwclock -w
 # Generate localization files from templates
 locale-gen
 
-# Create an initial ramdisk environment
+# Generate initramfs images based on all existing presets
 mkinitcpio -P
 
 # Install GRUB to a device
