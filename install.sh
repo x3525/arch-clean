@@ -217,7 +217,9 @@ cp -r -- */ /mnt
 mount -m -o bind ./.dotfiles /mnt/etc/skel
 
 # Change file mode bits
-xargs -I {} chmod -v +x /mnt/{} < chmod.list
+chmod -v +x \
+    /mnt/etc/skel/.config/rofi/scripts/*
+    /mnt/usr/local/bin/*
 
 # Create a new user
 useradd -R /mnt -m -G wheel "$username"
