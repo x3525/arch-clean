@@ -49,7 +49,7 @@ element-icon {
 
 element-text {
     background-color: inherit;
-    highlight: Red;
+    highlight: none Red;
     horizontal-align: 0.0;
     vertical-align: 0.5;
 }
