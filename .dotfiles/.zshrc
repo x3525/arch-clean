@@ -1,11 +1,3 @@
-for f in /usr/local/bin /usr/bin /usr/bin/site_perl
-do
-    if (( ! ${path[(I)$f]} ))
-    then
-        path+=("$f")
-    fi
-done; unset f
-
 # An array of directories specifying the search path for function definitions.
 fpath=("$ZDOTDIR"/.zsh/functions "${fpath[@]}")
 
