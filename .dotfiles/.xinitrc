@@ -10,9 +10,11 @@ done
 
 for f in /etc/X11/xinit/.Xresources "$HOME/.Xresources"
 do
-    if [ -f "$f" ]
+    if [ -x /usr/bin/cpp ]
     then
         xrdb -merge "$f"
+    else
+        xrdb -merge -nocpp "$f"
     fi
 done
 
