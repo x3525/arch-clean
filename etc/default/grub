@@ -1,6 +1,6 @@
 # GRUB boot loader configuration
 
-GRUB_DEFAULT=0
+GRUB_DEFAULT=saved
 GRUB_TIMEOUT=10
 GRUB_DISTRIBUTOR="Arch"
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=4 zswap.enabled=1 usbcore.autosuspend=-1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf"
@@ -51,7 +51,7 @@ GRUB_COLOR_HIGHLIGHT="black/light-gray"
 
 # Uncomment to make GRUB remember the last selection. This requires
 # setting 'GRUB_DEFAULT=saved' above.
-#GRUB_SAVEDEFAULT=true
+GRUB_SAVEDEFAULT=true
 
 # Uncomment to disable submenus in boot menu
 GRUB_DISABLE_SUBMENU=y
