@@ -2,40 +2,40 @@
 #include <X11/XKBlib.h>
 
 int main(void) {
-    Display *display = XOpenDisplay(NULL);
+    Display *dpy = XOpenDisplay(NULL);
 
-    if (!display) {
+    if (!dpy) {
         return 1;
     }
 
     XkbStateRec state;
 
-    if (XkbGetState(display, XkbUseCoreKbd, &state) != Success) {
-        XCloseDisplay(display);
+    if (XkbGetState(dpy, XkbUseCoreKbd, &state) != Success) {
+        XCloseDisplay(dpy);
         return 1;
     }
 
     if (state.group >= XkbNumKbdGroups) {
-        XCloseDisplay(display);
+        XCloseDisplay(dpy);
         return 1;
     }
 
-    XkbDescPtr xkb = XkbGetMap(display, 0, XkbUseCoreKbd);
+    XkbDescPtr xkb = XkbGetMap(dpy, 0, XkbUseCoreKbd);
 
     if (!xkb) {
-        XCloseDisplay(display);
+        XCloseDisplay(dpy);
         return 1;
     }
 
-    if (XkbGetNames(display, XkbGroupNamesMask, xkb) != Success) {
+    if (XkbGetNames(dpy, XkbGroupNamesMask, xkb) != Success) {
         XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(display);
+        XCloseDisplay(dpy);
         return 1;
     }
 
     if (!xkb->names) {
         XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(display);
+        XCloseDisplay(dpy);
         return 1;
     }
 
@@ -49,7 +49,7 @@ int main(void) {
 
     if (num_groups == 1) {
         XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(display);
+        XCloseDisplay(dpy);
         return 0;
     }
 
@@ -57,13 +57,13 @@ int main(void) {
 
     if (!atom) {
         XkbFreeKeyboard(xkb, 0, True);
-        XCloseDisplay(display);
+        XCloseDisplay(dpy);
         return 1;
     }
 
     int status = 0;
 
-    char *name = XGetAtomName(display, atom);
+    char *name = XGetAtomName(dpy, atom);
 
     if (!name) {
         status = 1;
@@ -75,7 +75,7 @@ int main(void) {
     }
 
     XkbFreeKeyboard(xkb, 0, True);
-    XCloseDisplay(display);
+    XCloseDisplay(dpy);
 
     return status;
 }
