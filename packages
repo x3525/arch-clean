@@ -9,6 +9,7 @@ bash-completion
 breeze-gtk
 brightnessctl
 dex
+dmenu
 dunst
 efibootmgr
 exfat-utils
