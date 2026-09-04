@@ -76,7 +76,7 @@ fi
 
 LC_CTYPE=C
 
-if [[ ! $1 =~ ^[a-z][a-z0-9][a-z0-9]{0,30}$ ]]
+if [[ ! $1 =~ ^[a-zA-Z][a-zA-Z0-9]{0,31}$ ]]
 then
     echo "Login entry is invalid"
     exit 1
