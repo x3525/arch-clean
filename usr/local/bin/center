@@ -13,7 +13,7 @@ lock () {
 }
 
 menu () {
-    rofi -no-lazy-grab -show combi -modes combi -theme "$1"
+    stest -flx /usr/bin | sort -u | dmenu -b -i -l 5 -fn "JetBrains Mono NL-14" -nb "#000000" -nf "#F5F5DC" -sb "#2F4F4F" -sf "#000000" | sh
 }
 
 notify () {
