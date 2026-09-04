@@ -7,7 +7,7 @@ do
 done; unset f
 
 # An array of directories specifying the search path for function definitions.
-fpath=("$ZDOTDIR"/.zsh/functions "${fpath[@]}")
+fpath=("$ZDOTDIR"/.zsh/functions "$ZDOTDIR"/.zsh/completions "${fpath[@]}")
 
 # When the PROMPT_CR and PROMPT_SP options are set, the PROMPT_EOL_MARK parameter can be used to customize how the end of partial lines are shown.
 PROMPT_EOL_MARK='%K{yellow} %k'
