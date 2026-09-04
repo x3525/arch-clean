@@ -12,12 +12,7 @@ for f in /etc/X11/xinit/.Xresources "$HOME/.Xresources"
 do
     if [ -f "$f" ]
     then
-        if [ -x /usr/bin/cpp ]
-        then
-            xrdb -merge "$f"
-        else
-            xrdb -merge -nocpp "$f"
-        fi
+        xrdb -merge "$f"
     fi
 done
 
