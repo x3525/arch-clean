@@ -4,8 +4,6 @@ setopt ALWAYS_TO_END
 setopt APPEND_CREATE
 # Make cd push the old directory onto the directory stack.
 setopt AUTO_PUSHD
-# When the last character resulting from a completion is a slash and the next character typed is a slash, remove the slash.
-setopt AUTO_REMOVE_SLASH
 # Never print the working directory after a cd (whether explicit or implied with the AUTO_CD option set).
 setopt CD_SILENT
 # If unset, the cursor is set to the end of the word if completion is started.
