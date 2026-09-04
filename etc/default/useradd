@@ -1,3 +1,4 @@
+GROUP=users
 GROUPS=
 HOME=/home
 INACTIVE=-1
