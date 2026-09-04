@@ -1,3 +1,0 @@
-#!/bin/bash
-
-echo -e "$(date)\0icon\x1fapplication-default-icon\x1fnonselectable\x1ftrue\x1fpermanent\x1ftrue"

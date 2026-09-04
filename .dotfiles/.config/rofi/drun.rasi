@@ -1,8 +1,0 @@
-configuration {
-    drun {
-        gio-launch: false;
-        parse-system: true;
-        parse-user: true;
-        scan-desktop: true;
-    }
-}
