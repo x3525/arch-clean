@@ -39,9 +39,9 @@ int main(void) {
         return 1;
     }
 
-    unsigned int num_groups = 0;
+    int num_groups = 0;
 
-    for (unsigned int i = 0; i < XkbNumKbdGroups; i++) {
+    for (int i = 0; i < XkbNumKbdGroups; i++) {
         if (xkb->names->groups[i] != None) {
             num_groups++;
         }
