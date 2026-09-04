@@ -1,7 +1,7 @@
 if [ -z "$DISPLAY" ]
 then
-    case $(tty) in
-        /dev/tty1)
+    case $XDG_VTNR in
+        1)
             exec startx
             ;;
     esac
