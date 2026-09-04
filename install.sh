@@ -215,13 +215,13 @@ chmod -v +x \
     /mnt/usr/local/bin/*
 
 # Create a new user
-useradd -R /mnt -m -G wheel "$username"
+useradd --root=/mnt -m -G wheel "$username"
 
 # Change user password (root)
-echo "$root" | passwd -R /mnt -s
+echo "$root" | passwd --root=/mnt -s
 
 # Change user password (user)
-echo "$user" | passwd -R /mnt -s "$username"
+echo "$user" | passwd --root=/mnt -s "$username"
 
 # Mask units
 systemctl --root=/mnt mask ctrl-alt-del.target debug-shell.service
