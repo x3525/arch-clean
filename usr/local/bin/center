@@ -87,7 +87,7 @@ notify () {
 
     hint+=(-h string:x-dunst-stack-tag:"${tag-$1}")
 
-    notify-send -u "${urgency:-low}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
+    notify-send -u "${urgency:-LOW}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
 }
 
 reborn () {
