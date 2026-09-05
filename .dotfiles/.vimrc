@@ -1,5 +1,5 @@
 filetype indent on
-syntax off
+syntax on
 
 augroup jumpCursor
     autocmd!
