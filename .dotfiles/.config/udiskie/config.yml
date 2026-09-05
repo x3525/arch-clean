@@ -14,7 +14,7 @@ notifications:
     device_added: false
     device_removed: -1
     device_unlocked: -1
-    device_locked: -1
+    device_locked: false
     job_failed: -1
 
 quickmenu_actions: all
