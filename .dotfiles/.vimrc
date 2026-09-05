@@ -26,11 +26,13 @@ set list
 set listchars=tab:>-,trail:^,extends:>,precedes:<
 set mouse=
 set scrolloff=999
-set shiftwidth=4
+set shiftwidth=0
 set shortmess=oOstT
 set showmode
 set smartcase
 set smartindent
 set softtabstop=-1
+set tabstop=4
+set ttyfast
 set whichwrap=<,>,[,]
 set wrap
