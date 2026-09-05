@@ -85,7 +85,7 @@ notify () {
             ;;
     esac
 
-    hint+=(-h string:x-dunst-stack-tag:"${tag:-$1}")
+    hint+=(-h string:x-dunst-stack-tag:"${tag-$1}")
 
     notify-send -u "${urgency:-low}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
 }
