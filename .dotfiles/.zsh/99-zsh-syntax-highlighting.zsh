@@ -44,8 +44,8 @@ typeset -gA ZSH_HIGHLIGHT_STYLES=(
     [assign]=none
     [redirection]=fg=yellow
     [comment]=none
-    [named-fd]=none
-    [numeric-fd]=none
+    [named-fd]=fg=cyan
+    [numeric-fd]=fg=cyan
     [arg0]=fg=green
     [default]=none
 )
