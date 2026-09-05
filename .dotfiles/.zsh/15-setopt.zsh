@@ -2,6 +2,8 @@
 setopt ALWAYS_TO_END
 # If this option is not set, the shell will report an error when a append redirection is used on a file that does not already exists.
 setopt APPEND_CREATE
+# Automatically list choices on an ambiguous completion.
+setopt AUTO_LIST
 # Make cd push the old directory onto the directory stack.
 setopt AUTO_PUSHD
 # Never print the working directory after a cd (whether explicit or implied with the AUTO_CD option set).
@@ -20,6 +22,8 @@ setopt HIST_VERIFY
 setopt LIST_TYPES
 # Print job notifications in the long format by default.
 setopt LONG_LIST_JOBS
+# On an ambiguous completion, instead of listing possibilities or beeping, insert the first match immediately.
+setopt MENU_COMPLETE
 # Print a carriage return just before printing a prompt in the line editor.
 setopt PROMPT_CR
 # Attempt to preserve a partial line that would otherwise be covered up by the command prompt due to the PROMPT_CR option.
