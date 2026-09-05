@@ -6,14 +6,15 @@ program_options:
     password_cache: false
     file_manager: xdg-open
     terminal: alacritty --working-directory
+    password_prompt: builtin:gui
 
 notifications:
     device_mounted: false
     device_unmounted: false
     device_added: false
     device_removed: -1
-    device_unlocked: false
-    device_locked: false
+    device_unlocked: -1
+    device_locked: -1
     job_failed: -1
 
 quickmenu_actions: all
@@ -26,12 +27,15 @@ notification_actions:
 icon_names:
     media: [drive-removable-media]
     browse: [document-open]
-    terminal: [terminal]
+    terminal: [utilities-terminal]
     mount: [udiskie-mount]
     unmount: [udiskie-unmount]
-    unlock: [udiskie-unlock]
-    lock: [udiskie-lock]
-    eject: [udiskie-eject]
+    unlock: [object-unlocked]
+    lock: [object-locked]
+    eject: [media-eject]
     detach: [udiskie-detach]
-    delete: [udiskie-eject]
     quit: [application-exit]
+    forget_password: [edit-delete]
+    clear_passwords: [edit-delete]
+    delete: [media-eject]
+    losetup: [udiskie-mount]
