@@ -102,9 +102,6 @@
     # Set to 0 to disable.
     frame_width=5
 
-    # Defines color of the frame around the notification window.
-    frame_color="#000000"
-
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
     # of size frame_width will be drawn around each notification instead.
@@ -125,7 +122,7 @@
     #  * urgency_ascending: sort by urgency (low then normal then critical)
     #  * urgency_descending: sort by urgency (critical then normal then low)
     #  * update: sort by update (most recent always at the top)
-    sort=urgency_descending
+    sort=update
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -191,7 +188,7 @@
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
-    show_age_threshold=600
+    show_age_threshold=-1
 
     # Specify where to make an ellipsis in long lines.
     # Possible values are "start", "middle" and "end".
@@ -245,7 +242,7 @@
 
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
-    sticky_history=yes
+    sticky_history=no
 
     # Maximum amount of notifications kept in history
     history_length=0
