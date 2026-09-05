@@ -81,7 +81,7 @@ notify () {
                 return
             fi
 
-            icon=keyboard
+            icon=input-keyboard
             ;;
     esac
 
