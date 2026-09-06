@@ -93,11 +93,10 @@ fi
 
 select device in $(lsblk -dnp -o NAME -Q 'RO == 0 && TYPE == "disk"')
 do
-    if [ ! -b "$device" ]
+    if [ -b "$device" ]
     then
-        continue
+        break
     fi
-    break
 done
 
 # EOF
