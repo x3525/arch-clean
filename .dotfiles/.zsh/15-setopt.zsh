@@ -22,8 +22,6 @@ setopt HIST_VERIFY
 setopt LIST_TYPES
 # Print job notifications in the long format by default.
 setopt LONG_LIST_JOBS
-# On an ambiguous completion, instead of listing possibilities or beeping, insert the first match immediately.
-setopt MENU_COMPLETE
 # Print a carriage return just before printing a prompt in the line editor.
 setopt PROMPT_CR
 # Attempt to preserve a partial line that would otherwise be covered up by the command prompt due to the PROMPT_CR option.
