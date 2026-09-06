@@ -12,6 +12,8 @@ unsetopt EXTENDED_GLOB
 unsetopt FLOW_CONTROL
 # Allow comments even in interactive shells.
 unsetopt INTERACTIVE_COMMENTS
+# On an ambiguous completion, instead of listing possibilities or beeping, insert the first match immediately.
+unsetopt MENU_COMPLETE
 # Allow the character sequence "''" to signify a single quote within singly quoted strings.
 unsetopt RC_QUOTES
 # Use single-line command line editing instead of multi-line.
