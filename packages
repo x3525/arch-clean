@@ -59,7 +59,6 @@ qt6-multimedia-ffmpeg
 reflector
 rlwrap
 shellcheck
-sudo
 thunar
 thunar-archive-plugin
 tk
