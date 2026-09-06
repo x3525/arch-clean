@@ -179,10 +179,10 @@ else
 fi
 
 case $(grep vendor_id /proc/cpuinfo) in
-    *[aA][mM][dD]*)
+    *AuthenticAMD*)
         packages+=(amd-ucode)
         ;;
-    *[iI][nN][tT][eE][lL]*)
+    *GenuineIntel*)
         packages+=(intel-ucode)
         ;;
 esac
