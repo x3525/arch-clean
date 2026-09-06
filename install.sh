@@ -97,13 +97,17 @@ do
     then
         break
     fi
-done
+done || exit 1
 
-# EOF
-if [ ! -b "$device" ]
-then
-    exit 1
-fi
+select kernel in linux linux-hardened linux-lts linux-rt linux-rt-lts linux-zen
+do
+    if [ -n "$kernel" ]
+    then
+        packages+=("$kernel")
+        packages+=("$kernel"-headers)
+        break
+    fi
+done || exit 1
 
 echo "Starting sanity checks..."
 
@@ -170,6 +174,8 @@ esac
 if systemd-detect-virt
 then
     packages+=(mesa)
+else
+    packages+=(linux-firmware)
 fi
 
 case $(grep vendor_id /proc/cpuinfo) in
@@ -186,7 +192,7 @@ then
     packages+=(sof-firmware)
 fi
 
-while ! pacstrap -K /mnt base base-devel linux linux-firmware linux-headers "${packages[@]}"
+while ! pacstrap -K /mnt base base-devel "${packages[@]}"
 do
     read -r -p "Alas, Pacman failed. Try agai[n]? "
 
