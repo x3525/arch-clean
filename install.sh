@@ -16,8 +16,6 @@ atexit () {
 
 trap atexit EXIT
 
-export SYSTEMD_PAGER=
-
 linger () {
     for unit
     do
@@ -25,7 +23,7 @@ linger () {
 
         case $unit in
             *.timer)
-                while [ -z "$(systemctl -P ActiveEnterTimestamp show "$unit")" ]
+                while [ -z "$(systemctl --no-pager --value --property=ActiveEnterTimestamp show "$unit")" ]
                 do
                     sleep 1
                 done
@@ -33,7 +31,7 @@ linger () {
             *.service)
                 while true
                 do
-                    case $(systemctl -P SubState show "$unit") in
+                    case $(systemctl --no-pager --value --property=SubState show "$unit") in
                         dead)
                             break
                             ;;
@@ -110,7 +108,7 @@ fi
 
 echo "Starting sanity checks..."
 
-while [ "$(timedatectl -P NTPSynchronized show)" != "yes" ]
+while [ "$(timedatectl --no-pager --value --property=NTPSynchronized show)" != "yes" ]
 do
     sleep 1
 done
