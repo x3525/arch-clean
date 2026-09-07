@@ -193,7 +193,7 @@ case $(< /proc/modules) in
         ;;
 esac
 
-while ! pacstrap -K /mnt base base-devel "${packages[@]}"
+while ! pacstrap -K /mnt base "${packages[@]}"
 do
     read -r -p "Alas, Pacman failed. Try agai[n]? "
 
