@@ -185,14 +185,17 @@ case $(grep vendor_id /proc/cpuinfo) in
         ;;
 esac
 
-case $(cat /proc/modules) in
-    *snd_sof*)
-        packages+=(sof-firmware)
-        ;;&
-    *snd_asihpi*|*snd_cs46xx*|*snd_darla20*|*snd_darla24*|*snd_echo3g*|*snd_emu10k1*|*snd_gina20*|*snd_gina24*|*snd_hda_codec_ca0132*|*snd_hdsp*|*snd_indigo*|*snd_indigodj*|*snd_indigodjx*|*snd_indigoio*|*snd_indigoiox*|*snd_layla20*|*snd_layla24*|*snd_mia*|*snd_mixart*|*snd_mona*|*snd_pcxhr*|*snd_vx_lib*)
-        packages+=(alsa-firmware)
-        ;;
-esac
+while IFS= read -r
+do
+    case $REPLY in
+        snd_sof)
+            packages+=(sof-firmware)
+            ;;
+        snd_asihpi|snd_cs46xx|snd_darla20|snd_darla24|snd_echo3g|snd_emu10k1|snd_gina20|snd_gina24|snd_hda_codec_ca0132|snd_hdsp|snd_indigo|snd_indigodj|snd_indigodjx|snd_indigoio|snd_indigoiox|snd_layla20|snd_layla24|snd_mia|snd_mixart|snd_mona|snd_pcxhr|snd_vx_lib)
+            packages+=(alsa-firmware)
+            ;;
+    esac
+done < <(cut -w -f 1 /proc/modules)
 
 while ! pacstrap -K /mnt base linux-firmware "${packages[@]}"
 do
