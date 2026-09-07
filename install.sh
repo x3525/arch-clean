@@ -210,6 +210,9 @@ done
 # Generate an fstab file
 genfstab -U /mnt > /mnt/etc/fstab
 
+# Set the file mode creation mask
+umask 0022
+
 cp -r -- */ /mnt
 
 mount -m -o bind ./.dotfiles /mnt/etc/skel
