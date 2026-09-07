@@ -18,6 +18,7 @@ ffmpeg
 firefox
 flameshot
 gammastep
+gcc
 git
 github-cli
 grub
@@ -59,6 +60,7 @@ qt6-multimedia-ffmpeg
 reflector
 rlwrap
 shellcheck
+sudo
 thunar
 thunar-archive-plugin
 tk
