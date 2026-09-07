@@ -217,7 +217,8 @@ cp -r -- */ /mnt
 
 mount -m -o bind ./.dotfiles /mnt/etc/skel
 
-# Change file mode bits
+chmod -v 0750 \
+    /mnt/etc/sudoers.d
 chmod -v 0755 \
     /mnt/usr/local/bin/*
 
