@@ -153,18 +153,18 @@ mount -m -t vfat "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-case $(lspci -d ::03xx) in
-    *[aA][mM][dD]*)
+case $(lspci -mn -d ::03xx) in
+    *'"1002"'*)
         packages+=(mesa)
         packages+=(vulkan-radeon)
         packages+=(xf86-video-amdgpu)
         ;;&
-    *[iI][nN][tT][eE][lL]*)
+    *'"8086"'*)
         packages+=(mesa)
         packages+=(vulkan-intel)
         packages+=(intel-media-driver)
         ;;&
-    *[nN][vV][iI][dD][iI][aA]*)
+    *'"10de"'*)
         packages+=(dkms)
         packages+=(nvidia-open-dkms)
         packages+=(libva-nvidia-driver)
