@@ -185,7 +185,7 @@ case $(grep vendor_id /proc/cpuinfo) in
         ;;
 esac
 
-case $(< /proc/modules) in
+case $(cat /proc/modules) in
     *snd_sof*)
         packages+=(sof-firmware)
         ;;
