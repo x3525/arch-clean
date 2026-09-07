@@ -159,15 +159,15 @@ case $(lspci -mn -d ::03xx) in
         packages+=(vulkan-radeon)
         packages+=(xf86-video-amdgpu)
         ;;&
-    *'"8086"'*)
-        packages+=(mesa)
-        packages+=(vulkan-intel)
-        packages+=(intel-media-driver)
-        ;;&
     *'"10de"'*)
         packages+=(dkms)
         packages+=(nvidia-open-dkms)
         packages+=(libva-nvidia-driver)
+        ;;&
+    *'"8086"'*)
+        packages+=(mesa)
+        packages+=(vulkan-intel)
+        packages+=(intel-media-driver)
         ;;
 esac
 
