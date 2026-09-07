@@ -187,10 +187,11 @@ case $(grep vendor_id /proc/cpuinfo) in
         ;;
 esac
 
-if grep snd_sof /proc/modules
-then
-    packages+=(sof-firmware)
-fi
+case $(< /proc/modules) in
+    *snd_sof*)
+        packages+=(sof-firmware)
+        ;;
+esac
 
 while ! pacstrap -K /mnt base base-devel "${packages[@]}"
 do
