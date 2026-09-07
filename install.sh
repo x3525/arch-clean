@@ -218,7 +218,7 @@ cp -r -- */ /mnt
 mount -m -o bind ./.dotfiles /mnt/etc/skel
 
 # Change file mode bits
-chmod -v +x \
+chmod +x \
     /mnt/usr/local/bin/*
 
 # Create a new user
