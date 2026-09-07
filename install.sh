@@ -174,8 +174,6 @@ esac
 if systemd-detect-virt
 then
     packages+=(mesa)
-else
-    packages+=(linux-firmware)
 fi
 
 case $(grep vendor_id /proc/cpuinfo) in
@@ -193,7 +191,7 @@ case $(< /proc/modules) in
         ;;
 esac
 
-while ! pacstrap -K /mnt base "${packages[@]}"
+while ! pacstrap -K /mnt base linux-firmware "${packages[@]}"
 do
     read -r -p "Alas, Pacman failed. Try agai[n]? "
 
