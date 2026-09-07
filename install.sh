@@ -157,18 +157,18 @@ if systemd-detect-virt
 then
     packages+=(mesa)
 else
-    case $(lspci -mn -d ::03xx) in
-        *'"1002"'*)
+    case $(lspci -vmmn -d ::03xx | grep ^Vendor) in
+        *1002*)
             packages+=(mesa)
             packages+=(vulkan-radeon)
             packages+=(xf86-video-amdgpu)
             ;;&
-        *'"10de"'*)
+        *10de*)
             packages+=(dkms)
             packages+=(nvidia-open-dkms)
             packages+=(libva-nvidia-driver)
             ;;&
-        *'"8086"'*)
+        *8086*)
             packages+=(mesa)
             packages+=(vulkan-intel)
             packages+=(intel-media-driver)
