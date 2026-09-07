@@ -153,28 +153,23 @@ mount -m -t vfat "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-if systemd-detect-virt
-then
-    packages+=(mesa)
-else
-    case $(lspci -vmmn -d ::03xx | grep ^Vendor) in
-        *1002*)
-            packages+=(mesa)
-            packages+=(vulkan-radeon)
-            packages+=(xf86-video-amdgpu)
-            ;;&
-        *10de*)
-            packages+=(dkms)
-            packages+=(nvidia-open-dkms)
-            packages+=(libva-nvidia-driver)
-            ;;&
-        *8086*)
-            packages+=(mesa)
-            packages+=(vulkan-intel)
-            packages+=(intel-media-driver)
-            ;;
-    esac
-fi
+case $(lspci -vmmn -d ::03xx | grep ^Vendor) in
+    *1002*)
+        packages+=(mesa)
+        packages+=(vulkan-radeon)
+        packages+=(xf86-video-amdgpu)
+        ;;&
+    *10de*)
+        packages+=(dkms)
+        packages+=(nvidia-open-dkms)
+        packages+=(libva-nvidia-driver)
+        ;;&
+    *8086*)
+        packages+=(mesa)
+        packages+=(vulkan-intel)
+        packages+=(intel-media-driver)
+        ;;
+esac
 
 case $(grep vendor_id /proc/cpuinfo) in
     *AuthenticAMD*)
