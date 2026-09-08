@@ -153,38 +153,50 @@ mount -m -t vfat "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-case $(lspci -vmmn -d ::03xx | grep ^Vendor) in
-    *1002*)
-        packages+=(mesa)
-        packages+=(vulkan-radeon)
-        packages+=(xf86-video-amdgpu)
-        ;;&
-    *10de*)
-        packages+=(dkms)
-        packages+=(nvidia-open-dkms)
-        packages+=(libva-nvidia-driver)
-        ;;&
-    *8086*)
-        packages+=(mesa)
-        packages+=(vulkan-intel)
-        packages+=(intel-media-driver)
-        ;;
-esac
+while read -r vendor
+do
+    case $vendor in
+        1002)
+            packages+=(mesa)
+            packages+=(vulkan-radeon)
+            packages+=(xf86-video-amdgpu)
+            ;;
+        10de)
+            packages+=(dkms)
+            packages+=(nvidia-open-dkms)
+            packages+=(libva-nvidia-driver)
+            ;;
+        8086)
+            packages+=(mesa)
+            packages+=(vulkan-intel)
+            packages+=(intel-media-driver)
+            ;;
+    esac
+done < <(lspci -vmmn -d::03xx | grep ^Vendor | cut -w -f 2)
 
-case $(grep vendor_id /proc/cpuinfo) in
-    *AuthenticAMD*)
-        packages+=(amd-ucode)
-        ;;
-    *GenuineIntel*)
-        packages+=(intel-ucode)
-        ;;
-esac
+while read -r vendor_id
+do
+    case $vendor_id in
+        AuthenticAMD)
+            packages+=(amd-ucode)
+            ;;
+        GenuineIntel)
+            packages+=(intel-ucode)
+            ;;
+    esac
+done < <(cat /proc/cpuinfo | grep ^vendor_id | cut -w -f 3 | sort -u)
 
-case $(cat /proc/modules) in
-    *snd_sof\ *)
-        packages+=(sof-firmware)
-        ;;
-esac
+while read -r module
+do
+    case $module in
+        snd_sof)
+            packages+=(sof-firmware)
+            ;;
+        snd_asihpi|snd_cs46xx|snd_darla2[04]|snd_echo3g|snd_emu10k1|snd_gina2[04]|snd_hda_codec_ca0132|snd_hdsp|snd_indigo|snd_indigodj|snd_indigodjx|snd_indigoio|snd_indigoiox|snd_layla2[04]|snd_mia|snd_mixart|snd_mona|snd_pcxhr|snd_vx_lib)
+            packages+=(alsa-firmware)
+            ;;
+    esac
+done < <(cat /proc/modules | cut -w -f 1)
 
 while ! pacstrap -K /mnt base linux-firmware "${packages[@]}"
 do
