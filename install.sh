@@ -189,14 +189,17 @@ do
     esac
 done < <(cat /proc/cpuinfo | grep ^vendor_id | cut -w -f 3 | sort -u)
 
-while read -r module
+for module in /sys/module/*
 do
-    case $module in
-        snd_sof)
-            packages+=(sof-firmware)
-            ;;
-    esac
-done < <(cat /proc/modules | cut -w -f 1)
+    if [[ -f $module/refcnt ]]
+    then
+        case ${module##*/} in
+            snd_sof)
+                packages+=(sof-firmware)
+                ;;
+        esac
+    fi
+done
 
 while ! pacstrap -K /mnt base linux-firmware "${packages[@]}"
 do
