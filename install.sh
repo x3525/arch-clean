@@ -159,19 +159,23 @@ do
     then
         case $(< "$device"/vendor) in
             0x1002)
+                # Advanced Micro Devices, Inc. [AMD/ATI]
                 packages+=(mesa)
                 packages+=(vulkan-radeon)
                 packages+=(xf86-video-amdgpu)
                 ;;
             0x10de)
+                # NVIDIA Corporation
                 packages+=(dkms)
                 packages+=(nvidia-open-dkms)
                 packages+=(libva-nvidia-driver)
                 ;;
             0x15ad)
+                # VMware
                 packages+=(mesa)
                 ;;
             0x8086)
+                # Intel Corporation
                 packages+=(mesa)
                 packages+=(vulkan-intel)
                 packages+=(intel-media-driver)
