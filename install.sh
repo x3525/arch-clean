@@ -194,7 +194,7 @@ done < <(cat /proc/cpuinfo | grep ^vendor_id | cut -w -f 3 | sort -u)
 
 for module in /sys/module/*
 do
-    if [[ -e $module/refcnt ]]
+    if [[ -f $module/refcnt ]]
     then
         case ${module##*/} in
             snd_sof)
