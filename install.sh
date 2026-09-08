@@ -226,8 +226,6 @@ cp -r -- */ /mnt
 
 mount -m -o bind ./.dotfiles /mnt/etc/skel
 
-chmod -v 0750 \
-    /mnt/etc/sudoers.d
 chmod -v 0755 \
     /mnt/usr/local/bin/*
 
