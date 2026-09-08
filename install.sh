@@ -180,16 +180,6 @@ do
     fi
 done
 
-if < /proc/cpuinfo grep AuthenticAMD
-then
-    packages+=(amd-ucode)
-fi
-
-if < /proc/cpuinfo grep GenuineIntel
-then
-    packages+=(intel-ucode)
-fi
-
 for module in /sys/module/*
 do
     if [[ -f $module/refcnt ]]
@@ -201,6 +191,16 @@ do
         esac
     fi
 done
+
+if < /proc/cpuinfo grep AuthenticAMD
+then
+    packages+=(amd-ucode)
+fi
+
+if < /proc/cpuinfo grep GenuineIntel
+then
+    packages+=(intel-ucode)
+fi
 
 while ! pacstrap -K /mnt base linux-firmware "${packages[@]}"
 do
