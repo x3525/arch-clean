@@ -91,9 +91,9 @@ then
     exit 1
 fi
 
-select device in $(lsblk -dnp -o NAME -Q 'RO == 0 && TYPE == "disk"')
+select block in $(lsblk -dnp -o NAME -Q 'RO == 0 && TYPE == "disk"')
 do
-    if [ -b "$device" ]
+    if [ -b "$block" ]
     then
         break
     fi
@@ -119,10 +119,10 @@ done
 linger reflector.service archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
 
 # Zap the GPT and MBR data structures
-sgdisk -Z "$device"
+sgdisk -Z "$block"
 
 # Manipulate disk partition table
-sfdisk -w always -W always "$device" << EOF
+sfdisk -w always -W always "$block" << EOF
 label: gpt
 unit: sectors
 
@@ -132,13 +132,13 @@ type=L,start=,size=
 EOF
 
 # Inform the operating system kernel of partition table changes
-partprobe "$device"
+partprobe "$block"
 
 # Wait for pending udev events
 udevadm settle
 
 # Dump the partitions of a device in JSON format
-partitions=$(sfdisk -J "$device")
+partitions=$(sfdisk -J "$block")
 
 U=$(jq -r '.partitiontable.partitions[] | select(.type == "C12A7328-F81F-11D2-BA4B-00A0C93EC93B") | .node' <<< "$partitions")
 S=$(jq -r '.partitiontable.partitions[] | select(.type == "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F") | .node' <<< "$partitions")
