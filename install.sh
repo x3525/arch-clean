@@ -153,26 +153,29 @@ mount -m -t vfat "$U" /mnt/efi
 mkswap "$S"
 swapon "$S"
 
-while read -r vendor
+for device in /sys/bus/pci/devices/*
 do
-    case $vendor in
-        1002)
-            packages+=(mesa)
-            packages+=(vulkan-radeon)
-            packages+=(xf86-video-amdgpu)
-            ;;
-        10de)
-            packages+=(dkms)
-            packages+=(nvidia-open-dkms)
-            packages+=(libva-nvidia-driver)
-            ;;
-        8086)
-            packages+=(mesa)
-            packages+=(vulkan-intel)
-            packages+=(intel-media-driver)
-            ;;
-    esac
-done < <(lspci -vmmn -d::03xx | grep ^Vendor | cut -w -f 2)
+    if [[ $(< "$device"/class) == 0x03* ]]
+    then
+        case $(< "$device"/vendor) in
+            0x1002)
+                packages+=(mesa)
+                packages+=(vulkan-radeon)
+                packages+=(xf86-video-amdgpu)
+                ;;
+            0x10de)
+                packages+=(dkms)
+                packages+=(nvidia-open-dkms)
+                packages+=(libva-nvidia-driver)
+                ;;
+            0x8086)
+                packages+=(mesa)
+                packages+=(vulkan-intel)
+                packages+=(intel-media-driver)
+                ;;
+        esac
+    fi
+done
 
 while read -r vendor_id
 do
