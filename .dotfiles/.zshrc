@@ -13,6 +13,9 @@ RPROMPT='%?'
 # An array describing contexts in which ZLE should highlight the input text.
 zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
 
+# Those characters will cause the suffix to be removed.
+ZLE_REMOVE_SUFFIX_CHARS=$';'
+
 # Typically this will be used to set the value to 0 so that the prompt appears flush with the right hand side of the screen.
 ZLE_RPROMPT_INDENT=0
 
