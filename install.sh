@@ -168,6 +168,9 @@ do
                 packages+=(nvidia-open-dkms)
                 packages+=(libva-nvidia-driver)
                 ;;
+            0x15ad)
+                packages+=(mesa)
+                ;;
             0x8086)
                 packages+=(mesa)
                 packages+=(vulkan-intel)
