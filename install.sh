@@ -180,17 +180,15 @@ do
     fi
 done
 
-while read -r vendor_id
-do
-    case $vendor_id in
-        AuthenticAMD)
-            packages+=(amd-ucode)
-            ;;
-        GenuineIntel)
-            packages+=(intel-ucode)
-            ;;
-    esac
-done < <(cat /proc/cpuinfo | grep ^vendor_id | cut -w -f 3 | sort -u)
+if < /proc/cpuinfo grep ^vendor_id | grep AuthenticAMD
+then
+    packages+=(amd-ucode)
+fi
+
+if < /proc/cpuinfo grep ^vendor_id | grep GenuineIntel
+then
+    packages+=(intel-ucode)
+fi
 
 for module in /sys/module/*
 do
