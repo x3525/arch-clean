@@ -180,12 +180,12 @@ do
     fi
 done
 
-if < /proc/cpuinfo grep ^vendor_id | grep AuthenticAMD
+if < /proc/cpuinfo grep AuthenticAMD
 then
     packages+=(amd-ucode)
 fi
 
-if < /proc/cpuinfo grep ^vendor_id | grep GenuineIntel
+if < /proc/cpuinfo grep GenuineIntel
 then
     packages+=(intel-ucode)
 fi
