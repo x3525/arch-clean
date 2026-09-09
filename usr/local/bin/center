@@ -75,8 +75,8 @@ notify () {
             ;;
         xkb)
             declare -A layouts=(
-                [0]=tr
-                [1]=us
+                [0]="tr"
+                [1]="us"
             )
 
             layout=$(setxkbmap -query | grep layout | awk '{ print $NF }')
