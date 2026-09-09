@@ -7,9 +7,6 @@ PROMPT_EOL_MARK='%K{yellow} %k'
 # The primary prompt string, printed before a command is read.
 PS1='%~%# '
 
-# This prompt is displayed on the right-hand side of the screen when the primary prompt is being displayed on the left.
-RPROMPT='%?'
-
 # An array describing contexts in which ZLE should highlight the input text.
 zle_highlight=(default:none isearch:standout region:none special:none suffix:none paste:none)
 
