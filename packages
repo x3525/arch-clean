@@ -80,6 +80,7 @@ xdg-desktop-portal
 xdg-desktop-portal-gtk
 xdg-utils
 xorg-server
+xorg-setxkbmap
 xorg-xinit
 xsel
 xss-lock
