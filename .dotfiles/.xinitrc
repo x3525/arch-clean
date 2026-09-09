@@ -40,6 +40,12 @@ fi
 # Set environment variables for systemd user services as well as for traditional D-Bus session services.
 dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP
 
+# Specify the name of the laoyut.
+setxkbmap -layout tr
+
+# Set the typematic delay and rate.
+xset r rate 330 25
+
 # Turns NumLock on in X.
 numlockx on
 

@@ -265,7 +265,4 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ufw default deny incoming
 ufw default allow outgoing
 ufw enable
-
-# gcc
-gcc -lX11 -o /usr/local/bin/XkbLayout /usr/local/src/XkbLayout.c
 EOF
