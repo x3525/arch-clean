@@ -74,22 +74,26 @@ notify () {
             hint=(-h int:value:"$summary")
             ;;
         xkb)
-            declare -A layouts=(
-                [0]="tr"
-                [1]="us"
+            layouts=(
+                "tr"
+                "us"
             )
 
             layout=$(setxkbmap -query | grep layout | awk '{ print $NF }')
 
-            for index in "${!layouts[@]}"
+            for (( i=0; i < ${#layouts[@]}; i++ ))
             do
-                if [ "${layouts[$index]}" = "$layout" ]
+                if [ "${layouts[$i]}" = "$layout" ]
                 then
+                    summary=${layouts[(i + 1) % ${#layouts[@]}]}
                     break
                 fi
             done
 
-            summary=${layouts[$(( (index + 1) % ${#layouts[@]} ))]}
+            if [ -z "$summary" ]
+            then
+                summary=${layouts[0]}
+            fi
 
             setxkbmap -layout "$summary"
 
