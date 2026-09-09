@@ -79,7 +79,7 @@ notify () {
                 "us"
             )
 
-            layout=$(setxkbmap -query | grep layout | awk '{ print $NF }')
+            layout=$(setxkbmap -query | grep layout | awk '{print $NF}')
 
             for (( i=0; i < ${#layouts[@]}; i++ ))
             do
