@@ -79,7 +79,7 @@ notify () {
                 "us"
             )
 
-            layout=$(setxkbmap -query | grep layout | awk '{print $NF}')
+            layout=$(setxkbmap -query -verbose 0 | sed -n "s/^layout:[[:space:]]*\(.\+\)$/\1/p")
 
             for (( i=0; i < ${#layouts[@]}; i++ ))
             do
