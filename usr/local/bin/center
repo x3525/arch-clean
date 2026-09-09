@@ -90,12 +90,7 @@ notify () {
                 fi
             done
 
-            if [ -z "$summary" ]
-            then
-                summary=${layouts[0]}
-            fi
-
-            setxkbmap -layout "$summary"
+            setxkbmap -layout "${summary:=${layouts[0]}}"
 
             icon=input-keyboard
             ;;
