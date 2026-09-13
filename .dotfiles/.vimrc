@@ -27,7 +27,6 @@ set listchars=tab:>-,trail:^,extends:>,precedes:<
 set mouse=
 set scrolloff=999
 set shiftwidth=0
-set shortmess=oOstT
 set showmode
 set smartcase
 set smartindent
