@@ -62,7 +62,6 @@ shellcheck
 sudo
 thunar
 thunar-archive-plugin
-tk
 trash-cli
 ttf-jetbrains-mono
 ttf-meslo-nerd
