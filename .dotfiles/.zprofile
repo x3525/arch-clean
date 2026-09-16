@@ -1,4 +1,4 @@
-if [ -z "$DISPLAY" ]
+if [[ -z $DISPLAY ]]
 then
     case $XDG_VTNR in
         1)
