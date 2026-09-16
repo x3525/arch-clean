@@ -91,6 +91,8 @@ then
     exit 1
 fi
 
+lsblk
+
 select block in $(lsblk -dnp -o NAME -Q 'RO == 0 && TYPE == "disk"')
 do
     if [ -b "$block" ]
