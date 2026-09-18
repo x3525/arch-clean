@@ -23,7 +23,7 @@ linger () {
 
         case $unit in
             *.timer)
-                while [ -z "$(systemctl --no-pager --value --property=ActiveEnterTimestamp show "$unit")" ]
+                while [[ -z $(systemctl --no-pager --value --property=ActiveEnterTimestamp show "$unit") ]]
                 do
                     sleep 1
                 done
@@ -52,13 +52,13 @@ linger () {
     done
 }
 
-if [ ! -d /sys/firmware/efi ]
+if [[ ! -d /sys/firmware/efi ]]
 then
     echo "System is not booted in UEFI mode"
     exit 1
 fi
 
-if [ ! -f packages ]
+if [[ ! -f packages ]]
 then
     echo "packages file not found"
     exit 1
@@ -66,7 +66,7 @@ else
     mapfile -t packages < packages
 fi
 
-if [ $# -ne 1 ]
+if (( $# != 1 ))
 then
     echo "Usage: $0 USERNAME"
     exit 1
@@ -85,7 +85,7 @@ fi
 root=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (root)")
 user=$(systemd-ask-password --timeout=0 --echo=yes --emoji=no "Enter a password (user)")
 
-if [ -z "$root" ] || [ -z "$user" ]
+if [[ -z $root || -z $user ]]
 then
     echo "Empty passwords are not allowed"
     exit 1
@@ -95,7 +95,7 @@ lsblk
 
 select block in $(lsblk -dnp -o NAME -Q 'RO == 0 && TYPE == "disk"')
 do
-    if [ -b "$block" ]
+    if [[ -b $block ]]
     then
         break
     fi
@@ -103,7 +103,7 @@ done || exit 1
 
 select kernel in linux linux-hardened linux-lts linux-rt linux-rt-lts linux-zen
 do
-    if [ -n "$kernel" ]
+    if [[ -n $kernel ]]
     then
         packages+=("$kernel")
         packages+=("$kernel"-headers)
@@ -113,7 +113,7 @@ done || exit 1
 
 echo "Starting sanity checks..."
 
-while [ "$(timedatectl --no-pager --value --property=NTPSynchronized show)" != "yes" ]
+while [[ $(timedatectl --no-pager --value --property=NTPSynchronized show) != yes ]]
 do
     sleep 1
 done
