@@ -83,7 +83,7 @@ notify () {
 
             for (( i=0; i < ${#layouts[@]}; i++ ))
             do
-                if [[ "${layouts[$i]}" = "$layout" ]]
+                if [[ "${layouts[$i]}" == "$layout" ]]
                 then
                     summary=${layouts[(i + 1) % ${#layouts[@]}]}
                     break
