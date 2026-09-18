@@ -24,7 +24,6 @@ set incsearch
 set laststatus=2
 set list
 set listchars=tab:>-,trail:^,extends:>,precedes:<
-set maxsearchcount=99
 set mouse=
 set scrolloff=999
 set shiftwidth=0
