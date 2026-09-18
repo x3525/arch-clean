@@ -24,7 +24,7 @@ notify () {
                 return
             fi
 
-            until [ "$(pactl get-default-sink)" != "@DEFAULT_SINK@" ]
+            until [[ $(pactl get-default-sink) != @DEFAULT_SINK@ ]]
             do
                 sleep 0.5
             done
@@ -45,7 +45,7 @@ notify () {
                 summary=0$summary
             done
 
-            if [ "$(pamixer --get-mute)" != "false" ]
+            if [[ $(pamixer --get-mute) != false ]]
             then
                 icon=audio-volume-muted
             else
@@ -83,7 +83,7 @@ notify () {
 
             for (( i=0; i < ${#layouts[@]}; i++ ))
             do
-                if [ "${layouts[$i]}" = "$layout" ]
+                if [[ "${layouts[$i]}" = "$layout" ]]
                 then
                     summary=${layouts[(i + 1) % ${#layouts[@]}]}
                     break
