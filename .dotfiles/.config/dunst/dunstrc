@@ -22,11 +22,9 @@
     ### Geometry ###
 
     # The width of the window, excluding the frame.
-    # dynamic width from 0 to 300
-    width=(0, 300)
+    width=(100, 300)
 
     # The height of a single notification, excluding the frame.
-    # dynamic height from 0 to 300
     height=(0, 300)
 
     # Position the notification in the top right corner
@@ -55,7 +53,7 @@
     progress_bar_frame_width=0
 
     # Set the minimum width for the progress bar
-    progress_bar_min_width=0
+    progress_bar_min_width=100
 
     # Set the maximum width for the progress bar
     progress_bar_max_width=300
@@ -87,7 +85,7 @@
     # notifications.
     # Set to 0 to disable.
     # If gap_size is greater than 0, this setting will be ignored.
-    separator_height=5
+    separator_height=0
 
     # Padding between text and separator.
     padding=20
@@ -96,7 +94,7 @@
     horizontal_padding=20
 
     # Padding between text and icon.
-    text_icon_padding=20
+    text_icon_padding=0
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
@@ -217,13 +215,13 @@
 
     # Recursive icon lookup. You can set a single theme, instead of having to
     # define all lookup paths.
-    enable_recursive_icon_lookup=false
+    enable_recursive_icon_lookup=true
 
     # Set icon theme (only used for recursive icon lookup)
     icon_theme=Papirus-Dark
 
     # Align icons left/right/top/off
-    icon_position=left
+    icon_position=off
 
     # Scale small icons up to this size, set to 0 to disable. Helpful
     # for e.g. small files or high-dpi screens. In case of conflict,
@@ -232,9 +230,6 @@
 
     # Scale larger icons down to this size, set to 0 to disable
     max_icon_size=48
-
-    # Paths to default icons (only necessary when not using recursive icon lookup)
-    icon_path=/usr/share/icons/Papirus-Dark/8x8/emblems/:/usr/share/icons/Papirus-Dark/16x16/actions/:/usr/share/icons/Papirus-Dark/16x16/apps/:/usr/share/icons/Papirus-Dark/16x16/devices/:/usr/share/icons/Papirus-Dark/16x16/emblems/:/usr/share/icons/Papirus-Dark/16x16/emotes/:/usr/share/icons/Papirus-Dark/16x16/mimetypes/:/usr/share/icons/Papirus-Dark/16x16/panel/:/usr/share/icons/Papirus-Dark/16x16/places/:/usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/symbolic/actions/:/usr/share/icons/Papirus-Dark/16x16/symbolic/apps/:/usr/share/icons/Papirus-Dark/16x16/symbolic/categories/:/usr/share/icons/Papirus-Dark/16x16/symbolic/devices/:/usr/share/icons/Papirus-Dark/16x16/symbolic/emblems/:/usr/share/icons/Papirus-Dark/16x16/symbolic/emotes/:/usr/share/icons/Papirus-Dark/16x16/symbolic/mimetypes/:/usr/share/icons/Papirus-Dark/16x16/symbolic/places/:/usr/share/icons/Papirus-Dark/16x16/symbolic/status/:/usr/share/icons/Papirus-Dark/16x16/symbolic/up-to-32/:/usr/share/icons/Papirus-Dark/18x18/actions/:/usr/share/icons/Papirus-Dark/22x22/actions/:/usr/share/icons/Papirus-Dark/22x22/animations/:/usr/share/icons/Papirus-Dark/22x22/apps/:/usr/share/icons/Papirus-Dark/22x22/devices/:/usr/share/icons/Papirus-Dark/22x22/emblems/:/usr/share/icons/Papirus-Dark/22x22/emotes/:/usr/share/icons/Papirus-Dark/22x22/mimetypes/:/usr/share/icons/Papirus-Dark/22x22/panel/:/usr/share/icons/Papirus-Dark/22x22/places/:/usr/share/icons/Papirus-Dark/22x22/status/:/usr/share/icons/Papirus-Dark/22x22/symbolic/actions/:/usr/share/icons/Papirus-Dark/22x22/symbolic/apps/:/usr/share/icons/Papirus-Dark/22x22/symbolic/categories/:/usr/share/icons/Papirus-Dark/22x22/symbolic/devices/:/usr/share/icons/Papirus-Dark/22x22/symbolic/emblems/:/usr/share/icons/Papirus-Dark/22x22/symbolic/mimetypes/:/usr/share/icons/Papirus-Dark/22x22/symbolic/places/:/usr/share/icons/Papirus-Dark/22x22/symbolic/status/:/usr/share/icons/Papirus-Dark/24x24/actions/:/usr/share/icons/Papirus-Dark/24x24/animations/:/usr/share/icons/Papirus-Dark/24x24/apps/:/usr/share/icons/Papirus-Dark/24x24/devices/:/usr/share/icons/Papirus-Dark/24x24/emblems/:/usr/share/icons/Papirus-Dark/24x24/emotes/:/usr/share/icons/Papirus-Dark/24x24/mimetypes/:/usr/share/icons/Papirus-Dark/24x24/panel/:/usr/share/icons/Papirus-Dark/24x24/places/:/usr/share/icons/Papirus-Dark/24x24/status/:/usr/share/icons/Papirus-Dark/24x24/symbolic/actions/:/usr/share/icons/Papirus-Dark/24x24/symbolic/apps/:/usr/share/icons/Papirus-Dark/24x24/symbolic/categories/:/usr/share/icons/Papirus-Dark/24x24/symbolic/devices/:/usr/share/icons/Papirus-Dark/24x24/symbolic/emblems/:/usr/share/icons/Papirus-Dark/24x24/symbolic/mimetypes/:/usr/share/icons/Papirus-Dark/24x24/symbolic/places/:/usr/share/icons/Papirus-Dark/24x24/symbolic/status/:/usr/share/icons/Papirus-Dark/32x32/actions/:/usr/share/icons/Papirus-Dark/32x32/apps/:/usr/share/icons/Papirus-Dark/32x32/devices/:/usr/share/icons/Papirus-Dark/32x32/emblems/:/usr/share/icons/Papirus-Dark/32x32/emotes/:/usr/share/icons/Papirus-Dark/32x32/mimetypes/:/usr/share/icons/Papirus-Dark/32x32/places/:/usr/share/icons/Papirus-Dark/32x32/status/:/usr/share/icons/Papirus-Dark/42x42/apps/:/usr/share/icons/Papirus-Dark/48x48/actions/:/usr/share/icons/Papirus-Dark/48x48/apps/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/emblems/:/usr/share/icons/Papirus-Dark/48x48/emotes/:/usr/share/icons/Papirus-Dark/48x48/mimetypes/:/usr/share/icons/Papirus-Dark/48x48/places/:/usr/share/icons/Papirus-Dark/48x48/status/:/usr/share/icons/Papirus-Dark/64x64/apps/:/usr/share/icons/Papirus-Dark/64x64/devices/:/usr/share/icons/Papirus-Dark/64x64/mimetypes/:/usr/share/icons/Papirus-Dark/64x64/places/:/usr/share/icons/Papirus-Dark/84x84/apps/
 
     ### History ###
 
