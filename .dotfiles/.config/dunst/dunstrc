@@ -321,24 +321,24 @@
 
 [urgency_low]
     timeout=3
+    foreground="#F5F5DCFF"
+    background="#000000FF"
+    frame_color="#2F4F4FFF"
+    highlight="#2F4F4FFF"
     fullscreen=show
-    foreground="#F5F5DC"
-    background="#000000"
-    highlight="#2F4F4F"
-    frame_color="#2F4F4F"
 
 [urgency_normal]
     timeout=0
+    foreground="#F5F5DCFF"
+    background="#000000FF"
+    frame_color="#2F4F4FFF"
+    highlight="#2F4F4FFF"
     fullscreen=show
-    foreground="#F5F5DC"
-    background="#000000"
-    highlight="#2F4F4F"
-    frame_color="#2F4F4F"
 
 [urgency_critical]
     timeout=0
+    foreground="#F5F5DCFF"
+    background="#000000FF"
+    frame_color="#FF0000FF"
+    highlight="#FF0000FF"
     fullscreen=show
-    foreground="#F5F5DC"
-    background="#000000"
-    highlight="#FF0000"
-    frame_color="#FF0000"
