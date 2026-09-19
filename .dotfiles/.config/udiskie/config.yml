@@ -25,7 +25,7 @@ notification_actions:
     job_failed: []
 
 icon_names:
-    media: [drive-removable-media]
+    media: [media-optical]
     browse: [document-open]
     terminal: [utilities-terminal]
     mount: [udiskie-mount]
