@@ -17,7 +17,7 @@ ZLE_REMOVE_SUFFIX_CHARS=$';'
 ZLE_RPROMPT_INDENT=0
 
 # Color setup for grep.
-export GREP_COLORS=sl=:cx=:mt=31:ms=31:mc=31:fn=35:ln=32:bn=33:se=36:
+export GREP_COLORS=sl=:cx=:mt=31:ms=31:mc=31:fn=35:ln=32:bn=33:se=36
 
 # Color setup for ls.
 eval "$(dircolors -b "$HOME"/.dir_colors)"
