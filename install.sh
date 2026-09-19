@@ -208,16 +208,10 @@ fi
 
 while ! pacstrap -K /mnt base linux-firmware "${packages[@]}"
 do
-    read -r -p "Alas, Pacman failed. Try agai[n]? "
-
-    case $REPLY in
-        n|N)
-            exit 1
-            ;;
-        *)
-            echo
-            ;;
-    esac
+    if ! read -r
+    then
+        exit 1
+    fi
 done
 
 # Generate an fstab file
