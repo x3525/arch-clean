@@ -29,23 +29,9 @@ linger () {
                 done
                 ;;
             *.service)
-                while true
+                while [[ ! $(systemctl --no-pager --value --property=SubState show "$unit") =~ ^(dead|exited)$ ]]
                 do
-                    case $(systemctl --no-pager --value --property=SubState show "$unit") in
-                        dead)
-                            break
-                            ;;
-                        exited)
-                            break
-                            ;;
-                        failed)
-                            echo "$unit failed"
-                            exit 1
-                            ;;
-                        *)
-                            sleep 1
-                            ;;
-                    esac
+                    sleep 1
                 done
                 ;;
         esac
