@@ -40,35 +40,9 @@ notify () {
 
             summary=$(pamixer --get-volume)
 
-            while (( ${#summary} < 3 ))
-            do
-                summary=0$summary
-            done
-
-            if [[ $(pamixer --get-mute) != false ]]
+            if [[ $(pamixer --get-mute) == true ]]
             then
-                icon=audio-volume-muted
-            else
-                case $summary in
-                    00[0-9])
-                        icon=audio-volume-low
-                        ;;
-                    0[1-3][0-9])
-                        icon=audio-volume-low
-                        ;;
-                    0[4-6][0-9])
-                        icon=audio-volume-medium
-                        ;;
-                    0[7-9][0-9])
-                        icon=audio-volume-high
-                        ;;
-                    1[0-2][0-9])
-                        icon=audio-volume-high-warning
-                        ;;
-                    *)
-                        icon=audio-volume-high-danger
-                        ;;
-                esac
+                body=muted
             fi
 
             hint=(-h int:value:"$summary")
@@ -79,7 +53,7 @@ notify () {
                 "us"
             )
 
-            layout=$(setxkbmap -query -verbose 0 | sed -n "s/^layout:[[:space:]]*\(.*\)$/\1/p")
+            layout=$(setxkbmap -query | sed -n "s/^layout:[[:space:]]*\(.*\)$/\1/p")
 
             for (( i=0; i < ${#layouts[@]}; i++ ))
             do
@@ -91,14 +65,12 @@ notify () {
             done
 
             setxkbmap -layout "${summary:=${layouts[0]}}"
-
-            icon=input-keyboard
             ;;
     esac
 
-    hint+=(-h string:x-dunst-stack-tag:"${tag-$1}")
+    hint+=(-h string:x-dunst-stack-tag:"$1")
 
-    notify-send -u "${urgency:-LOW}" -i "${icon:-application-default-icon}" "${hint[@]}" "${summary:-}" "${body:-}"
+    notify-send -u "${urgency:-LOW}" "${hint[@]}" "${summary:-}" "${body:-}"
 }
 
 reborn () {
