@@ -233,7 +233,7 @@ mount -m -o bind ./.dotfiles /mnt/etc/skel
 # Create a new user
 useradd --root=/mnt -m -G wheel "$username"
 
-# Change user password
+# Change user password (user)
 echo "$user" | passwd --root=/mnt -s "$username"
 
 # Change user password (root)
